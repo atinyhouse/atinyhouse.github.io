@@ -1,0 +1,41 @@
+# Site settings
+title:          A Tiny House
+description:    "Minimal Jekyll theme for storytellers"
+baseurl:        "/blog"
+url:            "https://atinyhouse.github.io"
+
+# Google Analytics
+# google_analytics: UA—XXXXXXXX-X
+
+# Author
+author:
+  name:         小草庐
+  url:          https://atinyhouse.github.io
+  email:        lucca.caolu@gmail.com
+
+# Build settings
+markdown:       kramdown
+include:
+  - _pages
+
+# Assets
+sass:
+  sass_dir:     _sass
+  style:        compressed
+
+# Gems
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-seo-tag
+  # - jemoji # to allow emoji in your post
+
+# Permalinks
+permalink:      /:year-:month-:day/:title
+paginate:       5
+
+# Excludes
+exclude: [ Gemfile, Gemfile.lock, tale.gemspec ]
+
+# Disqus (Set to your disqus id)
+# disqus:         jekyll-tale
