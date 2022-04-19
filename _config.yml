@@ -1,8 +1,8 @@
 # Site settings
 title:          A Tiny House
 description:    "Minimal Jekyll theme for storytellers"
-baseurl:        "/blog"
-url:            "https://atinyhouse.github.io"
+baseurl:        ""
+url:            "https://atinyhouse.github.io/"
 
 # Google Analytics
 # google_analytics: UA—XXXXXXXX-X
