@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>初入职场，你在进行角色扮演吗 - A Tiny House</title>
+  
+  <style>
+    /* CSS变量定义 */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #37352f;
+      --text-shade: #2f2f2f;
+      --text-tint: #8b8b8b;
+      --grey-1: #6b6b6b;
+      --grey-2: #e9e9e7;
+      --grey-3: #f7f6f3;
+      --grey-4: #f1f1ef;
+      --blue: #2383e2;
+      --blue-light: #e8f4fd;
+      --border-color: #e9e9e7;
+      --shadow-color: rgba(0, 0, 0, .04);
+      --white: #ffffff;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #1a1a1a;
+      --text-color: #e0e0e0;
+      --text-shade: #ffffff;
+      --text-tint: #a0a0a0;
+      --grey-1: #808080;
+      --grey-2: #2a2a2a;
+      --grey-3: #1f1f1f;
+      --grey-4: #252525;
+      --blue: #4a9eff;
+      --blue-light: #1a3a5c;
+      --border-color: #2a2a2a;
+      --shadow-color: rgba(0, 0, 0, .3);
+    }
+
+    * {
+      box-sizing: border-box;
+      line-height: 1.5;
+    }
+
+    html, body {
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      margin: 0 auto;
+      max-width: 800px;
+      width: 100%;
+      padding: 0 24px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .container {
+        max-width: 900px;
+        padding: 0 48px;
+      }
+    }
+
+    .nav {
+      border-bottom: 1px solid var(--border-color);
+      overflow: auto;
+      background-color: var(--bg-color);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .nav-container {
+      margin: 0 auto;
+      position: relative;
+      text-align: left;
+      padding: 16px 0;
+      max-width: 800px;
+      width: 100%;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .nav-container {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .nav-container {
+        max-width: 900px;
+        padding-left: 48px;
+        padding-right: 48px;
+      }
+    }
+
+    .nav-title {
+      color: var(--text-shade);
+      display: inline-block;
+      margin: 0;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+
+    .nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      text-align: right;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .nav li {
+      color: var(--text-tint);
+      display: inline-block;
+      margin-left: 24px;
+    }
+
+    .nav a {
+      color: inherit;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-weight: 400;
+      font-size: 0.875rem;
+      padding: 4px 8px;
+      border-radius: 3px;
+      transition: background-color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .nav a:hover {
+      background-color: var(--grey-4);
+    }
+
+    .nav a.active {
+      background-color: var(--text-color);
+      color: var(--bg-color);
+    }
+
+    /* 暗黑模式切换按钮 */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: var(--bg-color);
+      border: 2px solid var(--border-color);
+      border-radius: 25px;
+      width: 50px;
+      height: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+      box-shadow: 0 2px 8px var(--shadow-color);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--text-color);
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
+
+    .theme-toggle-slider {
+      width: 19px;
+      height: 19px;
+      background: var(--text-color);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .theme-toggle[data-theme="dark"] .theme-toggle-slider {
+      transform: translateX(25px);
+      background: var(--text-color);
+    }
+
+    .theme-toggle[data-theme="dark"] .theme-toggle-slider::before {
+      content: "☀";
+      color: #000;
+    }
+
+    .theme-toggle:not([data-theme="dark"]) .theme-toggle-slider::before {
+      content: "☾";
+      color: #000;
+    }
+
+    main {
+      display: block;
+      margin: 0 auto;
+      max-width: 800px;
+      width: 100%;
+      padding: 0 24px;
+    }
+
+    @media (min-width: 768px) {
+      main {
+        padding: 0 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      main {
+        max-width: 900px;
+        padding: 0 48px;
+      }
+    }
+
+    .post {
+      padding: 48px 0;
+    }
+
+    .post-info {
+      color: var(--text-tint);
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 0.875rem;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .post-title {
+      color: var(--text-shade);
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 2.25rem;
+      margin: 0 0 24px 0;
+      text-align: left;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .post-content {
+      line-height: 1.6;
+    }
+
+    .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
+      color: var(--text-shade);
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      line-height: 1.3;
+      margin-top: 2em;
+      margin-bottom: 0.5em;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .post-content h2 {
+      font-size: 1.5em;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      font-weight: 600;
+    }
+
+    .post-content h3 {
+      font-size: 1.25em;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      font-weight: 600;
+    }
+
+    .post-content p {
+      margin: 0.75em 0;
+      line-height: 1.6;
+    }
+
+    .post-content strong {
+      font-weight: 600;
+      color: var(--text-shade);
+    }
+
+    .post-content em {
+      font-style: italic;
+      color: var(--text-tint);
+    }
+
+    .post-content ul, .post-content ol {
+      padding-left: 1.5em;
+      margin: 1.5em 0;
+    }
+
+    .post-content li {
+      margin: 0.5em 0;
+      line-height: 1.6;
+    }
+
+    .post-content blockquote {
+      border-left: 3px solid var(--border-color);
+      color: var(--grey-1);
+      margin: 1.5em 0;
+      padding: 0 1em;
+      background-color: var(--grey-4);
+      border-radius: 0 3px 3px 0;
+      font-style: normal;
+    }
+
+    .post-content blockquote p:last-child {
+      margin-bottom: 0;
+    }
+
+    .post-content img {
+      display: block;
+      margin: 1.5rem auto;
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px var(--shadow-color);
+    }
+
+    .post-content a {
+      color: var(--text-color);
+      text-decoration: underline;
+      text-decoration-color: var(--border-color);
+      transition: all 0.2s ease;
+    }
+
+    .post-content a:hover {
+      color: var(--text-shade);
+      text-decoration-color: var(--text-color);
+    }
+
+    .post-tags {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .post-tags .tag {
+      display: inline-block;
+      background: var(--grey-4);
+      color: var(--text-color);
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 0.75rem;
+      margin-right: 8px;
+      margin-top: 4px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .post-tags .tag:hover {
+      background: var(--text-color);
+      color: var(--bg-color);
+    }
+
+    footer {
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      padding: 48px 0;
+      text-align: center;
+      margin-top: 48px;
+      border-top: 1px solid var(--border-color);
+      max-width: 800px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    @media (min-width: 768px) {
+      footer {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      footer {
+        max-width: 900px;
+        padding-left: 48px;
+        padding-right: 48px;
+      }
+    }
+
+    footer span {
+      color: var(--text-tint);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="#" class="nav-title">A Tiny House</a>
+        <ul>
+          <li><a href="#home">Posts</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#tags">Tags</a></li>
+        </ul>
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+          <div class="theme-toggle-slider"></div>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <div class="post">
+        <div class="post-info">
+          <span>2020年11月1日</span>
+        </div>
+        <h1 class="post-title">初入职场，你在进行角色扮演吗</h1>
+        
+        <div class="post-content">
+          <p><em>最近和好几个朋友聊了一个话题：关于在职场中的角色扮演感。这一话题来源于我作为职场新人，对自我日常的观察与反思。</em></p>
+
+          <p><em>本篇推送用文字界定了这一感受，以对话的形式阐释了其产生的原因，并对如何与之共处提出了一些可行的办法。</em></p>
+
+          <br>
+
+          <h2>1 | 别扭的感觉：我在表演吗？</h2>
+
+          <p>Lucca：我在理性上能感知到职场语境/社会语境下一个优秀的职场人士的标准：思维严密、学习能力强、擅长沟通、勤于解决问题、理性、勤奋、负责任……在这样的理性感知前提下，我常觉得在工作中有一种别扭的感觉——感觉自己每天的工作都在表演：<strong>想象一种职场需要的人格，然后在工作中将其表演出来</strong>。</p>
+
+          <p>这种适应性的冲突感会出现在工作的间隙中，当我偶尔抽离出当下，观察工作中的自己时。这种适应性的冲突感也会在一些时刻给我造成极大的心理压力、落差感、挫败感——当我在工作中遇到困难，没有把一件事情做好的时候。</p>
+
+          <h2>2 | 角色扮演感来自于....?</h2>
+
+          <p>Allen：我觉得这种别扭感来自于一个gap，gap的两端分别是<strong>自己的现状和一个职场的能力和性格模型</strong>。我经常能感到后者并不是我现在的模样，但是它可能是我现在这份工作所需要的样子，这种差别也会给我带来心理的张力。</p>
+
+          <p>Lucca：是的，一针见血。或许当我培养自己拥有这些技能以后，这种心理的张力会变小，人格的切换会更自然，或者也根本不用切换直接可以成为我性格的一部分。</p>
+
+          <h2>3 | 如何处理这样的角色转化张力？</h2>
+
+          <p>Allen：我觉得可以这样考虑：</p>
+
+          <p><strong>这个职场模型让你不舒服的点是什么？</strong>是本身这种被催促改变（或"成长"）的压力，还是模型中一些特征是你不认同的（e.g. 狡诈、圆滑）。</p>
+
+          <p>如果是前者，我自己觉得可以接受的，因为走出舒适区会有一些意想不到的收获，而且<strong>当这个gap合拢以后，你又会舒适起来</strong>；</p>
+
+          <p>如果是后者，我会评估是不是这份职业本身特点带来的（比如公务员可能需要喝酒，我不喜欢），如果是，那我会进一步评估更换其他职业的可能性，因为<strong>和自己信念相抵触的职场模型带来的不快乐是会很持久的</strong>，人不能长期生活在这种状态下。如果是后者的话，我会建议收集信息考虑别的职业。</p>
+
+          <p>我现在评估自己的"不舒服"可能更多来自前者，那有种"扮演感"是很正常的，我很能体会你说的感觉。有时候就是在模仿、扮演中你就真的慢慢靠拢这个模型了，然后可能会惊讶于自己的成长。有一句话说挺好的：<strong>Fake it until you make it～</strong></p>
+
+          <p>Lucca：嗯嗯，我明白你的意思。其实我可能是踏入了舒适区之外吧，毕竟之前也没怎么接触过现在的工作，或者说成为一个成熟的职场人士。我有时候跳出自己的日常角色观察自己的时候，会惊讶于自己的fake，这种fake超出了我之前的自我认知。但是必须要承认，目前做的事情我是在某种程度上认可其价值的。</p>
+
+          <p>Allen：嗯嗯理解。跳出自己的日常角色观察，惊讶于自己的fake，可能是这种强烈的感觉：<strong>"这不是我"</strong>，但其实它的真实含义是："这不是【以前的】我"。我觉得fake在这里只是"不同"，而不一定是"假"。<strong>只要你的能力和人格在向外扩张疆域，你就一定会有这种感觉。</strong></p>
+
+          <p>这个感觉本身并不可怕。你会担心一方面是因为职场的模型离之前的学生生活还是太远了，另一方面可能是因为你没想清楚你涉足的新疆域是不是你想要的。我想如果你能确定了，那你对这个模型就会舒服很多。</p>
+
+          <h2>4 | 一定要改变自己吗？</h2>
+
+          <p>后来又与其他两个朋友聊了这个话题。他们的回答也让我有所启发：</p>
+
+          <p>X：在我工作前三个月的时候，我也有这样的感觉。但是当我慢慢上手工作之后，我对自己的性格、能力都有着比较清楚的认知。</p>
+
+          <p>我知道有些方面就是我不擅长的，我也不想假装自己擅长这些部分。如果我的领导让我去做某件事，那我倾向于一开始就告诉我的leader，哪一方面我就是不擅长的。</p>
+
+          <p>我觉得<strong>职场中保持真实很重要</strong>。如果你总是扮演一个不是自己的人，那会很累，而且也不可持续。与其这样，不如找到适合自己的工作方式，或者找到能够接受你真实样子的团队。</p>
+
+          <p>Y：我觉得这个问题其实涉及到<strong>自我认知和职业匹配度</strong>的问题。如果你发现自己在某个岗位上需要大量"表演"，那可能说明这个岗位并不适合你。</p>
+
+          <p>当然，适度的调整和成长是必要的，但如果需要完全改变自己的性格才能胜任工作，那可能就需要重新考虑职业选择了。</p>
+
+          <h2>5 | 总结与思考</h2>
+
+          <p>通过和朋友们这些对话，我逐渐意识到：</p>
+
+          <ul>
+            <li><strong>角色扮演感是正常的</strong>：当我们进入新的环境，需要适应新的角色时，这种"表演"感是成长过程中的正常现象。</li>
+            <li><strong>重要的是找到平衡</strong>：在适应职场要求的同时，保持自己的核心价值和真实性格。</li>
+            <li><strong>持续自我反思</strong>：定期审视自己的状态，确保没有过度"表演"而失去自我。</li>
+            <li><strong>选择合适的环境</strong>：如果某个环境需要你完全改变自己，那可能不是最适合的选择。</li>
+          </ul>
+
+          <p>职场成长是一个过程，在这个过程中，我们既需要适应环境，也需要保持自我。关键是要找到这个平衡点，让自己既能胜任工作，又能保持内心的真实和舒适。</p>
+
+          <div class="post-tags">
+            <a href="#" class="tag">Work</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2024 A Tiny House. All rights reserved.</span>
+    </footer>
+  </div>
+
+  <script>
+    // 暗黑模式功能
+    function toggleTheme() {
+      const body = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+      
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // 页面加载时检查保存的主题
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggle').setAttribute('data-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

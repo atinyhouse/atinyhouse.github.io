@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tags - A Tiny House</title>
+  
+  <style>
+    /* CSS变量定义 */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #37352f;
+      --text-shade: #2f2f2f;
+      --text-tint: #8b8b8b;
+      --grey-1: #6b6b6b;
+      --grey-2: #e9e9e7;
+      --grey-3: #f7f6f3;
+      --grey-4: #f1f1ef;
+      --blue: #2383e2;
+      --blue-light: #e8f4fd;
+      --border-color: #e9e9e7;
+      --shadow-color: rgba(0, 0, 0, .04);
+      --white: #ffffff;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #1a1a1a;
+      --text-color: #e0e0e0;
+      --text-shade: #ffffff;
+      --text-tint: #a0a0a0;
+      --grey-1: #808080;
+      --grey-2: #2a2a2a;
+      --grey-3: #1f1f1f;
+      --grey-4: #252525;
+      --blue: #4a9eff;
+      --blue-light: #1a3a5c;
+      --border-color: #2a2a2a;
+      --shadow-color: rgba(0, 0, 0, .3);
+    }
+
+    * {
+      box-sizing: border-box;
+      line-height: 1.5;
+    }
+
+    html, body {
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      margin: 0 auto;
+      max-width: 800px;
+      width: 100%;
+      padding: 0 24px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .container {
+        max-width: 900px;
+        padding: 0 48px;
+      }
+    }
+
+    .nav {
+      border-bottom: 1px solid var(--border-color);
+      overflow: auto;
+      background-color: var(--bg-color);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .nav-container {
+      margin: 0 auto;
+      position: relative;
+      text-align: left;
+      padding: 16px 0;
+      max-width: 800px;
+      width: 100%;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .nav-container {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .nav-container {
+        max-width: 900px;
+        padding-left: 48px;
+        padding-right: 48px;
+      }
+    }
+
+    .nav-title {
+      color: var(--text-shade);
+      display: inline-block;
+      margin: 0;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+
+    .nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      text-align: right;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .nav li {
+      color: var(--text-tint);
+      display: inline-block;
+      margin-left: 24px;
+    }
+
+    .nav a {
+      color: inherit;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-weight: 400;
+      font-size: 0.875rem;
+      padding: 4px 8px;
+      border-radius: 3px;
+      transition: background-color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .nav a:hover {
+      background-color: var(--grey-4);
+    }
+
+    .nav a.active {
+      background-color: var(--text-color);
+      color: var(--bg-color);
+    }
+
+    /* 暗黑模式切换按钮 */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: var(--bg-color);
+      border: 2px solid var(--border-color);
+      border-radius: 25px;
+      width: 50px;
+      height: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+      box-shadow: 0 2px 8px var(--shadow-color);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--blue);
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
+
+    .theme-toggle-slider {
+      width: 19px;
+      height: 19px;
+      background: var(--text-color);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .theme-toggle[data-theme="dark"] .theme-toggle-slider {
+      transform: translateX(25px);
+      background: var(--blue);
+    }
+
+    .theme-toggle[data-theme="dark"] .theme-toggle-slider::before {
+      content: "☀";
+      color: #000;
+    }
+
+    .theme-toggle:not([data-theme="dark"]) .theme-toggle-slider::before {
+      content: "☾";
+      color: #000;
+    }
+
+    main {
+      display: block;
+      margin: 0 auto;
+      max-width: 800px;
+      width: 100%;
+      padding: 0 24px;
+    }
+
+    @media (min-width: 768px) {
+      main {
+        padding: 0 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      main {
+        max-width: 900px;
+        padding: 0 48px;
+      }
+    }
+
+    .post {
+      padding: 48px 0;
+    }
+
+    .post-info {
+      color: var(--text-tint);
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 0.875rem;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .post-title {
+      color: var(--text-shade);
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 2.25rem;
+      margin: 0 0 24px 0;
+      text-align: left;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .post-content {
+      line-height: 1.6;
+    }
+
+    .tags-clouds {
+      margin: 2rem 0;
+    }
+
+    .tags-clouds a {
+      display: inline-block;
+      margin: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--grey-4);
+      border-radius: 20px;
+      text-decoration: none;
+      color: var(--text-color);
+      transition: all 0.2s ease;
+    }
+
+    .tags-clouds a:hover {
+      background: var(--text-color);
+      color: var(--bg-color);
+    }
+
+    .tags-clouds a.active {
+      background: var(--text-color);
+      color: var(--bg-color);
+    }
+
+    .tags-content h3 {
+      color: var(--text-shade);
+      font-size: 1.5rem;
+      margin: 2rem 0 1rem 0;
+      font-weight: 600;
+    }
+
+    .tags-posts a {
+      display: block;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border-color);
+      text-decoration: none;
+      color: var(--text-color);
+      transition: background-color 0.2s ease;
+    }
+
+    .tags-posts a:hover {
+      background-color: var(--grey-4);
+    }
+
+    .tags-posts a span:first-child {
+      font-weight: 600;
+    }
+
+    .tags-posts a span:last-child {
+      float: right;
+      color: var(--text-tint);
+      font-size: 0.875rem;
+    }
+
+    footer {
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      padding: 48px 0;
+      text-align: center;
+      margin-top: 48px;
+      border-top: 1px solid var(--border-color);
+      max-width: 800px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    @media (min-width: 768px) {
+      footer {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      footer {
+        max-width: 900px;
+        padding-left: 48px;
+        padding-right: 48px;
+      }
+    }
+
+    footer span {
+      color: var(--text-tint);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="#" class="nav-title">A Tiny House</a>
+        <ul>
+          <li><a href="#home">Posts</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#tags" class="active">Tags</a></li>
+        </ul>
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+          <div class="theme-toggle-slider"></div>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <div class="post">
+        <div class="post-info">
+          <span>Tags</span>
+        </div>
+        <h1 class="post-title">Tags</h1>
+        <div class="post-content">
+          <div class="tags-clouds">
+            <a href="#Story">Story</a>
+            <a href="#Product">Product</a>
+            <a href="#Work">Work</a>
+            <a href="#Life">Life</a>
+            <a href="#Books">Books</a>
+          </div>
+          
+          <div class="tags-content">
+            <h3>Story</h3>
+            <div class="tags-posts">
+              <a href="#">
+                <span>与想象中的「精英」告别</span>
+                <span>2021-12-28</span>
+              </a>
+            </div>
+            
+            <h3>Product</h3>
+            <div class="tags-posts">
+              <a href="#">
+                <span>看完 Her 后，和我的 DAN 聊了一下</span>
+                <span>2024-06-01</span>
+              </a>
+              <a href="#">
+                <span>关于用户故事</span>
+                <span>2023-05-29</span>
+              </a>
+              <a href="#">
+                <span>切歌的习惯</span>
+                <span>2023-02-05</span>
+              </a>
+              <a href="#">
+                <span>报告，最近好爱Arc浏览器！</span>
+                <span>2022-12-09</span>
+              </a>
+              <a href="#">
+                <span>最喜欢看小团队产品开发者的What's New</span>
+                <span>2022-11-06</span>
+              </a>
+              <a href="#">
+                <span>把自己产品化的一种解读</span>
+                <span>2022-10-23</span>
+              </a>
+              <a href="#">
+                <span>滴答清单优化记</span>
+                <span>2021-11-07</span>
+              </a>
+            </div>
+            
+            <h3>Work</h3>
+            <div class="tags-posts">
+              <a href="#">
+                <span>理解编程的世界</span>
+                <span>2022-09-04</span>
+              </a>
+              <a href="#">
+                <span>大厂里的工具和人</span>
+                <span>2022-05-14</span>
+              </a>
+              <a href="#">
+                <span>我去小米之家卖了四天手机</span>
+                <span>2021-04-11</span>
+              </a>
+              <a href="#">
+                <span>在珠海的互联网公司工作是一种什么样的体验？</span>
+                <span>2021-02-10</span>
+              </a>
+              <a href="#">
+                <span>咨询公司的价值，兼论组织创新的难题</span>
+                <span>2020-11-29</span>
+              </a>
+              <a href="#">
+                <span>刚进入公司的六个月，你在思考什么？</span>
+                <span>2020-11-24</span>
+              </a>
+              <a href="#">
+                <span>初入职场，你在进行角色扮演吗</span>
+                <span>2020-11-01</span>
+              </a>
+            </div>
+            
+            <h3>Life</h3>
+            <div class="tags-posts">
+              <a href="#">
+                <span>澳门赌场参观记</span>
+                <span>2022-10-09</span>
+              </a>
+              <a href="#">
+                <span>如歌</span>
+                <span>2022-07-25</span>
+              </a>
+              <a href="#">
+                <span>独自在傍晚的水边</span>
+                <span>2022-06-18</span>
+              </a>
+              <a href="#">
+                <span>2022年春天最后的夜晚</span>
+                <span>2022-05-08</span>
+              </a>
+              <a href="#">
+                <span>小草庐的自白</span>
+                <span>2022-05-02</span>
+              </a>
+              <a href="#">
+                <span>当突然落入生活的B面</span>
+                <span>2022-02-25</span>
+              </a>
+              <a href="#">
+                <span>Intellectual Highlights during My 24th Solar Revolution</span>
+                <span>2021-06-27</span>
+              </a>
+            </div>
+            
+            <h3>Books</h3>
+            <div class="tags-posts">
+              <a href="#">
+                <span>《启示录》读书笔记</span>
+                <span>2022-09-25</span>
+              </a>
+              <a href="#">
+                <span>《海滩的一天》和人生设计课</span>
+                <span>2021-08-28</span>
+              </a>
+              <a href="#">
+                <span>信息不足时如何做出好决策</span>
+                <span>2020-12-27</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2024 A Tiny House. All rights reserved.</span>
+    </footer>
+  </div>
+
+  <script>
+    // 暗黑模式功能
+    function toggleTheme() {
+      const body = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+      
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // 页面加载时检查保存的主题
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggle').setAttribute('data-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

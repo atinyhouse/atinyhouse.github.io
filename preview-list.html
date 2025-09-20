@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>博客排版优化预览 - 文章列表</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
+  
+  <style>
+    /* 优化后的样式 */
+    * {
+      box-sizing: border-box;
+      line-height: 1.6;
+    }
+
+    html, body {
+      color: #555;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-family: 'Noto Serif SC', 'Libre Baskerville', serif;
+      font-size: 16px;
+      overflow-y: scroll;
+    }
+
+    @media (min-width: 600px) {
+      html {
+        font-size: 18px;
+      }
+    }
+    
+    @media (min-width: 1200px) {
+      html {
+        font-size: 20px;
+      }
+    }
+
+    body {
+      -webkit-text-size-adjust: 100%;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      word-break: break-word;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .container {
+      margin: 0 auto;
+      max-width: 900px;
+      width: 85%;
+    }
+
+    @media (min-width: 1200px) {
+      .container {
+        max-width: 1000px;
+        width: 80%;
+      }
+    }
+
+    .nav {
+      box-shadow: 0 2px 2px -2px rgba(0, 0, 0, .2);
+      overflow: auto;
+      margin: 1rem auto;
+      position: relative;
+      text-align: center;
+    }
+
+    .nav-title {
+      color: #555;
+      display: inline-block;
+      margin: 0;
+      padding-right: .2rem;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      transition: all .2s ease-out;
+    }
+
+    .nav-title:hover {
+      opacity: .6;
+    }
+
+    .nav ul {
+      list-style-type: none;
+      margin: 1rem 0 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .nav li {
+      color: #555;
+      display: inline-block;
+      opacity: .6;
+      padding: 0 2rem 0 0;
+      transition: all .2s ease-out;
+    }
+
+    .nav li:last-child {
+      padding-right: 0;
+    }
+
+    .nav li:hover {
+      opacity: 1;
+    }
+
+    .nav a {
+      color: #555;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: 500;
+    }
+
+    @media (min-width: 600px) {
+      .nav {
+        text-align: left;
+      }
+
+      .nav ul {
+        bottom: 0;
+        position: absolute;
+        right: 0;
+      }
+    }
+
+    main {
+      display: block;
+      margin: 0 auto;
+      max-width: 900px;
+      width: 85%;
+    }
+
+    @media (min-width: 1200px) {
+      main {
+        max-width: 1000px;
+        width: 80%;
+      }
+    }
+
+    .catalogue-item {
+      border-bottom: 1px solid #e5e5e5;
+      color: #555;
+      display: block;
+      padding: 2.5rem 0;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .catalogue-item:hover {
+      background-color: rgba(249, 249, 249, 0.5);
+      padding-left: 1rem;
+      padding-right: 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .catalogue-item:last-child {
+      border: 0;
+    }
+
+    .catalogue-pinned {
+      color: #aaa;
+      font-family: serif;
+      letter-spacing: .5px;
+    }
+
+    .catalogue-time {
+      color: #aaa;
+      font-family: serif;
+      letter-spacing: .5px;
+    }
+
+    .catalogue-title {
+      color: #353535;
+      display: block;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin: .8rem 0;
+      line-height: 1.3;
+    }
+
+    .catalogue-line {
+      border-top: .2rem solid #353535;
+      display: block;
+      width: 2rem;
+      transition: all .3s ease-out;
+    }
+
+    .catalogue-item:hover .catalogue-line {
+      width: 5rem;
+    }
+
+    .catalogue-excerpt {
+      color: #555;
+      margin-top: 1rem;
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+
+    footer {
+      font-family: serif;
+      padding: 2rem 0;
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    footer span {
+      color: #555;
+      font-size: .8rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <a href="#" class="nav-title">A Tiny House</a>
+      <ul>
+        <li><a href="#">首页</a></li>
+        <li><a href="#">关于</a></li>
+        <li><a href="#">标签</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <div class="catalogue">
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-pinned">📌 精选文章</div>
+          <div class="catalogue-time">2020年11月1日</div>
+          <div class="catalogue-title">初入职场，你在进行角色扮演吗</div>
+          <div class="catalogue-line"></div>
+          <div class="catalogue-excerpt">
+            最近和好几个朋友聊了一个话题：关于在职场中的角色扮演感。这一话题来源于我作为职场新人，对自我日常的观察与反思。本篇推送用文字界定了这一感受，以对话的形式阐释了其产生的原因，并对如何与之共处提出了一些可行的办法。
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2020年11月24日</div>
+          <div class="catalogue-title">刚进入公司的六个月，你在思考什么？</div>
+          <div class="catalogue-line"></div>
+          <div class="catalogue-excerpt">
+            进入公司已经六个月了，这段时间里我一直在思考一个问题：作为一个新人，我应该如何快速适应工作环境，同时保持自己的独立思考？这篇文章记录了我的一些观察和思考。
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2020年11月29日</div>
+          <div class="catalogue-title">咨询公司的价值，兼论组织创新的难题</div>
+          <div class="catalogue-line"></div>
+          <div class="catalogue-excerpt">
+            在咨询公司工作一段时间后，我开始思考咨询公司真正的价值在哪里。这篇文章从组织创新的角度分析了咨询行业面临的挑战和机遇。
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2020年12月27日</div>
+          <div class="catalogue-title">信息不足时如何做好决策</div>
+          <div class="catalogue-line"></div>
+          <div class="catalogue-excerpt">
+            在职场中，我们经常需要在信息不充分的情况下做出重要决策。这篇文章分享了一些实用的决策框架和思考方法，帮助在不确定性中做出更好的选择。
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2017年3月10日</div>
+          <div class="catalogue-title">Welcome to Jekyll</div>
+          <div class="catalogue-line"></div>
+          <div class="catalogue-excerpt">
+            You'll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`.
+          </div>
+        </a>
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2024 A Tiny House. All rights reserved.</span>
+    </footer>
+  </div>
+</body>
+</html>
+
+

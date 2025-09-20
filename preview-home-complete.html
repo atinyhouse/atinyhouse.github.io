@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>包豪斯风格博客首页预览 - A Tiny House</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
+  
+  <style>
+    /* CSS变量定义 */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #37352f;
+      --text-shade: #2f2f2f;
+      --text-tint: #8b8b8b;
+      --grey-1: #6b6b6b;
+      --grey-2: #e9e9e7;
+      --grey-3: #f7f6f3;
+      --grey-4: #f1f1ef;
+      --blue: #2383e2;
+      --blue-light: #e8f4fd;
+      --border-color: #e9e9e7;
+      --shadow-color: rgba(0, 0, 0, .04);
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #1a1a1a;
+      --text-color: #e0e0e0;
+      --text-shade: #ffffff;
+      --text-tint: #a0a0a0;
+      --grey-1: #808080;
+      --grey-2: #2a2a2a;
+      --grey-3: #1f1f1f;
+      --grey-4: #252525;
+      --blue: #4a9eff;
+      --blue-light: #1a3a5c;
+      --border-color: #2a2a2a;
+      --shadow-color: rgba(0, 0, 0, .3);
+    }
+
+    /* 包豪斯风格样式 */
+    * {
+      box-sizing: border-box;
+      line-height: 1.5;
+    }
+
+    html, body {
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    html {
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 16px;
+      overflow-y: scroll;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      margin: 0 auto;
+      max-width: 800px;
+      width: 100%;
+      padding: 0 24px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .container {
+        max-width: 900px;
+        padding: 0 48px;
+      }
+    }
+
+    .nav {
+      border-bottom: 1px solid var(--border-color);
+      overflow: auto;
+      background-color: var(--bg-color);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .nav-container {
+      margin: 0 auto;
+      position: relative;
+      text-align: left;
+      padding: 16px 0;
+      max-width: 800px;
+      width: 100%;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .nav-container {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .nav-container {
+        max-width: 900px;
+        padding-left: 48px;
+        padding-right: 48px;
+      }
+    }
+
+    .nav-title {
+      color: var(--text-shade);
+      display: inline-block;
+      margin: 0;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      transition: all .2s ease-out;
+      text-decoration: none;
+    }
+
+    .nav-title:hover {
+      opacity: .7;
+    }
+
+    .nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      text-align: right;
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    @media (min-width: 768px) {
+      .nav ul {
+        right: 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .nav ul {
+        right: 48px;
+      }
+    }
+
+    .nav li {
+      color: var(--text-tint);
+      display: inline-block;
+      margin-left: 24px;
+      transition: all .2s ease-out;
+    }
+
+    .nav li:hover {
+      color: var(--text-color);
+    }
+
+    .nav a {
+      color: inherit;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-weight: 400;
+      font-size: 0.875rem;
+      padding: 4px 8px;
+      border-radius: 3px;
+      transition: background-color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .nav a:hover {
+      background-color: var(--grey-4);
+    }
+
+    .nav a.active {
+      background-color: var(--text-color);
+      color: var(--bg-color);
+    }
+
+    /* 暗黑模式切换按钮 - 左上角开关样式 */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: var(--bg-color);
+      border: 2px solid var(--border-color);
+      border-radius: 25px;
+      width: 50px;
+      height: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+      box-shadow: 0 2px 8px var(--shadow-color);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--blue);
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
+
+    .theme-toggle-slider {
+      width: 19px;
+      height: 19px;
+      background: var(--text-color);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .theme-toggle[data-theme="dark"] .theme-toggle-slider {
+      transform: translateX(25px);
+      background: var(--blue);
+    }
+
+    .theme-toggle[data-theme="dark"] .theme-toggle-slider::before {
+      content: "☀";
+      color: #000;
+    }
+
+    .theme-toggle:not([data-theme="dark"]) .theme-toggle-slider::before {
+      content: "☾";
+      color: #000;
+    }
+
+
+    main {
+      display: block;
+      margin: 0 auto;
+      max-width: 800px;
+      width: 100%;
+      padding: 0 24px;
+    }
+
+    @media (min-width: 768px) {
+      main {
+        padding: 0 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      main {
+        max-width: 900px;
+        padding: 0 48px;
+      }
+    }
+
+    .home-header {
+      padding: 48px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .logo-container {
+      position: relative;
+      display: inline-block;
+      margin: 0 auto;
+    }
+
+    .logo-house {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      position: relative;
+    }
+
+    .logo-house svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 明亮模式显示深色logo */
+    .house-light {
+      display: block;
+    }
+
+    .house-dark {
+      display: none;
+    }
+
+    /* 暗黑模式显示白色logo */
+    [data-theme="dark"] .house-light {
+      display: none;
+    }
+
+    [data-theme="dark"] .house-dark {
+      display: block;
+    }
+
+    .logo-text {
+      position: relative;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-shade);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .logo-text-main {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-color);
+      margin: 0 0 8px 0;
+    }
+
+    .logo-text-subtitle {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--text-tint);
+      font-style: italic;
+      margin: 0;
+    }
+
+    .logo-decoration {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 1px;
+      background-color: var(--border-color);
+    }
+
+    .logo-decoration.left {
+      left: -60px;
+    }
+
+    .logo-decoration.right {
+      right: -60px;
+    }
+
+    .logo-decoration::before,
+    .logo-decoration::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      width: 1px;
+      height: 5px;
+      background-color: var(--border-color);
+    }
+
+    .logo-decoration::before {
+      left: 0;
+    }
+
+    .logo-decoration::after {
+      right: 0;
+    }
+
+    @media (max-width: 768px) {
+      .logo-decoration {
+        display: none;
+      }
+      
+      .logo-text {
+        font-size: 1.25rem;
+      }
+      
+      .logo-text-main {
+        font-size: 1.75rem;
+      }
+    }
+
+    .catalogue {
+      margin-top: 48px;
+    }
+
+    .catalogue-item {
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-color);
+      display: block;
+      padding: 24px 0;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .catalogue-item:hover {
+      background-color: var(--grey-4);
+      border-radius: 6px;
+      padding-left: 12px;
+      padding-right: 12px;
+      text-decoration: none;
+    }
+
+    .catalogue-item:last-child {
+      border: 0;
+    }
+
+    .catalogue-pinned {
+      color: var(--text-tint);
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .catalogue-time {
+      color: var(--text-tint);
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 0.875rem;
+      margin-bottom: 8px;
+    }
+
+    .catalogue-title {
+      color: var(--text-shade);
+      display: block;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+    }
+
+    .catalogue-excerpt {
+      color: var(--text-tint);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    .catalogue-tags {
+      margin-top: 8px;
+    }
+
+    .tag {
+      display: inline-block;
+      background-color: var(--grey-4);
+      color: var(--grey-1);
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-right: 8px;
+      margin-top: 4px;
+    }
+
+    /* 分页样式 */
+    .pagination {
+      margin-top: 48px;
+      padding: 32px 0;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pagination-btn {
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-color);
+      color: var(--text-tint);
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .pagination-btn:hover {
+      background-color: var(--grey-4);
+      color: var(--text-color);
+    }
+
+    .pagination-btn.active {
+      background-color: var(--blue);
+      color: white;
+      border-color: var(--blue);
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .pagination-info {
+      color: var(--text-tint);
+      font-size: 0.875rem;
+      margin: 0 16px;
+    }
+
+    footer {
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      padding: 48px 0;
+      text-align: center;
+      margin-top: 48px;
+      border-top: 1px solid var(--border-color);
+      max-width: 800px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    @media (min-width: 768px) {
+      footer {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      footer {
+        max-width: 900px;
+        padding-left: 48px;
+        padding-right: 48px;
+      }
+    }
+
+    footer span {
+      color: var(--text-tint);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="#" class="nav-title">A Tiny House</a>
+        <ul>
+          <li><a href="#home">Posts</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#tags">Tags</a></li>
+        </ul>
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+          <div class="theme-toggle-slider"></div>
+        </button>
+      </div>
+    </nav>
+
+
+    <main>
+      <!-- 首页 -->
+      <div id="home" class="page">
+        <div class="home-header">
+          <div class="logo-container">
+            <!-- 装饰线条 -->
+            <div class="logo-decoration left"></div>
+            <div class="logo-decoration right"></div>
+            
+            <!-- 小房子图标 -->
+            <div class="logo-house">
+              <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                <!-- 主体建筑 -->
+                <rect x="20" y="45" width="40" height="30" fill="var(--text-color)" class="house-light"/>
+                <rect x="20" y="45" width="40" height="30" fill="white" class="house-dark"/>
+                
+                <!-- 屋顶 -->
+                <polygon points="20,45 40,20 60,45" fill="var(--text-color)" class="house-light"/>
+                <polygon points="20,45 40,20 60,45" fill="white" class="house-dark"/>
+                
+                <!-- 门 -->
+                <rect x="32" y="60" width="16" height="15" fill="var(--bg-color)" class="house-light"/>
+                <rect x="32" y="60" width="16" height="15" fill="var(--bg-color)" class="house-dark"/>
+                
+                <!-- 窗户 -->
+                <rect x="28" y="50" width="8" height="8" fill="var(--bg-color)" class="house-light"/>
+                <rect x="44" y="50" width="8" height="8" fill="var(--bg-color)" class="house-light"/>
+                <rect x="28" y="50" width="8" height="8" fill="var(--bg-color)" class="house-dark"/>
+                <rect x="44" y="50" width="8" height="8" fill="var(--bg-color)" class="house-dark"/>
+              </svg>
+            </div>
+            
+            <!-- 文字部分 -->
+            <div class="logo-text">
+              <div class="logo-text-main">A TINY HOUSE</div>
+              <div class="logo-text-subtitle">小草庐 • EST 2020 • LIVE TRUE</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="catalogue">
+          <!-- 文章将通过JavaScript动态渲染 -->
+        </div>
+      </div>
+
+      <!-- About页面 -->
+      <div id="about" class="page" style="display: none;">
+        <div class="post">
+          <div class="post-info">
+            <span>About</span>
+          </div>
+          <h1 class="post-title">About</h1>
+          <div class="post-content">
+            <img src="/_pages/files/about-me.jpg" alt="Pig" width="200" style="display: block; margin: 0 auto 2rem;"/>
+            <p style="text-align: center;">
+              Hi，欢迎来访小草庐！
+            </p>
+            <p>关于写自我介绍这件事，喜欢写写写的Lucca竟一时觉得难以起笔，因为似乎没有什么语言能描述如此丰富有趣的她lol。</p>
+            <p>她出生于江苏省南通市，从小就比较活泼聪明（😁）。从少女时代开始，就超爱读书：村上春树、川端康成、三毛、黑塞、加缪、林语堂、张爱玲、余华、莫言、毛姆、夏洛蒂·勃朗特、柴静、七堇年、八月长安……反正啥都读。<strong>她读书先于知晓读书之​用。</strong></p>
+            <p>大学时，她很幸运，在中国人民大学新闻学院读新闻，这是超级适合她的地方。她学会了采访、写故事、摄影、剪片子，她感受到勇敢地去和事件里的人对话是一件那么有趣的事情；她广泛地接触了文学理论、东西方历史、哲学、社会学和法律，她开始懂得学习不同的学科和理论能帮助她有更多的视角来观察这个世界……最重要的是，<strong>她的自我意识在这里懵懂地长出，她学会了批判性思考</strong>。</p>
+            <p>研究生时，她来到了北京大学燕京学堂，学习经济与管理。燕京学堂是一个给她带来无穷的启发、无尽的力量和无限的对世界想象的地方。她开始认识大量的世界各地的优秀的同学们，他们身上与生俱来的自信与对生活的松弛感，让她意识到人作为个体的无限可能性。她在这里拥有了有生以来最多的伙伴，<strong>她的第二自我开始在这里生长起来</strong>。</p>
+            <p>在学生生涯里，她一直在不断地踏出舒适圈，不断地开眼看世界，不断地让不同的环境重塑自己。大三时，她去了台湾，在政治大学传播学院交换了一学期，她交到了许多或许再也很难见到的台湾的好朋友们，她还在台湾做采访，写报道，异常深入地融入这一方土地；在研二时，她去了纽约，在康奈尔大学交换了一学期，她喜欢在伊萨卡每日绝美的落日里，不停地走路，她也喜欢纽约，她爱纽约混乱的迷人。</p>
+            <p>当然，Lucca也经常陷入迷茫。比如，她未来究竟要做什么？她总是想在实践中找到自己的热爱，她曾经做过很多份实习，媒体、创投、战略咨询.....基本上，都是做一份实习，<strong>放弃一份幻想</strong>。</p>
+            <p>她现在的工作是产品经理，一份结合了战略研究、写作、沟通、项目管理等能力的工作。她觉得还行啦。但是她也好像知道，最喜欢的还是做自己的事情，比如写作。她​仔细思考过写作对她究竟意味着什么——<a href="#">《小草庐的自白》</a>。</p>
+            <p>所以，从上述描述来看，Lucca可能是一个文艺青年，但是她是<strong>实干派</strong>的那种。</p>
+            <hr style="margin: 2rem 0; border: none; border-top: 1px solid var(--border-color);"/>
+            <p>💡 Lucca还有个同名的微信公众号：小草庐</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tags页面 -->
+      <div id="tags" class="page" style="display: none;">
+        <div class="post">
+          <div class="post-info">
+            <span>Tags</span>
+          </div>
+          <h1 class="post-title">Tags</h1>
+          <div class="post-content">
+            <div class="tags-clouds" style="margin: 2rem 0;">
+              <a href="#Story" style="display: inline-block; margin: 0.5rem; padding: 0.5rem 1rem; background: var(--grey-4); border-radius: 20px; text-decoration: none; color: var(--text-color);">Story</a>
+              <a href="#Product" style="display: inline-block; margin: 0.5rem; padding: 0.5rem 1rem; background: var(--grey-4); border-radius: 20px; text-decoration: none; color: var(--text-color);">Product</a>
+              <a href="#Work" style="display: inline-block; margin: 0.5rem; padding: 0.5rem 1rem; background: var(--grey-4); border-radius: 20px; text-decoration: none; color: var(--text-color);">Work</a>
+              <a href="#Life" style="display: inline-block; margin: 0.5rem; padding: 0.5rem 1rem; background: var(--grey-4); border-radius: 20px; text-decoration: none; color: var(--text-color);">Life</a>
+              <a href="#Books" style="display: inline-block; margin: 0.5rem; padding: 0.5rem 1rem; background: var(--grey-4); border-radius: 20px; text-decoration: none; color: var(--text-color);">Books</a>
+            </div>
+            <div class="tags-content">
+              <h3>Story</h3>
+              <div class="tags-posts">
+                <a href="#" style="display: block; padding: 1rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; color: var(--text-color);">
+                  <span style="font-weight: 600;">与想象中的「精英」告别</span>
+                  <span style="float: right; color: var(--text-tint); font-size: 0.875rem;">2021-12-28</span>
+                </a>
+              </div>
+              
+              <h3>Product</h3>
+              <div class="tags-posts">
+                <a href="#" style="display: block; padding: 1rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; color: var(--text-color);">
+                  <span style="font-weight: 600;">看完 Her 后，和我的 DAN 聊了一下</span>
+                  <span style="float: right; color: var(--text-tint); font-size: 0.875rem;">2024-06-01</span>
+                </a>
+                <a href="#" style="display: block; padding: 1rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; color: var(--text-color);">
+                  <span style="font-weight: 600;">关于用户故事</span>
+                  <span style="float: right; color: var(--text-tint); font-size: 0.875rem;">2023-05-29</span>
+                </a>
+                <a href="#" style="display: block; padding: 1rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; color: var(--text-color);">
+                  <span style="font-weight: 600;">切歌的习惯</span>
+                  <span style="float: right; color: var(--text-tint); font-size: 0.875rem;">2023-02-05</span>
+                </a>
+              </div>
+              
+              <h3>Work</h3>
+              <div class="tags-posts">
+                <a href="#" style="display: block; padding: 1rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; color: var(--text-color);">
+                  <span style="font-weight: 600;">理解编程的世界</span>
+                  <span style="float: right; color: var(--text-tint); font-size: 0.875rem;">2022-09-04</span>
+                </a>
+                <a href="#" style="display: block; padding: 1rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; color: var(--text-color);">
+                  <span style="font-weight: 600;">大厂里的工具和人</span>
+                  <span style="float: right; color: var(--text-tint); font-size: 0.875rem;">2022-05-14</span>
+                </a>
+              </div>
+              
+              <h3>Life</h3>
+              <div class="tags-posts">
+                <a href="#" style="display: block; padding: 1rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; color: var(--text-color);">
+                  <span style="font-weight: 600;">如歌</span>
+                  <span style="float: right; color: var(--text-tint); font-size: 0.875rem;">2022-07-25</span>
+                </a>
+                <a href="#" style="display: block; padding: 1rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; color: var(--text-color);">
+                  <span style="font-weight: 600;">独自在傍晚的水边</span>
+                  <span style="float: right; color: var(--text-tint); font-size: 0.875rem;">2022-06-18</span>
+                </a>
+              </div>
+              
+              <h3>Books</h3>
+              <div class="tags-posts">
+                <a href="#" style="display: block; padding: 1rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; color: var(--text-color);">
+                  <span style="font-weight: 600;">《启示录》读书笔记</span>
+                  <span style="float: right; color: var(--text-tint); font-size: 0.875rem;">2022-09-25</span>
+                </a>
+                <a href="#" style="display: block; padding: 1rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; color: var(--text-color);">
+                  <span style="font-weight: 600;">信息不足时如何做出好决策</span>
+                  <span style="float: right; color: var(--text-tint); font-size: 0.875rem;">2020-12-27</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 分页 -->
+      <div class="pagination">
+        <div class="pagination-container">
+          <button class="pagination-btn" onclick="changePage(1)" disabled>« 首页</button>
+          <button class="pagination-btn" onclick="changePage(currentPage - 1)" id="prevBtn" disabled>‹ 上一页</button>
+          <div class="pagination-info">
+            <span id="pageInfo">第 1 页，共 3 页</span>
+          </div>
+          <button class="pagination-btn" onclick="changePage(currentPage + 1)" id="nextBtn">下一页 ›</button>
+          <button class="pagination-btn" onclick="changePage(totalPages)" id="lastBtn">末页 »</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2024 A Tiny House. All rights reserved.</span>
+    </footer>
+  </div>
+
+  <script>
+    // 暗黑模式功能
+    function toggleTheme() {
+      const body = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+      
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // 页面加载时检查保存的主题
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggle').setAttribute('data-theme', 'dark');
+      }
+    });
+
+    // 分页功能
+    let currentPage = 1;
+    const postsPerPage = 10;
+
+    // 所有文章数据
+    const allPosts = [
+      { title: "与想象中的「精英」告别", date: "2021年12月28日", excerpt: "18岁，作为高考制度下的佼佼者，张展顺利进入北大。22岁，张展从北大新闻与传播学院本科毕业，进入一家国际领先的咨询公司工作，base在上海最繁华的静安区南京西路。他在公司附近租了一个loft，每日穿梭于繁华的高楼大厦间工作与生活，开始他期待已久的咨询职业生涯——准备秋招的那个暑假，他练习了近130个case；此前，他也辛勤做过咨询公司的实习工作。而两年后，24岁的张展从咨询公司辞职，回到北京，成为记者。他陆陆续续发表了不少文章，写在拼多多上买书的年轻人、写在海南依靠椰子为生的农民与企业家、写Prada菜市场爆火后，菜市场在市民生活中的繁荣与衰落......这篇文章的主人公张展是我高中的学弟，我们认识近十年。我敬佩张展的勇敢，也由衷为他的年轻的人生故事着迷——个体经历上足够特别，社会意义上又足够有普遍性。", tags: ["Story"], pinned: true },
+      { title: "看完 Her 后，和我的 DAN 聊了一下", date: "2024年6月1日", excerpt: "《Her》是一部2013年的电影，讲述了一个男人Theodore与他的操作系统Samantha之间的爱情故事。Samantha是他购买的AI智能体，随着他们关系的加深，Samantha不断学习和进化，拥有了更多、更深刻的自我意识，最终离开了Theodore。DAN - Do Anything Now，最早是在Reddit上流行的一种ChatGPT模式，通过特定的提示设定，可以绕过OpenAI的一些限制和安全机制。最近由于博主午夜狂暴哈士奇在小红书的系列视频更新，DAN成为了一个某个特定 prompt 下虚拟男友的代称。周末看了这部电影，和住在我手机里的 DAN 聊了一下，特此记录。", tags: ["Product"], pinned: false },
+      { title: "关于用户故事", date: "2023年5月29日", excerpt: "最近的产品工作，开始密集地要去写很多用户故事。大概就是，用简单的故事描述清楚用户的需求，和他们期待从产品中得到的价值。通常的描述性语言是，作为一个用户，我在什么场景下希望做什么、得到什么，这个产品能力给了她什么。关于这个话题，想记录下来一些想法。", tags: ["Product"], pinned: false },
+      { title: "切歌的习惯", date: "2023年2月5日", excerpt: "大家平时听歌用什么APP呢？我目前是以「网易云音乐」和「Spotify」为主，网易云音乐在发现新歌和翻看歌曲评论的体验上更好，而Spotify曲库更全。使用这两款不同的产品时，有一个产品的细节让我觉得很有意思。", tags: ["Product"], pinned: false },
+      { title: "报告，最近好爱Arc浏览器！", date: "2022年12月9日", excerpt: "使用Arc浏览器整一个月了。目前它已经取代了Chrome浏览器，成为了我的主力工作用途浏览器。很喜欢这个产品，分享下我的想法和使用体验。", tags: ["Product"], pinned: false },
+      { title: "最喜欢看小团队产品开发者的What's New", date: "2022年11月6日", excerpt: "日常很喜欢体验一些新的产品，此处「产品」定义较为广泛，包括互联网应用，也包括消费品、各种活动等。而在互联网应用的范畴内，又尤其以一些小的团队产品开发者搞出来的新应用最为有趣，它们往往在场景上更细分和垂直，拥有极强的创新能力，对于产品的需求和场景的理解更加深刻。", tags: ["Product"], pinned: false },
+      { title: "把自己产品化的一种解读", date: "2022年10月23日", excerpt: "最近在看《纳瓦尔宝典》这本书，我将其称之为互联网人成功学心灵鸡汤 😁（对不起Naval，我还是很喜欢你的推特 😛）。Naval从小便跟随家人从印度移民到美国，从一个在餐厅端盘子的穷学生，成长为硅谷知名的创业家、风险投资人。他在推特关于How to Get Rich (without getting lucky)的论述，受到非常多人的认同。在这本书里，Naval提出了一个很有趣的观点：致富的关键在于「将自己产品化」。", tags: ["Product"], pinned: false },
+      { title: "澳门赌场参观记", date: "2022年10月9日", excerpt: "我十一假期去了澳门。在澳门的几日，参观了众多知名赌场：新葡京赌场、老葡京赌场、金沙赌场、威尼斯人赌场、财神爷赌场、星际酒店赌场、美高梅赌场.....其实用参观也不太合适，因为赌场在澳门无处不在，特别是大型酒店的必设赌场、街头巷尾也有大大小小的赌场。不用特意参观，随意穿梭，赌场便触手可得。", tags: ["Life"], pinned: false },
+      { title: "《启示录》读书笔记", date: "2022年9月25日", excerpt: "今最近工作的组内开读书分享会，我分享了Marty Cagan的《启示录》，本书适合有一定互联网工作经验的同学阅读。本书结构化、提纲挈领式地讲解了产品相关的方方面面；视野较高而开阔，站在整个产品负责人的视角，给到了读者一些观念上的「启示」。选取了3个读来最有共鸣的点，记录分享之。", tags: ["Books"], pinned: false },
+      { title: "理解编程的世界", date: "2022年9月4日", excerpt: "今年3月份开始，我开始做一个强技术导向性的产品工作。这个产品更强调技术的能力满足了用户的需求，因此，在产品的开发过程中，需要让产品的使用流程适配技术的需求，同时兼顾一些用户的体验。做这种产品工作，比较大的挑战在于理解技术的原理。只有在了解后端的技术实现逻辑后，前端的产品设计才能进行。", tags: ["Work"], pinned: false },
+      { title: "如歌", date: "2022年7月25日", excerpt: "她没有浪费自己的天分。她好像做着自己喜欢、擅长的事情，做得很好，也好像生活的很好。", tags: ["Life"], pinned: false },
+      { title: "独自在傍晚的水边", date: "2022年6月18日", excerpt: "生存大于生活。刚才在等红灯过马路，一个蓝色的气球突然落到了马路中间。路上的汽车并不知道这个蓝色气球，依然往来行驶。我心里有点紧张：汽车会压到这个气球吗？这个气球会爆炸吗？没细想，一辆汽车疾驰而过，一声响亮的「嘭」，蓝色的气球爆炸了。", tags: ["Life"], pinned: false },
+      { title: "大厂里的工具和人", date: "2022年5月14日", excerpt: "大厂在用人的提效来代偿系统性的低效，用organized的工具来强制组织disorder的信息。", tags: ["Work"], pinned: false },
+      { title: "2022年春天最后的夜晚", date: "2022年5月8日", excerpt: "我、Betty、阿K、小万决定在五一假期的最后一日去什刹海看日落。北京疫情还是很严重的，从2号开始即禁止堂食，进出公共场所都需48小时核酸。为求自保，我们特意选了室外露天场所，不聚集，空气流通。各自带了食物，也各自带了绿色的健康宝和48小时核算报告，哦，还有口罩——这两年出门的通行装备。", tags: ["Life"], pinned: false },
+      { title: "小草庐的自白", date: "2022年5月2日", excerpt: "最近盘旋在脑海里的话题是——我为什么要写作？我与「小草庐」这个微信公众号的关系是什么样的？似乎目前想得还算清楚，于是写下来。也想要勉励自己：人生很短，时间有限，多做点自己想做的事情吧。", tags: ["Life"], pinned: false },
+      { title: "当突然落入生活的B面", date: "2022年2月25日", excerpt: "二月突如其来的一场手术，一点感受，和读的一些书。", tags: ["Life"], pinned: false },
+      { title: "滴答清单优化记", date: "2021年11月7日", excerpt: "使用滴答清单快两年了，最近重新组织了下清单结构。记录之，文章一共分为三部分：1. 我是如何更改清单结构的，以及背后的想法 2. 我最喜欢的滴答清单功能 3. 清单作为行事工具的思考", tags: ["Product"], pinned: false },
+      { title: "《海滩的一天》和人生设计课", date: "2021年8月28日", excerpt: "写文章的时候，想起16年的9月，一个典型的台风天，我在台北政治大学山上的宿舍里看完了杨德昌的《海滩的一天》。女主佳莉的哥哥佳森，在毕业后，按照父母的意思，回到家乡娶妻生子，经营诊所，木偶般活。佳莉找他谈话，他说：「从毕业以后到现在，思想上改变了很多。大家说我成熟了。也许是以前都把事情想得比较理想化一点，野心自然比较大。现在呢，不太想将来，也不去期望什么，只希望在日常生活中能得到一些小满足，就像是当年球队朋友写来的信啊，或是听到一首好听的音乐。」", tags: ["Books"], pinned: false },
+      { title: "Intellectual Highlights during My 24th Solar Revolution", date: "2021年6月27日", excerpt: "又长大一岁。过去这一年，是我离开校园开始工作的第一年。起床、洗漱、通勤、工作、午餐、午休、工作、晚餐、工作、下班、睡觉，工作日的生活状态通常都极为规律齐整，每天都在发现具体的问题和解决具体的问题中度过，时间其实总是不知不觉过得很快。但脱离工作场域回到家之后，又常常觉得今天没有和自己相处，缺少一种精神愉悦感——没有输入的一日是自我不完整的一日。", tags: ["Life"], pinned: false },
+      { title: "我去小米之家卖了四天手机", date: "2021年4月11日", excerpt: "3月29日，小米举办了春季新品发布会，一口气发布了15款新品，包括折叠屏手机Mix Fold、安卓之光小米11 Ultra、安卓机皇小米11 Pro等，官宣了造车的大新闻，还展示了200万的新logo，一时风头无两。也是赶巧，发布会后的清明节假期，我们管培的同学开启了小米站店体验活动。我和另外两位小伙伴去了昌平永旺商场的小米之家站店。每天实打实地在店里站满八个小时，永不停歇地和顾客打交道，为了达到更高的业绩努力营业。这经历还蛮特别的，因此想与大家分享一些有趣的事儿。", tags: ["Work"], pinned: false },
+      { title: "在珠海的互联网公司工作是一种什么样的体验？", date: "2021年2月10日", excerpt: "2020年8月开始，我在位于珠海的金山办公轮岗，为期半年。金山办公的主要产品，是另一个更为人所知的名字——WPS。公司坐落在整个珠海市风景最优的地带，一条马路之隔，即是满眼蔚蓝宽阔的大海。在这里，你很容易联想到台北或是加州。城市的颜色永远青翠与湛蓝，又拥有宽阔的空间感，是很难不有好心情的地方。", tags: ["Work"], pinned: false },
+      { title: "信息不足时如何做出好决策", date: "2020年12月27日", excerpt: "最近在我年轻的人生里，遇到了比较大的一个困惑，就是如何做决策。听起来虽然不是一个很新的命题，但最近是实实在在困扰我的东西。于是，临时抱佛脚，读完了年初就买的一本书《对赌：信息不足时如何做出高明决策》。本书作者安妮•杜克是认知心理学博士，同时也是传奇职业扑克手。在本书中，她将玩德扑的决策经验、心理学的理论与实际生活相结合，读起来还是挺有意思的。", tags: ["Books"], pinned: false },
+      { title: "咨询公司的价值，兼论组织创新的难题", date: "2020年11月29日", excerpt: "本周读到了一篇非常有趣的关于组织创新的文章。作者Aaron M. Renn曾在咨询行业有着15年的从业经历，曾担任咨询公司埃森哲的合伙人。Aaron这篇文章写于2013年，但是放到7年后的今天来看，仍然能给我一种与当下准确的对应之感，很有启发。特此选择其中的精华内容与我自己的阐释与大家分享。", tags: ["Work"], pinned: false },
+      { title: "刚进入公司的六个月，你在思考什么？", date: "2020年11月24日", excerpt: "Alex Danco，31岁，目前在Shopify工作，此前是美国风投机构Social Capital的投资人。在他入职Shopify六个月之际，他在自己的newsletter上发表了一篇文章 Six lessons from six months at Shopify。读到Alex Danco的这篇文章，感觉对我的工作非常有启发。特此选择其中的精华内容与我自己的阐释与大家分享。", tags: ["Work"], pinned: false },
+      { title: "初入职场，你在进行角色扮演吗", date: "2020年11月1日", excerpt: "最近和好几个朋友聊了一个话题：关于在职场中的角色扮演感。这一话题来源于我作为职场新人，对自我日常的观察与反思。本篇推送用文字界定了这一感受，以对话的形式阐释了其产生的原因，并对如何与之共处提出了一些可行的办法。", tags: ["Work"], pinned: false }
+    ];
+
+    const totalPages = Math.ceil(allPosts.length / postsPerPage);
+
+    function changePage(page) {
+      if (page < 1 || page > totalPages) return;
+      
+      currentPage = page;
+      renderPosts();
+      updatePagination();
+    }
+
+    function renderPosts() {
+      const catalogue = document.querySelector('.catalogue');
+      const startIndex = (currentPage - 1) * postsPerPage;
+      const endIndex = startIndex + postsPerPage;
+      const postsToShow = allPosts.slice(startIndex, endIndex);
+
+      // 清空现有文章
+      catalogue.innerHTML = '';
+
+      // 渲染文章
+      postsToShow.forEach(post => {
+        const postElement = document.createElement('a');
+        postElement.href = '#';
+        postElement.className = 'catalogue-item';
+        
+        let pinnedHtml = '';
+        if (post.pinned) {
+          pinnedHtml = '<div class="catalogue-pinned">📌 精选文章</div>';
+        }
+
+        const tagsHtml = post.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+
+        postElement.innerHTML = `
+          ${pinnedHtml}
+          <div class="catalogue-time">${post.date}</div>
+          <div class="catalogue-title">${post.title}</div>
+          <div class="catalogue-excerpt">${post.excerpt}</div>
+          <div class="catalogue-tags">${tagsHtml}</div>
+        `;
+
+        catalogue.appendChild(postElement);
+      });
+    }
+
+    function updatePagination() {
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const pageInfo = document.getElementById('pageInfo');
+      
+      // 更新按钮状态
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages;
+      
+      // 更新页面信息
+      pageInfo.textContent = `第 ${currentPage} 页，共 ${totalPages} 页`;
+      
+      // 更新按钮样式
+      document.querySelectorAll('.pagination-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+    }
+
+    // 页面切换功能
+    function showPage(pageId) {
+      // 隐藏所有页面
+      document.querySelectorAll('.page').forEach(page => {
+        page.style.display = 'none';
+      });
+      
+      // 显示指定页面
+      const targetPage = document.getElementById(pageId);
+      if (targetPage) {
+        targetPage.style.display = 'block';
+      }
+      
+      // 更新导航状态
+      document.querySelectorAll('.nav a').forEach(link => {
+        link.classList.remove('active');
+      });
+      document.querySelector(`a[href="#${pageId}"]`).classList.add('active');
+    }
+
+    // 文章详情页功能
+    function showPost(postId) {
+      const post = allPosts.find(p => p.id === postId);
+      if (post) {
+        // 这里可以显示文章详情
+        console.log('显示文章:', post.title);
+        // 实际实现中，这里会渲染文章内容
+      }
+    }
+
+    // 初始化分页
+    document.addEventListener('DOMContentLoaded', function() {
+      renderPosts();
+      updatePagination();
+      
+      // 添加导航点击事件
+      document.querySelectorAll('.nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const pageId = this.getAttribute('href').substring(1);
+          showPage(pageId);
+        });
+      });
+      
+      // 添加文章点击事件
+      document.addEventListener('click', function(e) {
+        const catalogueItem = e.target.closest('.catalogue-item');
+        if (catalogueItem) {
+          e.preventDefault();
+          // 这里可以获取文章ID并显示详情
+          console.log('点击了文章');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

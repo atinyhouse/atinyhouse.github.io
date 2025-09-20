@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notion风格博客首页预览</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
+  
+  <style>
+    /* Notion风格样式 */
+    * {
+      box-sizing: border-box;
+      line-height: 1.5;
+    }
+
+    html, body {
+      color: #37352f;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+    }
+
+    html {
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 16px;
+      overflow-y: scroll;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      margin: 0 auto;
+      max-width: 680px;
+      width: 100%;
+      padding: 0 24px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .container {
+        max-width: 720px;
+        padding: 0 48px;
+      }
+    }
+
+    .nav {
+      border-bottom: 1px solid #e9e9e7;
+      overflow: auto;
+      background-color: #ffffff;
+    }
+
+    .nav-container {
+      margin: 0 auto;
+      position: relative;
+      text-align: left;
+      padding: 16px 0;
+      max-width: 680px;
+      width: 100%;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .nav-container {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .nav-container {
+        max-width: 720px;
+        padding-left: 48px;
+        padding-right: 48px;
+      }
+    }
+
+    .nav-title {
+      color: #2f2f2f;
+      display: inline-block;
+      margin: 0;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      transition: all .2s ease-out;
+      text-decoration: none;
+    }
+
+    .nav-title:hover {
+      opacity: .7;
+    }
+
+    .nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      text-align: right;
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    @media (min-width: 768px) {
+      .nav ul {
+        right: 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .nav ul {
+        right: 48px;
+      }
+    }
+
+    .nav li {
+      color: #8b8b8b;
+      display: inline-block;
+      margin-left: 24px;
+      transition: all .2s ease-out;
+    }
+
+    .nav li:hover {
+      color: #37352f;
+    }
+
+    .nav a {
+      color: inherit;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-weight: 400;
+      font-size: 0.875rem;
+      padding: 4px 8px;
+      border-radius: 3px;
+      transition: background-color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .nav a:hover {
+      background-color: #f1f1ef;
+    }
+
+    main {
+      display: block;
+      margin: 0 auto;
+      max-width: 680px;
+      width: 100%;
+      padding: 0 24px;
+    }
+
+    @media (min-width: 768px) {
+      main {
+        padding: 0 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      main {
+        max-width: 720px;
+        padding: 0 48px;
+      }
+    }
+
+    .home-header {
+      padding: 48px 0 32px 0;
+      text-align: center;
+    }
+
+    .home-title {
+      color: #2f2f2f;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 16px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .home-subtitle {
+      color: #8b8b8b;
+      font-size: 1.125rem;
+      margin: 0 0 24px 0;
+      line-height: 1.5;
+    }
+
+    .home-description {
+      color: #6b6b6b;
+      font-size: 1rem;
+      margin: 0;
+      line-height: 1.6;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .catalogue {
+      margin-top: 48px;
+    }
+
+    .catalogue-item {
+      border-bottom: 1px solid #e9e9e7;
+      color: #37352f;
+      display: block;
+      padding: 24px 0;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .catalogue-item:hover {
+      background-color: #f1f1ef;
+      border-radius: 6px;
+      padding-left: 12px;
+      padding-right: 12px;
+      text-decoration: none;
+    }
+
+    .catalogue-item:last-child {
+      border: 0;
+    }
+
+    .catalogue-pinned {
+      color: #8b8b8b;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .catalogue-time {
+      color: #8b8b8b;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 0.875rem;
+      margin-bottom: 8px;
+    }
+
+    .catalogue-title {
+      color: #2f2f2f;
+      display: block;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+    }
+
+    .catalogue-excerpt {
+      color: #8b8b8b;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    .catalogue-tags {
+      margin-top: 8px;
+    }
+
+    .tag {
+      display: inline-block;
+      background-color: #f1f1ef;
+      color: #6b6b6b;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-right: 8px;
+      margin-top: 4px;
+    }
+
+    footer {
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      padding: 48px 0;
+      text-align: center;
+      margin-top: 48px;
+      border-top: 1px solid #e9e9e7;
+    }
+
+    footer span {
+      color: #8b8b8b;
+      font-size: 0.875rem;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 24px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      color: #2f2f2f;
+      font-size: 1.5rem;
+      font-weight: 600;
+      display: block;
+    }
+
+    .stat-label {
+      color: #8b8b8b;
+      font-size: 0.875rem;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="#" class="nav-title">A Tiny House</a>
+        <ul>
+          <li><a href="#">首页</a></li>
+          <li><a href="#">关于</a></li>
+          <li><a href="#">标签</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main>
+      <div class="home-header">
+        <h1 class="home-title">A Tiny House</h1>
+        <p class="home-subtitle">记录思考，分享见解</p>
+        <p class="home-description">这里是我记录职场思考、生活感悟和个人成长的地方。希望通过文字与更多人分享我的观察和思考。</p>
+        
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-number">8</span>
+            <span class="stat-label">文章</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">3</span>
+            <span class="stat-label">标签</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">2020</span>
+            <span class="stat-label">开始</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="catalogue">
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-pinned">📌 精选文章</div>
+          <div class="catalogue-time">2020年12月27日</div>
+          <div class="catalogue-title">信息不足时如何做好决策</div>
+          <div class="catalogue-excerpt">
+            在职场中，我们经常需要在信息不充分的情况下做出重要决策。这篇文章分享了一些实用的决策框架和思考方法，帮助在不确定性中做出更好的选择。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">工作</span>
+            <span class="tag">决策</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2020年11月29日</div>
+          <div class="catalogue-title">咨询公司的价值，兼论组织创新的难题</div>
+          <div class="catalogue-excerpt">
+            在咨询公司工作一段时间后，我开始思考咨询公司真正的价值在哪里。这篇文章从组织创新的角度分析了咨询行业面临的挑战和机遇。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">工作</span>
+            <span class="tag">咨询</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2020年11月24日</div>
+          <div class="catalogue-title">刚进入公司的六个月，你在思考什么？</div>
+          <div class="catalogue-excerpt">
+            进入公司已经六个月了，这段时间里我一直在思考一个问题：作为一个新人，我应该如何快速适应工作环境，同时保持自己的独立思考？这篇文章记录了我的一些观察和思考。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">工作</span>
+            <span class="tag">成长</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2020年11月1日</div>
+          <div class="catalogue-title">初入职场，你在进行角色扮演吗</div>
+          <div class="catalogue-excerpt">
+            最近和好几个朋友聊了一个话题：关于在职场中的角色扮演感。这一话题来源于我作为职场新人，对自我日常的观察与反思。本篇推送用文字界定了这一感受，以对话的形式阐释了其产生的原因，并对如何与之共处提出了一些可行的办法。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">工作</span>
+            <span class="tag">职场</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2017年3月10日</div>
+          <div class="catalogue-title">Welcome to Jekyll</div>
+          <div class="catalogue-excerpt">
+            You'll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`.
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">技术</span>
+            <span class="tag">Jekyll</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2017年3月7日</div>
+          <div class="catalogue-title">The Case of the Missing Post</div>
+          <div class="catalogue-excerpt">
+            This is a post that demonstrates a few typography treatment. Lorem ipsum dolor sit amet, consectetur adipiscing elit. You can use this template by copying it to the `_posts` directory.
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">示例</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2017年3月6日</div>
+          <div class="catalogue-title">The Mystery of the Filler Post</div>
+          <div class="catalogue-excerpt">
+            This is a filler post to show you how posts will look. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is a sample post to demonstrate the layout and typography.
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">示例</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2017年3月5日</div>
+          <div class="catalogue-title">Pagination Post</div>
+          <div class="catalogue-excerpt">
+            This is a pagination post to demonstrate how pagination works. Lorem ipsum dolor sit amet, consectetur adipiscing elit. This post shows how the pagination system works with multiple posts.
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">示例</span>
+            <span class="tag">分页</span>
+          </div>
+        </a>
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2024 A Tiny House. All rights reserved.</span>
+    </footer>
+  </div>
+</body>
+</html>
+
+

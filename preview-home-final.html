@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notion风格博客首页预览 - A Tiny House</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
+  
+  <style>
+    /* Notion风格样式 */
+    * {
+      box-sizing: border-box;
+      line-height: 1.5;
+    }
+
+    html, body {
+      color: #37352f;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+    }
+
+    html {
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 16px;
+      overflow-y: scroll;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      margin: 0 auto;
+      max-width: 680px;
+      width: 100%;
+      padding: 0 24px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .container {
+        max-width: 720px;
+        padding: 0 48px;
+      }
+    }
+
+    .nav {
+      border-bottom: 1px solid #e9e9e7;
+      overflow: auto;
+      background-color: #ffffff;
+    }
+
+    .nav-container {
+      margin: 0 auto;
+      position: relative;
+      text-align: left;
+      padding: 16px 0;
+      max-width: 680px;
+      width: 100%;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .nav-container {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .nav-container {
+        max-width: 720px;
+        padding-left: 48px;
+        padding-right: 48px;
+      }
+    }
+
+    .nav-title {
+      color: #2f2f2f;
+      display: inline-block;
+      margin: 0;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      transition: all .2s ease-out;
+      text-decoration: none;
+    }
+
+    .nav-title:hover {
+      opacity: .7;
+    }
+
+    .nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      text-align: right;
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    @media (min-width: 768px) {
+      .nav ul {
+        right: 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .nav ul {
+        right: 48px;
+      }
+    }
+
+    .nav li {
+      color: #8b8b8b;
+      display: inline-block;
+      margin-left: 24px;
+      transition: all .2s ease-out;
+    }
+
+    .nav li:hover {
+      color: #37352f;
+    }
+
+    .nav a {
+      color: inherit;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-weight: 400;
+      font-size: 0.875rem;
+      padding: 4px 8px;
+      border-radius: 3px;
+      transition: background-color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .nav a:hover {
+      background-color: #f1f1ef;
+    }
+
+    main {
+      display: block;
+      margin: 0 auto;
+      max-width: 680px;
+      width: 100%;
+      padding: 0 24px;
+    }
+
+    @media (min-width: 768px) {
+      main {
+        padding: 0 40px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      main {
+        max-width: 720px;
+        padding: 0 48px;
+      }
+    }
+
+    .home-header {
+      padding: 48px 0 32px 0;
+      text-align: center;
+    }
+
+    .home-title {
+      color: #2f2f2f;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 32px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 500px;
+      height: 300px;
+      background: linear-gradient(135deg, #f7f6f3 0%, #e9e9e7 100%);
+      border-radius: 8px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e9e9e7;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23e9e9e7" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .hero-image-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: #6b6b6b;
+    }
+
+    .hero-image-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #37352f;
+    }
+
+    .hero-image-subtitle {
+      font-size: 0.875rem;
+      color: #8b8b8b;
+    }
+
+    .catalogue {
+      margin-top: 48px;
+    }
+
+    .catalogue-item {
+      border-bottom: 1px solid #e9e9e7;
+      color: #37352f;
+      display: block;
+      padding: 24px 0;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .catalogue-item:hover {
+      background-color: #f1f1ef;
+      border-radius: 6px;
+      padding-left: 12px;
+      padding-right: 12px;
+      text-decoration: none;
+    }
+
+    .catalogue-item:last-child {
+      border: 0;
+    }
+
+    .catalogue-pinned {
+      color: #8b8b8b;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .catalogue-time {
+      color: #8b8b8b;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 0.875rem;
+      margin-bottom: 8px;
+    }
+
+    .catalogue-title {
+      color: #2f2f2f;
+      display: block;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+    }
+
+    .catalogue-excerpt {
+      color: #8b8b8b;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    .catalogue-tags {
+      margin-top: 8px;
+    }
+
+    .tag {
+      display: inline-block;
+      background-color: #f1f1ef;
+      color: #6b6b6b;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-right: 8px;
+      margin-top: 4px;
+    }
+
+    footer {
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+      padding: 48px 0;
+      text-align: center;
+      margin-top: 48px;
+      border-top: 1px solid #e9e9e7;
+    }
+
+    footer span {
+      color: #8b8b8b;
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="#" class="nav-title">A Tiny House</a>
+        <ul>
+          <li><a href="#">首页</a></li>
+          <li><a href="#">关于</a></li>
+          <li><a href="#">标签</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main>
+      <div class="home-header">
+        <h1 class="home-title">A Tiny House</h1>
+        <div class="hero-image">
+          <div class="hero-image-content">
+            <div class="hero-image-title">小草庐</div>
+            <div class="hero-image-subtitle">A Tiny House</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="catalogue">
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-pinned">📌 精选文章</div>
+          <div class="catalogue-time">2022年5月2日</div>
+          <div class="catalogue-title">小草庐的自白</div>
+          <div class="catalogue-excerpt">
+            关于这个博客的自我介绍，为什么叫"小草庐"，以及写作的初衷。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">博客</span>
+            <span class="tag">自白</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2024年6月1日</div>
+          <div class="catalogue-title">看完 Her 后，和我的 DAN 聊了一下</div>
+          <div class="catalogue-excerpt">
+            看完电影《Her》后，与AI助手的对话让我思考了人工智能与人类关系的未来可能性。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">思考</span>
+            <span class="tag">AI</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2023年5月29日</div>
+          <div class="catalogue-title">关于用户故事</div>
+          <div class="catalogue-excerpt">
+            在产品开发中，用户故事的重要性以及如何更好地理解和运用用户故事。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">产品</span>
+            <span class="tag">工作</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2023年2月5日</div>
+          <div class="catalogue-title">切歌的习惯</div>
+          <div class="catalogue-excerpt">
+            关于音乐播放习惯的一些观察和思考，以及这些习惯背后的心理机制。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">生活</span>
+            <span class="tag">音乐</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2022年12月9日</div>
+          <div class="catalogue-title">报告，最近好爱Arc浏览器</div>
+          <div class="catalogue-excerpt">
+            分享使用Arc浏览器的体验，以及它如何改变了我的网页浏览习惯。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">工具</span>
+            <span class="tag">推荐</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2022年11月6日</div>
+          <div class="catalogue-title">最喜欢看小团队产品开发者的What's new</div>
+          <div class="catalogue-excerpt">
+            观察小团队产品开发者的更新日志，从中学习产品迭代的思路和方法。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">产品</span>
+            <span class="tag">观察</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2022年10月23日</div>
+          <div class="catalogue-title">把自己产品化的一种解读</div>
+          <div class="catalogue-excerpt">
+            从产品思维的角度来理解个人成长和自我提升，如何将自己当作产品来打造。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">思考</span>
+            <span class="tag">成长</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2022年10月9日</div>
+          <div class="catalogue-title">澳门赌场参观记</div>
+          <div class="catalogue-excerpt">
+            在澳门赌场的观察和思考，关于人性、概率和决策的一些感悟。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">旅行</span>
+            <span class="tag">观察</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2022年9月25日</div>
+          <div class="catalogue-title">《启示录》读书笔记</div>
+          <div class="catalogue-excerpt">
+            阅读《启示录》这本书的思考和感悟，关于产品管理和团队协作的见解。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">读书</span>
+            <span class="tag">产品</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2022年9月4日</div>
+          <div class="catalogue-title">理解编程的世界</div>
+          <div class="catalogue-excerpt">
+            作为非技术背景的人，如何理解和学习编程，以及编程思维对生活的影响。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">编程</span>
+            <span class="tag">学习</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2022年7月25日</div>
+          <div class="catalogue-title">如歌</div>
+          <div class="catalogue-excerpt">
+            关于音乐、生活和情感的一些感悟，如歌般的人生体验。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">生活</span>
+            <span class="tag">情感</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2022年6月18日</div>
+          <div class="catalogue-title">独自在傍晚的水边</div>
+          <div class="catalogue-excerpt">
+            一个人在水边的思考时光，关于孤独、宁静和内心对话的体验。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">生活</span>
+            <span class="tag">思考</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2022年5月14日</div>
+          <div class="catalogue-title">大厂里的工具和人</div>
+          <div class="catalogue-excerpt">
+            在大厂工作期间，对工具和人的关系的观察和思考，技术与人性的平衡。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">工作</span>
+            <span class="tag">观察</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2022年5月8日</div>
+          <div class="catalogue-title">2022年春天最后的夜晚</div>
+          <div class="catalogue-excerpt">
+            记录2022年春天最后一个夜晚的感受，关于季节、时间和生活的思考。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">生活</span>
+            <span class="tag">季节</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2022年2月25日</div>
+          <div class="catalogue-title">当突然落入生活的B面</div>
+          <div class="catalogue-excerpt">
+            二月突如其来的一场手术，一点感受，和读的一些书。关于生活A面和B面的思考。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">生活</span>
+            <span class="tag">思考</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2021年12月28日</div>
+          <div class="catalogue-title">与想象中的精英告别</div>
+          <div class="catalogue-excerpt">
+            关于精英主义的一些反思，以及如何与想象中的精英形象告别，做真实的自己。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">思考</span>
+            <span class="tag">成长</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2021年11月7日</div>
+          <div class="catalogue-title">滴答清单优化记</div>
+          <div class="catalogue-excerpt">
+            使用滴答清单进行时间管理和任务规划的优化经验分享。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">工具</span>
+            <span class="tag">效率</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2021年8月28日</div>
+          <div class="catalogue-title">《海滩的一天》和人生设计课</div>
+          <div class="catalogue-excerpt">
+            观看电影《海滩的一天》后，结合人生设计课的学习，对人生规划的思考。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">电影</span>
+            <span class="tag">人生</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2021年6月27日</div>
+          <div class="catalogue-title">Intellectual Highlights during My 24th Solar Revolution</div>
+          <div class="catalogue-excerpt">
+            在我第24个太阳年革命期间的智力亮点，记录这一年来的学习和思考成果。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">思考</span>
+            <span class="tag">成长</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2021年4月11日</div>
+          <div class="catalogue-title">我去小米之家卖了四天手机</div>
+          <div class="catalogue-excerpt">
+            清明节假期在小米之家站店体验活动的经历，了解线下零售和销售的一些观察。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">工作</span>
+            <span class="tag">体验</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2021年2月10日</div>
+          <div class="catalogue-title">在珠海的互联网公司工作是一种什么体验？</div>
+          <div class="catalogue-excerpt">
+            在珠海金山办公轮岗半年的经历，关于WPS、工作环境和生活体验的分享。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">工作</span>
+            <span class="tag">珠海</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2020年12月27日</div>
+          <div class="catalogue-title">信息不足时如何做好决策</div>
+          <div class="catalogue-excerpt">
+            在职场中，我们经常需要在信息不充分的情况下做出重要决策。这篇文章分享了一些实用的决策框架和思考方法。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">工作</span>
+            <span class="tag">决策</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2020年11月29日</div>
+          <div class="catalogue-title">咨询公司的价值，兼论组织创新的难题</div>
+          <div class="catalogue-excerpt">
+            在咨询公司工作一段时间后，开始思考咨询公司真正的价值在哪里。从组织创新的角度分析了咨询行业面临的挑战和机遇。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">工作</span>
+            <span class="tag">咨询</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2020年11月24日</div>
+          <div class="catalogue-title">刚进入公司的六个月，你在思考什么？</div>
+          <div class="catalogue-excerpt">
+            进入公司已经六个月了，这段时间里一直在思考：作为一个新人，应该如何快速适应工作环境，同时保持自己的独立思考？
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">工作</span>
+            <span class="tag">成长</span>
+          </div>
+        </a>
+
+        <a href="#" class="catalogue-item">
+          <div class="catalogue-time">2020年11月1日</div>
+          <div class="catalogue-title">初入职场，你在进行角色扮演吗</div>
+          <div class="catalogue-excerpt">
+            最近和好几个朋友聊了一个话题：关于在职场中的角色扮演感。这一话题来源于我作为职场新人，对自我日常的观察与反思。
+          </div>
+          <div class="catalogue-tags">
+            <span class="tag">工作</span>
+            <span class="tag">职场</span>
+          </div>
+        </a>
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2024 A Tiny House. All rights reserved.</span>
+    </footer>
+  </div>
+</body>
+</html>
