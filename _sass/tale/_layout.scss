@@ -1,7 +1,17 @@
 .container {
   margin: 0 auto;
-  max-width: 800px;
-  width: 80%;
+  max-width: 680px;
+  width: 100%;
+  padding: 0 24px;
+  
+  @media (min-width: 768px) {
+    padding: 0 40px;
+  }
+  
+  @media (min-width: 1200px) {
+    max-width: 720px;
+    padding: 0 48px;
+  }
 }
 
 main,
@@ -9,60 +19,83 @@ footer,
 .nav-container {
   display: block;
   margin: 0 auto;
-  max-width: 800px;
-  width: 80%;
+  max-width: 680px;
+  width: 100%;
+  padding: 0 24px;
+  
+  @media (min-width: 768px) {
+    padding: 0 40px;
+  }
+  
+  @media (min-width: 1200px) {
+    max-width: 720px;
+    padding: 0 48px;
+  }
 }
 
 .nav {
-  box-shadow: 0 2px 2px -2px $shadow-color;
+  border-bottom: 1px solid $border-color;
   overflow: auto;
+  background-color: $white;
 
   &-container {
-    margin: 1rem auto;
+    margin: 0 auto;
     position: relative;
-    text-align: center;
+    text-align: left;
+    padding: 16px 0;
   }
 
   &-title {
     @include transition(all .2s ease-out);
-    color: $default-color;
+    color: $default-shade;
     display: inline-block;
     margin: 0;
-    padding-right: .2rem;
+    font-family: $chinese-sans, $sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
 
     &:hover,
     &:focus {
-      opacity: .6;
+      opacity: .7;
     }
   }
 
   ul {
     list-style-type: none;
-    margin: 1rem 0 0;
+    margin: 0;
     padding: 0;
-    text-align: center;
+    text-align: right;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   li {
     @include transition(all .2s ease-out);
-    color: $default-color;
+    color: $default-tint;
     display: inline-block;
-    opacity: .6;
-    padding: 0 2rem 0 0;
-
-    &:last-child {
-      padding-right: 0;
-    }
+    margin-left: 24px;
 
     &:hover,
     &:focus {
-      opacity: 1;
+      color: $default-color;
     }
   }
 
   a {
-    color: $default-color;
-    font-family: $sans-serif;
+    color: inherit;
+    font-family: $chinese-sans, $sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    padding: 4px 8px;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: $grey-4;
+    }
   }
 }
 

@@ -1,36 +1,54 @@
 .pagination {
-  border-top: .5px solid $grey-2;
-  font-family: $serif-secondary;
-  padding-top: 2rem;
+  border-top: 1px solid $border-color;
+  font-family: $chinese-sans, $sans-serif;
+  padding: 32px 0;
   position: relative;
   text-align: center;
+  margin-top: 48px;
 
   span {
     color: $default-shade;
-    font-size: 1.1rem;
+    font-size: 0.875rem;
   }
 
   .top {
-    @include transition(all .3s ease-out);
-    color: $default-color;
-    font-family: $sans-serif;
-    font-size: 1.1rem;
-    opacity: .6;
+    @include transition(all .2s ease);
+    color: $default-tint;
+    font-family: $chinese-sans, $sans-serif;
+    font-size: 0.875rem;
+    padding: 8px 16px;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    display: inline-block;
+    background-color: $white;
 
     &:hover {
-      opacity: 1;
+      background-color: $grey-4;
+      border-color: $default-tint;
+      color: $default-color;
     }
   }
 
   .arrow {
-    @include transition(all .3s ease-out);
-    color: $default-color;
+    @include transition(all .2s ease);
+    color: $default-tint;
     position: absolute;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 12px;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $white;
 
     &:hover,
     &:focus {
-      opacity: .6;
       text-decoration: none;
+      background-color: $blue;
+      color: $white;
+      border-color: $blue;
     }
   }
 

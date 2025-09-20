@@ -1,35 +1,42 @@
 .post {
-  padding: 3rem 0;
+  padding: 48px 0;
 
   &-info {
     color: $default-tint;
-    font-family: $serif-secondary;
-    letter-spacing: 0.5px;
-    text-align: center;
+    font-family: $chinese-sans, $sans-serif;
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    text-align: left;
 
     span {
-      font-style: italic;
+      font-style: normal;
     }
   }
 
   &-title {
     color: $default-shade;
-    font-family: $sans-serif;
-    font-size: 4rem;
-    margin: 1rem 0;
-    text-align: center;
+    font-family: $chinese-sans, $sans-serif;
+    font-size: 2.25rem;
+    margin: 0 0 24px 0;
+    text-align: left;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    
+    @media (max-width: 600px) {
+      font-size: 1.875rem;
+    }
   }
 
   &-line {
-    border-top: 0.4rem solid $default-shade;
-    display: block;
-    margin: 0 auto 3rem;
-    width: 4rem;
+    display: none;
   }
 
   p {
-    margin: 0 0 1rem;
-    text-align: justify;
+    margin: 0.75em 0;
+    text-align: left;
+    text-indent: 0;
+    line-height: 1.6;
   }
 
   a:hover {

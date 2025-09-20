@@ -1,20 +1,27 @@
-// Colors
-$default-color: #555 !default;
-$default-shade: #353535 !default;
-$default-tint: #aaa !default;
-$grey-1: #979797 !default;
-$grey-2: #e5e5e5 !default;
-$grey-3: #f9f9f9 !default;
-$white: #fff !default;
-$blue: #4a9ae1 !default;
-$shadow-color: rgba(0, 0, 0, .2) !default;
-$code-color: #bf616a !default;
+// Colors - Notion Style
+$default-color: #37352f !default;
+$default-shade: #2f2f2f !default;
+$default-tint: #8b8b8b !default;
+$grey-1: #6b6b6b !default;
+$grey-2: #e9e9e7 !default;
+$grey-3: #f7f6f3 !default;
+$grey-4: #f1f1ef !default;
+$white: #ffffff !default;
+$blue: #2383e2 !default;
+$blue-light: #e8f4fd !default;
+$shadow-color: rgba(0, 0, 0, .04) !default;
+$code-color: #e16259 !default;
+$border-color: #e9e9e7 !default;
 
-// Fonts
+// Fonts - Notion Style
 $serif-primary: 'Libre Baskerville', 'Times New Roman', Times, serif !default;
 $serif-secondary: Palatino, 'Palatino LT STD', 'Palatino Linotype', 'Book Antiqua', 'Georgia', serif !default;
-$sans-serif: 'Helvetica Neue', 'Segoe UI', Helvetica, Arial, sans-serif !default;
-$monospaced: Menlo, Monaco, monospace !default;
+$sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !default;
+$monospaced: 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace !default;
+
+// Chinese fonts - Notion Style
+$chinese-serif: 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif !default;
+$chinese-sans: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif !default;
 
 @mixin box-sizing($type: border-box) {
   -webkit-box-sizing: $type;
