@@ -1,53 +1,27 @@
 ---
-layout: default
+layout: post
 title: "Tags"
 permalink: /tags/
 ---
 
-<div class="tags">
-  <div class="tags-header">
-    <h2 class="tags-header-title">{{ page.title }}</h2>
-    <div class="tags-header-line"></div>
-  </div>
-  <div class="tags-clouds">
+<div class="post-content">
+  <div class="tags-clouds" style="margin: 2rem 0;">
     {% for tag in site.tags %}
-    <a href="#{{ tag[0] }}">{{ tag[0] }}</a>
+    <a href="#{{ tag[0] }}" style="display: inline-block; margin: 0.5rem; padding: 0.5rem 1rem; background: var(--grey-4); border-radius: 20px; text-decoration: none; color: var(--text-color); transition: all 0.2s ease;" onmouseover="this.style.background='var(--text-color)'; this.style.color='var(--bg-color)';" onmouseout="this.style.background='var(--grey-4)'; this.style.color='var(--text-color)';">{{ tag[0] }}</a>
     {% endfor %}
   </div>
-  {% for tag in site.tags %}
-  <div class="tags-item" id="{{ tag[0] }}">
-    <svg
-      class="tags-item-icon"
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="feather feather-tag"
-    >
-      <path
-        d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
-      ></path>
-      <line x1="7" y1="7" x2="7.01" y2="7"></line>
-    </svg>
-    <h2 class="tags-item-label">{{ tag[0] }}</h2>
-    {% for post in tag[1] %}
-    <a class="tags-post" href="{{ post.url | prepend: site.baseurl }}">
-      <div>
-        <span class="tags-post-title">{{ post.title }}</span>
-        <div class="tags-post-line"></div>
-      </div>
-      <span class="tags-post-meta">
-        <time datetime="{{ post.date }}">
-          {{ post.date | date:"%Y-%m-%d" }}
-        </time>
-      </span>
-    </a>
+  
+  <div class="tags-content">
+    {% for tag in site.tags %}
+    <h3>{{ tag[0] }}</h3>
+    <div class="tags-posts">
+      {% for post in tag[1] %}
+      <a href="{{ post.url | prepend: site.baseurl }}" style="display: block; padding: 1rem 0; border-bottom: 1px solid var(--border-color); text-decoration: none; color: var(--text-color);">
+        <span style="font-weight: 600;">{{ post.title }}</span>
+        <span style="float: right; color: var(--text-tint); font-size: 0.875rem;">{{ post.date | date:"%Y-%m-%d" }}</span>
+      </a>
+      {% endfor %}
+    </div>
     {% endfor %}
   </div>
-  {% endfor %}
 </div>

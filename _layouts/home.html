@@ -2,6 +2,43 @@
 layout: default
 ---
 
+<div class="home-header">
+  <div class="logo-container">
+    <!-- 装饰线条 -->
+    <div class="logo-decoration left"></div>
+    <div class="logo-decoration right"></div>
+    
+    <!-- 小房子图标 -->
+    <div class="logo-house">
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <!-- 主体建筑 -->
+        <rect x="20" y="45" width="40" height="30" fill="var(--text-color)" class="house-light"/>
+        <rect x="20" y="45" width="40" height="30" fill="white" class="house-dark"/>
+        
+        <!-- 屋顶 -->
+        <polygon points="20,45 40,20 60,45" fill="var(--text-color)" class="house-light"/>
+        <polygon points="20,45 40,20 60,45" fill="white" class="house-dark"/>
+        
+        <!-- 门 -->
+        <rect x="32" y="60" width="16" height="15" fill="var(--bg-color)" class="house-light"/>
+        <rect x="32" y="60" width="16" height="15" fill="var(--bg-color)" class="house-dark"/>
+        
+        <!-- 窗户 -->
+        <rect x="28" y="50" width="8" height="8" fill="var(--bg-color)" class="house-light"/>
+        <rect x="44" y="50" width="8" height="8" fill="var(--bg-color)" class="house-light"/>
+        <rect x="28" y="50" width="8" height="8" fill="var(--bg-color)" class="house-dark"/>
+        <rect x="44" y="50" width="8" height="8" fill="var(--bg-color)" class="house-dark"/>
+      </svg>
+    </div>
+    
+    <!-- 文字部分 -->
+    <div class="logo-text">
+      <div class="logo-text-main">A TINY HOUSE</div>
+      <div class="logo-text-subtitle">小草庐 • EST 2020 • LIVE TRUE</div>
+    </div>
+  </div>
+</div>
+
 <div class="catalogue">
   {% for post in site.posts %}
     {% if post.sticky %}
@@ -15,12 +52,21 @@ layout: default
 </div>
 
 <div class="pagination">
-  {% if paginator.previous_page %}
-    <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
-  {% endif %}
-  {% if paginator.next_page %}
-    <a href="{{ paginator.next_page_path | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
-  {% endif %}
-
-  <span>{{ paginator.page }}</span>
+  <div class="pagination-container">
+    <a href="{{ paginator.first_page_path | prepend: site.baseurl }}" class="pagination-btn" {% unless paginator.previous_page %}disabled{% endunless %}>« 首页</a>
+    {% if paginator.previous_page %}
+      <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}" class="pagination-btn" id="prevBtn">‹ 上一页</a>
+    {% else %}
+      <span class="pagination-btn" disabled>‹ 上一页</span>
+    {% endif %}
+    <div class="pagination-info">
+      <span>第 {{ paginator.page }} 页，共 {{ paginator.total_pages }} 页</span>
+    </div>
+    {% if paginator.next_page %}
+      <a href="{{ paginator.next_page_path | prepend: site.baseurl }}" class="pagination-btn" id="nextBtn">下一页 ›</a>
+    {% else %}
+      <span class="pagination-btn" disabled>下一页 ›</span>
+    {% endif %}
+    <a href="{{ paginator.last_page_path | prepend: site.baseurl }}" class="pagination-btn" {% unless paginator.next_page %}disabled{% endunless %}>末页 »</a>
+  </div>
 </div>
