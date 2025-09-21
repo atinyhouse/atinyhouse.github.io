@@ -119,14 +119,22 @@ document.addEventListener('DOMContentLoaded', function() {
     tocMobileList.innerHTML = tocHTML;
   }
 
+  // 更新选中状态的函数
+  function updateActiveState(targetId) {
+    document.querySelectorAll('.table-of-contents-list a').forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('data-target') === targetId) {
+        link.classList.add('active');
+      }
+    });
+  }
+
   // 高亮当前章节
   function highlightCurrentSection() {
     const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
-    const tocLinks = document.querySelectorAll('.table-of-contents-list a');
     
     function updateActiveLink() {
       let current = '';
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       
       headings.forEach(heading => {
         const rect = heading.getBoundingClientRect();
@@ -135,12 +143,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
       
-      tocLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('data-target') === current) {
-          link.classList.add('active');
-        }
-      });
+      if (current) {
+        updateActiveState(current);
+      }
     }
     
     window.addEventListener('scroll', updateActiveLink);
@@ -180,20 +185,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 平滑滚动
   function initSmoothScroll() {
-    document.querySelectorAll('.table-of-contents-list a').forEach(link => {
-      link.addEventListener('click', function(e) {
+    // 使用事件委托来处理动态生成的链接
+    document.addEventListener('click', function(e) {
+      if (e.target.matches('.table-of-contents-list a')) {
         e.preventDefault();
-        const targetId = this.getAttribute('data-target');
+        const targetId = e.target.getAttribute('data-target');
         const targetElement = document.getElementById(targetId);
         
         if (targetElement) {
-          const offsetTop = targetElement.offsetTop - 80; // 考虑固定导航栏高度
+          // 立即更新选中状态
+          updateActiveState(targetId);
+          
+          const offsetTop = targetElement.offsetTop - 80;
           window.scrollTo({
             top: offsetTop,
             behavior: 'smooth'
           });
         }
-      });
+      }
     });
   }
 
