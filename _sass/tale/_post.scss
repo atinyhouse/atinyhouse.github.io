@@ -70,7 +70,7 @@
     margin-top: 2em;
     margin-bottom: 0.75em;
     font-weight: 600;
-    color: var(--text-shade);
+    color: var(--text-shade) !important;
   }
 
   h3 {
@@ -78,7 +78,7 @@
     margin-top: 1.5em;
     margin-bottom: 0.5em;
     font-weight: 600;
-    color: var(--text-shade);
+    color: var(--text-shade) !important;
   }
 
   h4, h5, h6 {
@@ -86,7 +86,7 @@
     margin-top: 1.25em;
     margin-bottom: 0.5em;
     font-weight: 600;
-    color: var(--text-shade);
+    color: var(--text-shade) !important;
   }
 
   p {
@@ -104,6 +104,12 @@
     font-style: normal !important;
     font-size: 0.95em;
     line-height: 1.6;
+  }
+
+  // 强调文本样式
+  strong {
+    font-weight: 600;
+    color: var(--text-shade) !important;
   }
 
   // 引用样式优化 - Notion风格黑白色系
