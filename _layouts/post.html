@@ -13,14 +13,45 @@ layout: default
 
     {% if page.date %}
       <br>
-      <span>on&nbsp;</span><time datetime="{{ page.date }}">{{ page.date | date: "%B %d, %Y" }}</time>
+      <span>on&nbsp;</span><time datetime="{{ page.date }}">{{ page.date | date: "%Y年%m月%d日" }}</time>
     {% endif %}
   </div>
 
   <h1 class="post-title">{{ page.title }}</h1>
   <div class="post-line"></div>
 
-  {{ content }}
+  <div class="post-content">
+    {{ content }}
+  </div>
+</div>
+
+<!-- 桌面端目录 -->
+<div class="table-of-contents" id="toc">
+  <div class="table-of-contents-title">目录</div>
+  <ul class="table-of-contents-list" id="toc-list">
+    <!-- 目录内容将通过JavaScript生成 -->
+  </ul>
+</div>
+
+<!-- 移动端目录按钮 -->
+<button class="toc-toggle" id="toc-toggle">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</button>
+
+<!-- 移动端目录覆盖层 -->
+<div class="toc-overlay" id="toc-overlay"></div>
+
+<!-- 移动端目录 -->
+<div class="toc-mobile" id="toc-mobile">
+  <button class="toc-close" id="toc-close">&times;</button>
+  <div class="table-of-contents-title">目录</div>
+  <ul class="table-of-contents-list" id="toc-mobile-list">
+    <!-- 目录内容将通过JavaScript生成 -->
+  </ul>
 </div>
 
 {% if page.comments %}
@@ -37,3 +68,139 @@ layout: default
 
   <a href="#" class="top">Top</a>
 </div>
+
+<!-- 目录功能JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 生成目录
+  function generateTOC() {
+    const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
+    const tocList = document.getElementById('toc-list');
+    const tocMobileList = document.getElementById('toc-mobile-list');
+    
+    if (headings.length === 0) {
+      document.getElementById('toc').style.display = 'none';
+      document.getElementById('toc-toggle').style.display = 'none';
+      return;
+    }
+
+    let tocHTML = '';
+    let currentLevel = 0;
+    
+    headings.forEach((heading, index) => {
+      const level = parseInt(heading.tagName.charAt(1));
+      const id = `heading-${index}`;
+      heading.id = id;
+      
+      const text = heading.textContent.trim();
+      const link = `<a href="#${id}" data-target="${id}">${text}</a>`;
+      
+      if (level > currentLevel) {
+        // 开始新的嵌套级别
+        tocHTML += '<ul>';
+        currentLevel = level;
+      } else if (level < currentLevel) {
+        // 结束嵌套级别
+        for (let i = level; i < currentLevel; i++) {
+          tocHTML += '</ul>';
+        }
+        currentLevel = level;
+      }
+      
+      tocHTML += `<li>${link}</li>`;
+    });
+    
+    // 关闭所有未关闭的ul标签
+    for (let i = 0; i < currentLevel; i++) {
+      tocHTML += '</ul>';
+    }
+    
+    tocList.innerHTML = tocHTML;
+    tocMobileList.innerHTML = tocHTML;
+  }
+
+  // 高亮当前章节
+  function highlightCurrentSection() {
+    const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
+    const tocLinks = document.querySelectorAll('.table-of-contents-list a');
+    
+    function updateActiveLink() {
+      let current = '';
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      headings.forEach(heading => {
+        const rect = heading.getBoundingClientRect();
+        if (rect.top <= 100) {
+          current = heading.id;
+        }
+      });
+      
+      tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-target') === current) {
+          link.classList.add('active');
+        }
+      });
+    }
+    
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+  }
+
+  // 移动端目录控制
+  function initMobileTOC() {
+    const toggle = document.getElementById('toc-toggle');
+    const overlay = document.getElementById('toc-overlay');
+    const mobile = document.getElementById('toc-mobile');
+    const close = document.getElementById('toc-close');
+    
+    function openTOC() {
+      overlay.classList.add('active');
+      mobile.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeTOC() {
+      overlay.classList.remove('active');
+      mobile.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    toggle.addEventListener('click', openTOC);
+    overlay.addEventListener('click', closeTOC);
+    close.addEventListener('click', closeTOC);
+    
+    // 点击目录链接后关闭移动端目录
+    mobile.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A') {
+        closeTOC();
+      }
+    });
+  }
+
+  // 平滑滚动
+  function initSmoothScroll() {
+    document.querySelectorAll('.table-of-contents-list a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('data-target');
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          const offsetTop = targetElement.offsetTop - 80; // 考虑固定导航栏高度
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  }
+
+  // 初始化所有功能
+  generateTOC();
+  highlightCurrentSection();
+  initMobileTOC();
+  initSmoothScroll();
+});
+</script>

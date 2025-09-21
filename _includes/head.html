@@ -46,7 +46,10 @@
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'dark') {
         document.body.setAttribute('data-theme', 'dark');
-        document.getElementById('themeToggle').setAttribute('data-theme', 'dark');
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+          themeToggle.setAttribute('data-theme', 'dark');
+        }
       }
     });
   </script>

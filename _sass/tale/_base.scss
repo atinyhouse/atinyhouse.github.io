@@ -5,10 +5,11 @@
 
 html,
 body {
-  color: $default-color;
+  color: var(--text-color);
   margin: 0;
   padding: 0;
-  background-color: $white;
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 html {
