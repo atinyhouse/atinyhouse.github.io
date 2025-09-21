@@ -616,6 +616,12 @@ body {
   font-size: 0.875rem;
 }
 
+/* 强调文本样式 */
+.post-content strong {
+  font-weight: 600;
+  color: var(--text-shade) !important;
+}
+
 /* 页面宽度调整 */
 .container {
   max-width: 800px;

@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初入职场，你在进行角色扮演吗 - A TINY HOUSE</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
+    <style>
+        /* CSS变量定义 - 与首页保持一致 */
+        :root {
+          --bg-color: #ffffff;
+          --text-color: #37352f;
+          --text-shade: #2f2f2f;
+          --text-tint: #8b8b8b;
+          --grey-1: #6b6b6b;
+          --grey-2: #e9e9e7;
+          --grey-3: #f7f6f3;
+          --grey-4: #f1f1ef;
+          --blue: #2383e2;
+          --blue-light: #e8f4fd;
+          --border-color: #e9e9e7;
+          --shadow-color: rgba(0, 0, 0, .04);
+        }
+
+        [data-theme="dark"] {
+          --bg-color: #1a1a1a;
+          --text-color: #e0e0e0;
+          --text-shade: #ffffff;
+          --text-tint: #a0a0a0;
+          --grey-1: #808080;
+          --grey-2: #2a2a2a;
+          --grey-3: #1f1f1f;
+          --grey-4: #252525;
+          --blue: #4a9eff;
+          --blue-light: #1a3a5c;
+          --border-color: #2a2a2a;
+          --shadow-color: rgba(0, 0, 0, .3);
+        }
+
+        /* 包豪斯风格样式 */
+        * {
+          box-sizing: border-box;
+          line-height: 1.5;
+        }
+
+        html, body {
+          color: var(--text-color);
+          margin: 0;
+          padding: 0;
+          background-color: var(--bg-color);
+          transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html {
+          font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+          font-size: 16px;
+          overflow-y: scroll;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+          margin: 0 auto;
+          max-width: 800px;
+          width: 100%;
+          padding: 0 24px;
+        }
+
+        @media (min-width: 768px) {
+          .container {
+            padding: 0 40px;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          .container {
+            max-width: 900px;
+            padding: 0 48px;
+          }
+        }
+
+        /* 导航样式 - 与首页保持一致 */
+        .nav {
+          border-bottom: 1px solid var(--border-color);
+          overflow: auto;
+          background-color: var(--bg-color);
+          transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .nav-container {
+          margin: 0 auto;
+          position: relative;
+          text-align: left;
+          padding: 16px 0;
+          max-width: 800px;
+          width: 100%;
+          padding-left: 24px;
+          padding-right: 24px;
+        }
+
+        @media (min-width: 768px) {
+          .nav-container {
+            padding-left: 40px;
+            padding-right: 40px;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          .nav-container {
+            max-width: 900px;
+            padding-left: 48px;
+            padding-right: 48px;
+          }
+        }
+
+        .nav-title {
+          color: var(--text-shade);
+          display: inline-block;
+          margin: 0;
+          font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+          font-size: 1.25rem;
+          font-weight: 600;
+          letter-spacing: -0.01em;
+          transition: all .2s ease-out;
+          text-decoration: none;
+        }
+
+        .nav-title:hover {
+          opacity: .7;
+        }
+
+        .nav ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          text-align: right;
+          position: absolute;
+          right: 24px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+
+        @media (min-width: 768px) {
+          .nav ul {
+            right: 40px;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          .nav ul {
+            right: 48px;
+          }
+        }
+
+        .nav li {
+          color: var(--text-tint);
+          display: inline-block;
+          margin-left: 24px;
+          transition: all .2s ease-out;
+        }
+
+        .nav li:hover {
+          color: var(--text-color);
+        }
+
+        .nav a {
+          color: inherit;
+          font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+          font-weight: 400;
+          font-size: 0.875rem;
+          padding: 4px 8px;
+          border-radius: 3px;
+          transition: background-color 0.2s ease;
+          text-decoration: none;
+        }
+
+        .nav a:hover {
+          background-color: var(--grey-4);
+        }
+
+        .nav a.active {
+          background-color: var(--text-color);
+          color: var(--bg-color);
+        }
+
+        /* 暗黑模式切换按钮 - 左上角开关样式 */
+        .theme-toggle {
+          position: fixed;
+          top: 20px;
+          left: 20px;
+          z-index: 1000;
+          background: var(--bg-color);
+          border: 2px solid var(--border-color);
+          border-radius: 25px;
+          width: 50px;
+          height: 25px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          padding: 2px;
+          box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        .theme-toggle:hover {
+          border-color: var(--blue);
+          box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .theme-toggle-slider {
+          width: 19px;
+          height: 19px;
+          background: var(--text-color);
+          border-radius: 50%;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 10px;
+        }
+
+        .theme-toggle[data-theme="dark"] .theme-toggle-slider {
+          transform: translateX(25px);
+          background: var(--blue);
+        }
+
+        .theme-toggle[data-theme="dark"] .theme-toggle-slider::before {
+          content: "☀";
+          color: #000;
+        }
+
+        .theme-toggle:not([data-theme="dark"]) .theme-toggle-slider::before {
+          content: "☾";
+          color: #000;
+        }
+
+        /* 文章样式 - 与首页保持一致 */
+        main {
+          display: block;
+          margin: 0 auto;
+          max-width: 800px;
+          width: 100%;
+          padding: 0 24px;
+        }
+
+        @media (min-width: 768px) {
+          main {
+            padding: 0 40px;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          main {
+            max-width: 900px;
+            padding: 0 48px;
+          }
+        }
+
+        .post {
+          padding: 48px 0;
+          position: relative;
+          max-width: 100%;
+        }
+
+        .post-info, .post-title, .post-content {
+          max-width: 100%;
+        }
+
+        .post-info {
+          color: var(--text-tint);
+          font-size: 0.875rem;
+          margin-bottom: 24px;
+          text-align: left;
+        }
+
+        .post-info span {
+          font-style: normal;
+        }
+
+        .post-title {
+          color: var(--text-shade) !important;
+          font-size: 2.25rem;
+          margin: 0 0 24px 0;
+          text-align: left;
+          font-weight: 700;
+          line-height: 1.2;
+          letter-spacing: -0.02em;
+        }
+
+        @media (max-width: 600px) {
+          .post-title {
+            font-size: 1.875rem;
+          }
+        }
+
+        .post-line {
+          display: none;
+        }
+
+        .post-content {
+          position: relative;
+          max-width: 100%;
+        }
+
+        @media (min-width: 1200px) {
+          .post-content {
+            margin-left: 0;
+            margin-right: 0;
+          }
+        }
+
+        /* 文章内容样式 */
+        .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
+          color: var(--text-shade) !important;
+          font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+          line-height: 1.3;
+          margin-top: 2em;
+          margin-bottom: 0.75em;
+          font-weight: 600;
+          letter-spacing: -0.01em;
+          scroll-margin-top: 80px;
+        }
+
+        .post-content h1 {
+          font-size: 1.75rem;
+          margin-top: 0;
+          margin-bottom: 1em;
+          font-weight: 700;
+          border-bottom: 2px solid var(--border-color);
+          padding-bottom: 0.5em;
+        }
+
+        .post-content h2 {
+          font-size: 1.5rem;
+          margin-top: 2em;
+          margin-bottom: 0.75em;
+          font-weight: 600;
+          color: var(--text-shade) !important;
+        }
+
+        .post-content h3 {
+          font-size: 1.25rem;
+          margin-top: 1.5em;
+          margin-bottom: 0.5em;
+          font-weight: 600;
+          color: var(--text-shade) !important;
+        }
+
+        .post-content h4, .post-content h5, .post-content h6 {
+          font-size: 1.1rem;
+          margin-top: 1.25em;
+          margin-bottom: 0.5em;
+          font-weight: 600;
+          color: var(--text-shade) !important;
+        }
+
+        .post-content p {
+          margin: 1.5em 0;
+          text-align: left;
+          text-indent: 0;
+          line-height: 1.8;
+          color: var(--text-color);
+          font-size: 1.05em;
+        }
+
+        /* 前言部分样式 - 灰色字体，非斜体 */
+        .post-content p em {
+          color: var(--text-tint);
+          font-style: normal !important;
+          font-size: 0.95em;
+          line-height: 1.6;
+        }
+
+        /* 引用样式优化 - Notion风格黑白色系 */
+        .post-content blockquote {
+          border-left: 3px solid var(--text-color);
+          color: var(--text-color);
+          margin: 3em 0;
+          padding: 2em 2.5em;
+          background-color: var(--grey-4);
+          border-radius: 0;
+          font-style: normal;
+          position: relative;
+          line-height: 1.8;
+          font-size: 1.05em;
+        }
+
+        .post-content blockquote p:last-child {
+          margin-bottom: 0;
+        }
+
+        .post-content blockquote::before {
+          content: """;
+          font-size: 3rem;
+          color: var(--text-tint);
+          position: absolute;
+          top: -0.3em;
+          left: 0.3em;
+          font-family: serif;
+          line-height: 1;
+          opacity: 0.4;
+        }
+
+        .post-content blockquote p {
+          margin: 1em 0;
+          position: relative;
+          z-index: 1;
+          padding-left: 1.5em;
+        }
+
+        .post-content blockquote div[style*="text-align: right"] {
+          margin-top: 2em;
+          font-size: 0.9em;
+          color: var(--text-tint);
+          font-style: normal;
+          text-align: right;
+          font-weight: 500;
+          border-top: 1px solid var(--border-color);
+          padding-top: 1em;
+        }
+
+        /* 列表样式 */
+        .post-content ul, .post-content ol {
+          padding-left: 1.5em;
+          margin: 1.5em 0;
+        }
+
+        .post-content ul li, .post-content ol li {
+          margin: 0.5em 0;
+          line-height: 1.6;
+        }
+
+        /* 强调文本样式 */
+        .post-content strong {
+          font-weight: 600;
+          color: var(--text-shade) !important;
+        }
+
+        /* 代码样式 */
+        .post-content code {
+          background-color: var(--grey-4);
+          padding: 0.2em 0.4em;
+          border-radius: 3px;
+          font-size: 0.9em;
+          font-family: 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+          color: #e16259;
+          border: 1px solid var(--border-color);
+        }
+
+        .post-content pre {
+          background-color: var(--grey-4);
+          padding: 1.5em;
+          border-radius: 6px;
+          overflow-x: auto;
+          margin: 1.5em 0;
+          border: 1px solid var(--border-color);
+          font-size: 0.9em;
+        }
+
+        .post-content pre code {
+          background: none;
+          padding: 0;
+          border: none;
+          color: inherit;
+        }
+
+        /* 图片样式 */
+        .post-content img {
+          margin: 1.5em auto;
+          max-width: 100%;
+          height: auto;
+          border-radius: 6px;
+          box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        .post-content img + em {
+          color: var(--text-tint);
+          display: block;
+          font-size: 0.875rem;
+          font-style: normal;
+          text-align: center;
+          margin-top: 0.5em;
+          margin-bottom: 1.5em;
+        }
+
+        /* 水平分割线 */
+        .post-content hr {
+          border: none;
+          height: 1px;
+          background: linear-gradient(to right, transparent, var(--border-color), transparent);
+          margin: 3em 0;
+        }
+
+        /* 目录样式 - Notion风格优化 */
+        .table-of-contents {
+          position: fixed;
+          top: 50%;
+          left: 20px;
+          transform: translateY(-50%);
+          width: 220px;
+          max-height: 70vh;
+          overflow-y: auto;
+          background: var(--bg-color);
+          border: none;
+          border-radius: 0;
+          padding: 0;
+          box-shadow: none;
+          z-index: 100;
+          font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+          font-size: 0.9rem;
+          line-height: 1.4;
+          pointer-events: auto;
+        }
+
+        @media (max-width: 1199px) {
+          .table-of-contents {
+            display: none;
+          }
+        }
+
+        .table-of-contents-title {
+          font-weight: 600;
+          color: var(--text-tint);
+          margin-bottom: 1em;
+          font-size: 0.8rem;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          padding: 0.6em 0;
+          border-bottom: 1px solid var(--border-color);
+        }
+
+        .table-of-contents-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        .table-of-contents-list li {
+          margin: 0;
+          list-style: none;
+        }
+
+        .table-of-contents-list li::before {
+          display: none;
+        }
+
+        .table-of-contents-list a {
+          color: var(--text-tint);
+          text-decoration: none;
+          display: block;
+          padding: 0.5em 0.6em;
+          border-radius: 4px;
+          transition: all 0.15s ease;
+          font-size: 0.85rem;
+          border-left: 3px solid transparent;
+          margin-bottom: 0.2em;
+        }
+
+        .table-of-contents-list a:hover {
+          color: var(--text-color);
+          background-color: var(--grey-4);
+          padding-left: 0.8em;
+        }
+
+        .table-of-contents-list a.active {
+          color: var(--text-color);
+          font-weight: 600;
+          background-color: var(--grey-4);
+          border-left-color: var(--text-color);
+          padding-left: 0.8em;
+        }
+
+        .table-of-contents-list ul {
+          margin: 0;
+          padding: 0;
+          border-left: 1px solid var(--border-color);
+          margin-left: 0.8em;
+          margin-top: 0.3em;
+        }
+
+        .table-of-contents-list ul li {
+          margin: 0;
+        }
+
+        .table-of-contents-list ul a {
+          font-size: 0.8rem;
+          color: var(--text-tint);
+          padding: 0.4em 0.6em;
+          margin-left: 0.3em;
+          border-left: none;
+        }
+
+        .table-of-contents-list ul a:hover {
+          color: var(--text-color);
+          background-color: var(--grey-4);
+          padding-left: 0.6em;
+        }
+
+        .table-of-contents-list ul a.active {
+          color: var(--text-color);
+          font-weight: 600;
+          background-color: var(--grey-4);
+          padding-left: 0.6em;
+        }
+
+        /* 移动端目录按钮 */
+        .toc-toggle {
+          position: fixed;
+          top: 80px;
+          left: 20px;
+          background: var(--bg-color);
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
+          padding: 0.5em;
+          cursor: pointer;
+          z-index: 101;
+          display: none;
+          box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        @media (max-width: 1199px) {
+          .toc-toggle {
+            display: block;
+          }
+        }
+
+        .toc-toggle svg {
+          width: 20px;
+          height: 20px;
+          fill: var(--text-color);
+        }
+
+        /* 移动端目录覆盖层 */
+        .toc-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 99;
+          display: none;
+        }
+
+        .toc-overlay.active {
+          display: block;
+        }
+
+        .toc-mobile {
+          position: fixed;
+          top: 0;
+          left: -300px;
+          width: 280px;
+          height: 100vh;
+          background: var(--bg-color);
+          border-right: 1px solid var(--border-color);
+          padding: 2em 1.5em;
+          overflow-y: auto;
+          z-index: 100;
+          transition: left 0.3s ease;
+        }
+
+        .toc-mobile.active {
+          left: 0;
+        }
+
+        .toc-close {
+          position: absolute;
+          top: 1em;
+          right: 1em;
+          background: none;
+          border: none;
+          font-size: 1.5rem;
+          cursor: pointer;
+          color: var(--text-tint);
+        }
+
+        /* 分页样式 */
+        .pagination {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin: 3rem 0;
+          padding: 2rem 0;
+          border-top: 1px solid var(--border-color);
+        }
+
+        .pagination .arrow {
+          color: var(--text-tint);
+          text-decoration: none;
+          font-size: 1.2rem;
+          padding: 0.5rem 1rem;
+          border-radius: 6px;
+          transition: all 0.2s ease;
+        }
+
+        .pagination .arrow:hover {
+          color: var(--text-color);
+          background-color: var(--grey-4);
+        }
+
+        .pagination .top {
+          color: var(--text-tint);
+          text-decoration: none;
+          font-size: 0.9rem;
+          padding: 0.5rem 1rem;
+          border-radius: 6px;
+          transition: all 0.2s ease;
+        }
+
+        .pagination .top:hover {
+          color: var(--text-color);
+          background-color: var(--grey-4);
+        }
+    </style>
+</head>
+<body>
+    <!-- 暗黑模式切换按钮 -->
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+        <div class="theme-toggle-slider"></div>
+    </button>
+
+    <!-- 导航栏 -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="nav-title">A TINY HOUSE</a>
+            <ul>
+                <li><a href="#" class="active">Posts</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Tags</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 文章内容 -->
+    <main>
+        <article class="post">
+            <div class="post-info">
+                <span>Written by</span>
+                Lucca
+                <br>
+                <span>on&nbsp;</span><time datetime="2020-11-01">2020年11月01日</time>
+            </div>
+
+            <h1 class="post-title">初入职场，你在进行角色扮演吗</h1>
+            <div class="post-line"></div>
+
+            <div class="post-content">
+                <p><em>最近和好几个朋友聊了一个话题：关于在职场中的角色扮演感。这一话题来源于我作为职场新人，对自我日常的观察与反思。</em></p>
+
+                <p><em>本篇推送用文字界定了这一感受，以对话的形式阐释了其产生的原因，并对如何与之共处提出了一些可行的办法。</em></p>
+
+                <br>
+
+                <h2>1 | 别扭的感觉：我在表演吗？</h2>
+
+                <p>Lucca：我在理性上能感知到职场语境/社会语境下一个优秀的职场人士的标准：思维严密、学习能力强、擅长沟通、勤于解决问题、理性、勤奋、负责任……在这样的理性感知前提下，我常觉得在工作中有一种别扭的感觉——感觉自己每天的工作都在表演：<strong>想象一种职场需要的人格，然后在工作中将其表演出来</strong>。</p>
+
+                <p>这种适应性的冲突感会出现在工作的间隙中，当我偶尔抽离出当下，观察工作中的自己时。这种适应性的冲突感也会在一些时刻给我造成极大的心理压力、落差感、挫败感——当我在工作中遇到困难，没有把一件事情做好的时候。</p>
+
+                <h2>2 | 角色扮演感来自于....?</h2>
+
+                <p>Allen：我觉得这种别扭感来自于一个gap，gap的两端分别是<strong>自己的现状和一个职场的能力和性格模型</strong>。我经常能感到后者并不是我现在的模样，但是它可能是我现在这份工作所需要的样子，这种差别也会给我带来心理的张力。</p>
+
+                <p>Lucca：是的，一针见血。或许当我培养自己拥有这些技能以后，这种心理的张力会变小，人格的切换会更自然，或者也根本不用切换直接可以成为我性格的一部分。</p>
+
+                <h2>3 | 如何处理这样的角色转化张力？</h2>
+
+                <p>Allen：我觉得可以这样考虑：</p>
+
+                <p><strong>这个职场模型让你不舒服的点是什么？</strong>是本身这种被催促改变（或"成长"）的压力，还是模型中一些特征是你不认同的（e.g. 狡诈、圆滑）。</p>
+
+                <p>如果是前者，那这种张力是成长过程中必然的，可以试着去接受它，把它当作成长的一部分。如果是后者，那可能需要重新考虑这份工作是否适合你。</p>
+
+                <p>Lucca：我觉得还有一个角度，就是<strong>区分"表演"和"学习"</strong>。当我们说"表演"的时候，往往带有一种不真实、不自然的感觉。但如果我们把它理解为"学习"，那这个过程就变得积极了很多。</p>
+
+                <p>就像学习一门新语言一样，一开始我们可能会觉得别扭，会"表演"说这门语言，但随着时间的推移，这种"表演"会逐渐内化为我们的能力。</p>
+
+                <h2>4 | 一些实用的建议</h2>
+
+                <p>基于我们的讨论，我总结了一些可能对职场新人有帮助的建议：</p>
+
+                <p><strong>1. 接受这种张力是正常的</strong></p>
+                <p>角色扮演感是职场新人普遍会经历的一种感受，不要因此觉得自己有问题或者不适合职场。</p>
+
+                <p><strong>2. 区分"表演"和"学习"</strong></p>
+                <p>把这种"表演"理解为学习新技能的过程，而不是一种不真实的行为。</p>
+
+                <p><strong>3. 找到自己的节奏</strong></p>
+                <p>每个人适应的速度不同，不要急于求成，给自己一些时间。</p>
+
+                <p><strong>4. 保持自我反思</strong></p>
+                <p>定期反思自己的成长过程，看看哪些技能已经内化，哪些还需要继续学习。</p>
+
+                <p><strong>5. 寻求支持</strong></p>
+                <p>和同事、朋友或者导师交流这种感受，获得理解和支持。</p>
+
+                <h2>5 | 结语</h2>
+
+                <p>职场中的角色扮演感是一个复杂的话题，它涉及到个人成长、社会适应、自我认知等多个方面。希望通过这篇文章，能够帮助更多的职场新人理解和应对这种感受。</p>
+
+                <p>记住，<strong>成长是一个过程，不是一蹴而就的</strong>。给自己一些时间，保持开放的心态，相信你会找到属于自己的职场节奏。</p>
+            </div>
+        </article>
+
+        <!-- 桌面端目录 -->
+        <div class="table-of-contents" id="toc">
+            <div class="table-of-contents-title">目录</div>
+            <ul class="table-of-contents-list" id="toc-list">
+                <!-- 目录内容将通过JavaScript生成 -->
+            </ul>
+        </div>
+
+        <!-- 移动端目录按钮 -->
+        <button class="toc-toggle" id="toc-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+
+        <!-- 移动端目录覆盖层 -->
+        <div class="toc-overlay" id="toc-overlay"></div>
+
+        <!-- 移动端目录 -->
+        <div class="toc-mobile" id="toc-mobile">
+            <button class="toc-close" id="toc-close">&times;</button>
+            <div class="table-of-contents-title">目录</div>
+            <ul class="table-of-contents-list" id="toc-mobile-list">
+                <!-- 目录内容将通过JavaScript生成 -->
+            </ul>
+        </div>
+
+        <!-- 分页 -->
+        <div class="pagination">
+            <a href="#" class="left arrow">&#8592;</a>
+            <a href="#" class="top">Top</a>
+            <a href="#" class="right arrow">&#8594;</a>
+        </div>
+    </main>
+
+    <script>
+        // 暗黑模式切换
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeToggle.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // 页面加载时应用保存的主题
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('themeToggle').setAttribute('data-theme', 'dark');
+            }
+
+            // 生成目录
+            generateTOC();
+            // 高亮当前章节
+            highlightCurrentSection();
+            // 移动端目录控制
+            initMobileTOC();
+            // 平滑滚动
+            initSmoothScroll();
+        });
+
+        // 生成目录
+        function generateTOC() {
+            const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
+            const tocList = document.getElementById('toc-list');
+            const tocMobileList = document.getElementById('toc-mobile-list');
+            
+            if (headings.length === 0) {
+                document.getElementById('toc').style.display = 'none';
+                document.getElementById('toc-toggle').style.display = 'none';
+                return;
+            }
+
+            let tocHTML = '';
+            let currentLevel = 0;
+            
+            headings.forEach((heading, index) => {
+                const level = parseInt(heading.tagName.charAt(1));
+                const id = `heading-${index}`;
+                heading.id = id;
+                
+                const text = heading.textContent.trim();
+                const link = `<a href="#${id}" data-target="${id}">${text}</a>`;
+                
+                if (level > currentLevel) {
+                    // 开始新的嵌套级别
+                    tocHTML += '<ul>';
+                    currentLevel = level;
+                } else if (level < currentLevel) {
+                    // 结束嵌套级别
+                    for (let i = level; i < currentLevel; i++) {
+                        tocHTML += '</ul>';
+                    }
+                    currentLevel = level;
+                }
+                
+                tocHTML += `<li>${link}</li>`;
+            });
+            
+            // 关闭所有未关闭的ul标签
+            for (let i = 0; i < currentLevel; i++) {
+                tocHTML += '</ul>';
+            }
+            
+            tocList.innerHTML = tocHTML;
+            tocMobileList.innerHTML = tocHTML;
+        }
+
+        // 更新选中状态的函数
+        function updateActiveState(targetId) {
+            document.querySelectorAll('.table-of-contents-list a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-target') === targetId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // 高亮当前章节
+        function highlightCurrentSection() {
+            const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
+            
+            function updateActiveLink() {
+                let current = '';
+                
+                headings.forEach(heading => {
+                    const rect = heading.getBoundingClientRect();
+                    if (rect.top <= 100) {
+                        current = heading.id;
+                    }
+                });
+                
+                if (current) {
+                    updateActiveState(current);
+                }
+            }
+            
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink();
+        }
+
+        // 平滑滚动
+        function initSmoothScroll() {
+            // 使用事件委托来处理动态生成的链接
+            document.addEventListener('click', function(e) {
+                if (e.target.matches('.table-of-contents-list a')) {
+                    e.preventDefault();
+                    const targetId = e.target.getAttribute('data-target');
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        // 立即更新选中状态
+                        updateActiveState(targetId);
+                        
+                        const offsetTop = targetElement.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        }
+
+        // 移动端目录控制
+        function initMobileTOC() {
+            const toggle = document.getElementById('toc-toggle');
+            const overlay = document.getElementById('toc-overlay');
+            const mobile = document.getElementById('toc-mobile');
+            const close = document.getElementById('toc-close');
+            
+            function openTOC() {
+                overlay.classList.add('active');
+                mobile.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            function closeTOC() {
+                overlay.classList.remove('active');
+                mobile.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            
+            toggle.addEventListener('click', openTOC);
+            overlay.addEventListener('click', closeTOC);
+            close.addEventListener('click', closeTOC);
+            
+            // 点击目录链接后关闭移动端目录
+            mobile.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    closeTOC();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
