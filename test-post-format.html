@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试文章格式</title>
+    <link rel="stylesheet" href="assets/custom.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
+</head>
+<body>
+    <main>
+        <article class="post">
+            <div class="post-info">
+                <span>Written by</span>
+                Lucca
+                <br>
+                <span>on&nbsp;</span><time datetime="2024-01-01">2024年01月01日</time>
+            </div>
+
+            <h1 class="post-title">测试文章标题</h1>
+            <div class="post-line"></div>
+
+            <div class="post-content">
+                <p><em>这是引言部分，应该显示为灰色字体，非斜体。</em></p>
+                
+                <p>这是正常的段落内容。文章内容应该使用新的格式，包括目录功能、暗黑模式支持等。</p>
+                
+                <h2>二级标题</h2>
+                <p>这是二级标题下的内容。</p>
+                
+                <h3>三级标题</h3>
+                <p>这是三级标题下的内容。</p>
+                
+                <blockquote>
+                    <p>这是引用块的内容，应该使用Notion风格的引用格式。</p>
+                    <div style="text-align: right">—— 引用来源</div>
+                </blockquote>
+                
+                <p><strong>这是强调文本，应该使用正确的颜色。</strong></p>
+            </div>
+        </article>
+    </main>
+
+    <!-- 桌面端目录 -->
+    <div class="table-of-contents" id="toc">
+        <div class="table-of-contents-title">目录</div>
+        <ul class="table-of-contents-list" id="toc-list">
+            <li><a href="#heading-0" data-target="heading-0">测试文章标题</a></li>
+            <li><a href="#heading-1" data-target="heading-1">二级标题</a></li>
+            <li><a href="#heading-2" data-target="heading-2">三级标题</a></li>
+        </ul>
+    </div>
+
+    <!-- 移动端目录按钮 -->
+    <button class="toc-toggle" id="toc-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <!-- 移动端目录覆盖层 -->
+    <div class="toc-overlay" id="toc-overlay"></div>
+
+    <!-- 移动端目录 -->
+    <div class="toc-mobile" id="toc-mobile">
+        <button class="toc-close" id="toc-close">&times;</button>
+        <div class="table-of-contents-title">目录</div>
+        <ul class="table-of-contents-list" id="toc-mobile-list">
+            <li><a href="#heading-0" data-target="heading-0">测试文章标题</a></li>
+            <li><a href="#heading-1" data-target="heading-1">二级标题</a></li>
+            <li><a href="#heading-2" data-target="heading-2">三级标题</a></li>
+        </ul>
+    </div>
+
+    <script>
+        // 暗黑模式功能
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                if (themeToggle) themeToggle.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                if (themeToggle) themeToggle.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // 页面加载时检查保存的主题
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+            }
+        });
+    </script>
+</body>
+</html>
