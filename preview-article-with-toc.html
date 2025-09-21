@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>与想象中的「精英」告别 - A TINY HOUSE</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* CSS变量定义 */
+        :root {
+          --bg-color: #ffffff;
+          --text-color: #37352f;
+          --text-shade: #2c2c2c;
+          --text-tint: #787774;
+          --grey-1: #f7f6f3;
+          --grey-2: #f1f1ef;
+          --grey-3: #e9e9e7;
+          --grey-4: #e3e2e0;
+          --border-color: #e3e2e0;
+          --shadow-color: rgba(0, 0, 0, .1);
+          --white: #ffffff;
+        }
+
+        [data-theme="dark"] {
+          --bg-color: #191919;
+          --text-color: #ffffff;
+          --text-shade: #ffffff;
+          --text-tint: #9b9a97;
+          --grey-1: #2f2f2f;
+          --grey-2: #373737;
+          --grey-3: #3f3f3f;
+          --grey-4: #474747;
+          --border-color: #2a2a2a;
+          --shadow-color: rgba(0, 0, 0, .3);
+          --white: #ffffff;
+        }
+
+        /* 基础样式 */
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          background-color: var(--bg-color);
+          color: var(--text-color);
+          font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+          line-height: 1.6;
+          transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+          max-width: 900px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        /* 导航样式 */
+        .nav {
+          background-color: var(--bg-color);
+          border-bottom: 1px solid var(--border-color);
+          padding: 1rem 0;
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          max-width: 900px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        .nav-title {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--text-shade);
+          text-decoration: none;
+        }
+
+        nav ul {
+          display: flex;
+          list-style: none;
+          gap: 2rem;
+        }
+
+        nav li {
+          margin: 0;
+        }
+
+        nav a {
+          color: var(--text-tint);
+          text-decoration: none;
+          font-weight: 500;
+          padding: 0.5rem 1rem;
+          border-radius: 6px;
+          transition: all 0.2s ease;
+        }
+
+        nav a:hover {
+          color: var(--text-color);
+          background-color: var(--grey-4);
+        }
+
+        nav a.active {
+          background-color: var(--text-color);
+          color: var(--bg-color);
+        }
+
+        /* 暗黑模式切换按钮 */
+        .theme-toggle {
+          position: fixed;
+          top: 20px;
+          left: 20px;
+          background: var(--bg-color);
+          border: 1px solid var(--border-color);
+          border-radius: 20px;
+          width: 50px;
+          height: 30px;
+          cursor: pointer;
+          z-index: 1001;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        .theme-toggle-slider {
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          width: 24px;
+          height: 24px;
+          background: var(--text-color);
+          border-radius: 50%;
+          transition: transform 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+          color: var(--bg-color);
+        }
+
+        [data-theme="dark"] .theme-toggle-slider {
+          transform: translateX(20px);
+        }
+
+        .theme-toggle-slider::before {
+          content: "☀";
+          color: #000;
+        }
+
+        [data-theme="dark"] .theme-toggle-slider::before {
+          content: "☾";
+          color: #fff;
+        }
+
+        /* 文章样式 */
+        .post {
+          padding: 48px 0;
+          position: relative;
+        }
+
+        .post-info {
+          color: var(--text-tint);
+          font-size: 0.875rem;
+          margin-bottom: 24px;
+          text-align: left;
+        }
+
+        .post-info span {
+          font-style: normal;
+        }
+
+        .post-title {
+          color: var(--text-shade);
+          font-size: 2.25rem;
+          margin: 0 0 24px 0;
+          text-align: left;
+          font-weight: 700;
+          line-height: 1.2;
+          letter-spacing: -0.02em;
+        }
+
+        @media (max-width: 600px) {
+          .post-title {
+            font-size: 1.875rem;
+          }
+        }
+
+        .post-line {
+          display: none;
+        }
+
+        .post-content {
+          position: relative;
+          max-width: 100%;
+        }
+
+        @media (min-width: 1200px) {
+          .post-content {
+            margin-left: 240px;
+            margin-right: 0;
+          }
+        }
+
+        /* 文章内容样式 */
+        .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
+          color: var(--text-shade);
+          font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+          line-height: 1.3;
+          margin-top: 2em;
+          margin-bottom: 0.75em;
+          font-weight: 600;
+          letter-spacing: -0.01em;
+          scroll-margin-top: 80px;
+        }
+
+        .post-content h1 {
+          font-size: 1.75rem;
+          margin-top: 0;
+          margin-bottom: 1em;
+          font-weight: 700;
+          border-bottom: 2px solid var(--border-color);
+          padding-bottom: 0.5em;
+        }
+
+        .post-content h2 {
+          font-size: 1.5rem;
+          margin-top: 2em;
+          margin-bottom: 0.75em;
+          font-weight: 600;
+          color: var(--text-shade);
+        }
+
+        .post-content h3 {
+          font-size: 1.25rem;
+          margin-top: 1.5em;
+          margin-bottom: 0.5em;
+          font-weight: 600;
+          color: var(--text-shade);
+        }
+
+        .post-content h4, .post-content h5, .post-content h6 {
+          font-size: 1.1rem;
+          margin-top: 1.25em;
+          margin-bottom: 0.5em;
+          font-weight: 600;
+          color: var(--text-shade);
+        }
+
+        .post-content p {
+          margin: 1.5em 0;
+          text-align: left;
+          text-indent: 0;
+          line-height: 1.8;
+          color: var(--text-color);
+          font-size: 1.05em;
+        }
+
+        /* 前言部分样式 - 灰色字体，非斜体 */
+        .post-content p em {
+          color: var(--text-tint);
+          font-style: normal !important;
+          font-size: 0.95em;
+          line-height: 1.6;
+        }
+
+        /* 引用样式优化 - Notion风格黑白色系 */
+        .post-content blockquote {
+          border-left: 3px solid var(--text-color);
+          color: var(--text-color);
+          margin: 3em 0;
+          padding: 2em 2.5em;
+          background-color: var(--grey-4);
+          border-radius: 0;
+          font-style: normal;
+          position: relative;
+          line-height: 1.8;
+          font-size: 1.05em;
+        }
+
+        .post-content blockquote p:last-child {
+          margin-bottom: 0;
+        }
+
+        .post-content blockquote::before {
+          content: """;
+          font-size: 3rem;
+          color: var(--text-tint);
+          position: absolute;
+          top: -0.3em;
+          left: 0.3em;
+          font-family: serif;
+          line-height: 1;
+          opacity: 0.4;
+        }
+
+        .post-content blockquote p {
+          margin: 1em 0;
+          position: relative;
+          z-index: 1;
+          padding-left: 1.5em;
+        }
+
+        .post-content blockquote div[style*="text-align: right"] {
+          margin-top: 2em;
+          font-size: 0.9em;
+          color: var(--text-tint);
+          font-style: normal;
+          text-align: right;
+          font-weight: 500;
+          border-top: 1px solid var(--border-color);
+          padding-top: 1em;
+        }
+
+        /* 列表样式 */
+        .post-content ul, .post-content ol {
+          padding-left: 1.5em;
+          margin: 1.5em 0;
+        }
+
+        .post-content ul li, .post-content ol li {
+          margin: 0.5em 0;
+          line-height: 1.6;
+        }
+
+        /* 代码样式 */
+        .post-content code {
+          background-color: var(--grey-4);
+          padding: 0.2em 0.4em;
+          border-radius: 3px;
+          font-size: 0.9em;
+          font-family: 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+          color: #e16259;
+          border: 1px solid var(--border-color);
+        }
+
+        .post-content pre {
+          background-color: var(--grey-4);
+          padding: 1.5em;
+          border-radius: 6px;
+          overflow-x: auto;
+          margin: 1.5em 0;
+          border: 1px solid var(--border-color);
+          font-size: 0.9em;
+        }
+
+        .post-content pre code {
+          background: none;
+          padding: 0;
+          border: none;
+          color: inherit;
+        }
+
+        /* 图片样式 */
+        .post-content img {
+          margin: 1.5em auto;
+          max-width: 100%;
+          height: auto;
+          border-radius: 6px;
+          box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        .post-content img + em {
+          color: var(--text-tint);
+          display: block;
+          font-size: 0.875rem;
+          font-style: normal;
+          text-align: center;
+          margin-top: 0.5em;
+          margin-bottom: 1.5em;
+        }
+
+        /* 表格样式 */
+        .post-content table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 1.5em 0;
+          font-size: 0.9em;
+          border-radius: 6px;
+          overflow: hidden;
+          box-shadow: 0 1px 3px var(--shadow-color);
+        }
+
+        .post-content th, .post-content td {
+          padding: 0.75em 1em;
+          text-align: left;
+          border-bottom: 1px solid var(--border-color);
+          vertical-align: top;
+        }
+
+        .post-content th {
+          background-color: var(--grey-4);
+          font-weight: 600;
+          color: var(--text-shade);
+        }
+
+        .post-content tr:hover {
+          background-color: rgba(241, 241, 239, 0.5);
+        }
+
+        [data-theme="dark"] .post-content tr:hover {
+          background-color: rgba(37, 37, 37, 0.5);
+        }
+
+        /* 水平分割线 */
+        .post-content hr {
+          border: none;
+          height: 1px;
+          background: linear-gradient(to right, transparent, var(--border-color), transparent);
+          margin: 3em 0;
+        }
+
+        /* 目录样式 - Notion风格优化 */
+        .table-of-contents {
+          position: fixed;
+          top: 50%;
+          left: 20px;
+          transform: translateY(-50%);
+          width: 220px;
+          max-height: 70vh;
+          overflow-y: auto;
+          background: var(--bg-color);
+          border: none;
+          border-radius: 0;
+          padding: 0;
+          box-shadow: none;
+          z-index: 100;
+          font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+          font-size: 0.9rem;
+          line-height: 1.4;
+        }
+
+        @media (max-width: 1199px) {
+          .table-of-contents {
+            display: none;
+          }
+        }
+
+        .table-of-contents-title {
+          font-weight: 600;
+          color: var(--text-tint);
+          margin-bottom: 1em;
+          font-size: 0.8rem;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          padding: 0.6em 0;
+          border-bottom: 1px solid var(--border-color);
+        }
+
+        .table-of-contents-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        .table-of-contents-list li {
+          margin: 0;
+        }
+
+        .table-of-contents-list a {
+          color: var(--text-tint);
+          text-decoration: none;
+          display: block;
+          padding: 0.5em 0.6em;
+          border-radius: 4px;
+          transition: all 0.15s ease;
+          font-size: 0.85rem;
+          border-left: 3px solid transparent;
+          margin-bottom: 0.2em;
+        }
+
+        .table-of-contents-list a:hover {
+          color: var(--text-color);
+          background-color: var(--grey-4);
+          padding-left: 0.8em;
+        }
+
+        .table-of-contents-list a.active {
+          color: var(--text-color);
+          font-weight: 600;
+          background-color: var(--grey-4);
+          border-left-color: var(--text-color);
+          padding-left: 0.8em;
+        }
+
+        .table-of-contents-list ul {
+          margin: 0;
+          padding: 0;
+          border-left: 1px solid var(--border-color);
+          margin-left: 0.8em;
+          margin-top: 0.3em;
+        }
+
+        .table-of-contents-list ul li {
+          margin: 0;
+        }
+
+        .table-of-contents-list ul a {
+          font-size: 0.8rem;
+          color: var(--text-tint);
+          padding: 0.4em 0.6em;
+          margin-left: 0.3em;
+          border-left: none;
+        }
+
+        .table-of-contents-list ul a:hover {
+          color: var(--text-color);
+          background-color: var(--grey-4);
+          padding-left: 0.6em;
+        }
+
+        .table-of-contents-list ul a.active {
+          color: var(--text-color);
+          font-weight: 600;
+          background-color: var(--grey-4);
+          padding-left: 0.6em;
+        }
+
+        /* 移动端目录按钮 */
+        .toc-toggle {
+          position: fixed;
+          top: 80px;
+          left: 20px;
+          background: var(--bg-color);
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
+          padding: 0.5em;
+          cursor: pointer;
+          z-index: 101;
+          display: none;
+          box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        @media (max-width: 1199px) {
+          .toc-toggle {
+            display: block;
+          }
+        }
+
+        .toc-toggle svg {
+          width: 20px;
+          height: 20px;
+          fill: var(--text-color);
+        }
+
+        /* 移动端目录覆盖层 */
+        .toc-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 99;
+          display: none;
+        }
+
+        .toc-overlay.active {
+          display: block;
+        }
+
+        .toc-mobile {
+          position: fixed;
+          top: 0;
+          left: -300px;
+          width: 280px;
+          height: 100vh;
+          background: var(--bg-color);
+          border-right: 1px solid var(--border-color);
+          padding: 2em 1.5em;
+          overflow-y: auto;
+          z-index: 100;
+          transition: left 0.3s ease;
+        }
+
+        .toc-mobile.active {
+          left: 0;
+        }
+
+        .toc-close {
+          position: absolute;
+          top: 1em;
+          right: 1em;
+          background: none;
+          border: none;
+          font-size: 1.5rem;
+          cursor: pointer;
+          color: var(--text-tint);
+        }
+
+        /* 分页样式 */
+        .pagination {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin: 3rem 0;
+          padding: 2rem 0;
+          border-top: 1px solid var(--border-color);
+        }
+
+        .pagination .arrow {
+          color: var(--text-tint);
+          text-decoration: none;
+          font-size: 1.2rem;
+          padding: 0.5rem 1rem;
+          border-radius: 6px;
+          transition: all 0.2s ease;
+        }
+
+        .pagination .arrow:hover {
+          color: var(--text-color);
+          background-color: var(--grey-4);
+        }
+
+        .pagination .top {
+          color: var(--text-tint);
+          text-decoration: none;
+          font-size: 0.9rem;
+          padding: 0.5rem 1rem;
+          border-radius: 6px;
+          transition: all 0.2s ease;
+        }
+
+        .pagination .top:hover {
+          color: var(--text-color);
+          background-color: var(--grey-4);
+        }
+    </style>
+</head>
+<body>
+    <!-- 暗黑模式切换按钮 -->
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+        <div class="theme-toggle-slider"></div>
+    </button>
+
+    <!-- 导航栏 -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="nav-title">A TINY HOUSE</a>
+            <ul>
+                <li><a href="#" class="active">Posts</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Tags</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 文章内容 -->
+    <div class="container">
+        <article class="post">
+            <div class="post-info">
+                <span>Written by</span>
+                小草庐
+                <br>
+                <span>on&nbsp;</span><time datetime="2020-11-01">2020年11月01日</time>
+            </div>
+
+            <h1 class="post-title">与想象中的「精英」告别</h1>
+            <div class="post-line"></div>
+
+            <div class="post-content">
+                <p><em>这篇文章写于2020年11月，记录了我对「精英」概念的重新思考。现在回看，依然觉得这些思考很有价值。</em></p>
+
+                <p>最近在读《精英的傲慢》这本书，作者迈克尔·桑德尔提出了一个很有意思的观点：我们现在的社会过于推崇「优绩主义」（meritocracy），认为成功完全取决于个人的努力和才能。但这样的观念实际上掩盖了社会不平等的问题，让那些「成功者」觉得自己的成功完全是应得的，而「失败者」的失败也是咎由自取。</p>
+
+                <p>这让我想起了自己曾经对「精英」的想象。从小到大，我一直觉得「精英」就是那些聪明、努力、成功的人。他们有着光鲜的履历，在顶级公司工作，拿着高薪，住着好房子，开着好车。他们的生活看起来完美无缺，让人羡慕。</p>
+
+                <h2>重新定义「精英」</h2>
+
+                <p>但是，随着年龄的增长和阅历的增加，我开始意识到这种对「精英」的理解是片面的，甚至是错误的。</p>
+
+                <p>真正的「精英」不应该仅仅用外在的成功来衡量。他们应该具备以下特质：</p>
+
+                <ul>
+                    <li><strong>同理心</strong>：能够理解他人的处境，关心社会问题</li>
+                    <li><strong>谦逊</strong>：认识到自己的成功离不开机遇和他人帮助</li>
+                    <li><strong>责任感</strong>：愿意为社会做出贡献，而不是只关注个人利益</li>
+                    <li><strong>学习能力</strong>：持续学习，不断成长，而不是固步自封</li>
+                </ul>
+
+                <h2>优绩主义的陷阱</h2>
+
+                <p>优绩主义的问题在于，它让人们相信成功完全是个人的功劳，失败也完全是个人的责任。这种观念忽略了：</p>
+
+                <blockquote>
+                    <p>「我们生活在一个相互依存的社会中，每个人的成功都离不开他人的帮助和支持。没有人是完全靠自己成功的。」</p>
+                    <div style="text-align: right">—— 迈克尔·桑德尔</div>
+                </blockquote>
+
+                <p>想想看，我们能够接受教育，是因为有老师、学校、政府提供的教育资源；我们能够找到工作，是因为有公司、同事、客户创造的工作机会；我们能够享受生活，是因为有无数人在背后默默付出。</p>
+
+                <h2>重新审视成功</h2>
+
+                <p>那么，什么才是真正的成功呢？我认为，真正的成功应该包括：</p>
+
+                <ol>
+                    <li><strong>个人成长</strong>：不断学习，提升自己的能力和见识</li>
+                    <li><strong>关系质量</strong>：与家人、朋友、同事建立良好的关系</li>
+                    <li><strong>社会贡献</strong>：用自己的能力为社会创造价值</li>
+                    <li><strong>内心平静</strong>：找到内心的平衡和满足感</li>
+                </ol>
+
+                <p>这些成功标准比单纯的财富、地位、名声更有意义，也更可持续。</p>
+
+                <h2>告别想象中的「精英」</h2>
+
+                <p>现在，我已经告别了想象中的「精英」形象。我不再羡慕那些只有外在成功的人，而是更加尊重那些真正有品格、有担当的人。</p>
+
+                <p>我也开始反思自己的价值观和行为。我是否过于关注个人利益？我是否忽视了对他人的责任？我是否在追求成功的过程中迷失了初心？</p>
+
+                <p>这些问题没有标准答案，但思考它们让我变得更加清醒和成熟。</p>
+
+                <h2>结语</h2>
+
+                <p>与想象中的「精英」告别，不是要放弃追求卓越，而是要重新定义什么是真正的卓越。真正的卓越应该包括品格、能力、责任感的全面发展，而不仅仅是外在的成功。</p>
+
+                <p>希望我们都能成为这样的人：既有能力，又有品格；既追求个人成长，又关心社会进步；既享受成功，又保持谦逊。</p>
+
+                <hr>
+
+                <p><em>如果你对这篇文章有想法，欢迎在评论区分享你的观点。让我们一起探讨什么是真正的「精英」。</em></p>
+            </div>
+        </article>
+
+        <!-- 桌面端目录 -->
+        <div class="table-of-contents" id="toc">
+            <div class="table-of-contents-title">目录</div>
+            <ul class="table-of-contents-list" id="toc-list">
+                <!-- 目录内容将通过JavaScript生成 -->
+            </ul>
+        </div>
+
+        <!-- 移动端目录按钮 -->
+        <button class="toc-toggle" id="toc-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+
+        <!-- 移动端目录覆盖层 -->
+        <div class="toc-overlay" id="toc-overlay"></div>
+
+        <!-- 移动端目录 -->
+        <div class="toc-mobile" id="toc-mobile">
+            <button class="toc-close" id="toc-close">&times;</button>
+            <div class="table-of-contents-title">目录</div>
+            <ul class="table-of-contents-list" id="toc-mobile-list">
+                <!-- 目录内容将通过JavaScript生成 -->
+            </ul>
+        </div>
+
+        <!-- 分页 -->
+        <div class="pagination">
+            <a href="#" class="left arrow">&#8592;</a>
+            <a href="#" class="top">Top</a>
+            <a href="#" class="right arrow">&#8594;</a>
+        </div>
+    </div>
+
+    <script>
+        // 暗黑模式切换
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeToggle.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // 页面加载时应用保存的主题
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('themeToggle').setAttribute('data-theme', 'dark');
+            }
+
+            // 生成目录
+            generateTOC();
+            // 高亮当前章节
+            highlightCurrentSection();
+            // 移动端目录控制
+            initMobileTOC();
+            // 平滑滚动
+            initSmoothScroll();
+        });
+
+        // 生成目录
+        function generateTOC() {
+            const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
+            const tocList = document.getElementById('toc-list');
+            const tocMobileList = document.getElementById('toc-mobile-list');
+            
+            if (headings.length === 0) {
+                document.getElementById('toc').style.display = 'none';
+                document.getElementById('toc-toggle').style.display = 'none';
+                return;
+            }
+
+            let tocHTML = '';
+            let currentLevel = 0;
+            
+            headings.forEach((heading, index) => {
+                const level = parseInt(heading.tagName.charAt(1));
+                const id = `heading-${index}`;
+                heading.id = id;
+                
+                const text = heading.textContent.trim();
+                const link = `<a href="#${id}" data-target="${id}">${text}</a>`;
+                
+                if (level > currentLevel) {
+                    // 开始新的嵌套级别
+                    tocHTML += '<ul>';
+                    currentLevel = level;
+                } else if (level < currentLevel) {
+                    // 结束嵌套级别
+                    for (let i = level; i < currentLevel; i++) {
+                        tocHTML += '</ul>';
+                    }
+                    currentLevel = level;
+                }
+                
+                tocHTML += `<li>${link}</li>`;
+            });
+            
+            // 关闭所有未关闭的ul标签
+            for (let i = 0; i < currentLevel; i++) {
+                tocHTML += '</ul>';
+            }
+            
+            tocList.innerHTML = tocHTML;
+            tocMobileList.innerHTML = tocHTML;
+        }
+
+        // 更新选中状态的函数
+        function updateActiveState(targetId) {
+            document.querySelectorAll('.table-of-contents-list a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-target') === targetId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // 高亮当前章节
+        function highlightCurrentSection() {
+            const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
+            
+            function updateActiveLink() {
+                let current = '';
+                
+                headings.forEach(heading => {
+                    const rect = heading.getBoundingClientRect();
+                    if (rect.top <= 100) {
+                        current = heading.id;
+                    }
+                });
+                
+                if (current) {
+                    updateActiveState(current);
+                }
+            }
+            
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink();
+        }
+
+        // 平滑滚动
+        function initSmoothScroll() {
+            // 使用事件委托来处理动态生成的链接
+            document.addEventListener('click', function(e) {
+                if (e.target.matches('.table-of-contents-list a')) {
+                    e.preventDefault();
+                    const targetId = e.target.getAttribute('data-target');
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        // 立即更新选中状态
+                        updateActiveState(targetId);
+                        
+                        const offsetTop = targetElement.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        }
+
+        // 移动端目录控制
+        function initMobileTOC() {
+            const toggle = document.getElementById('toc-toggle');
+            const overlay = document.getElementById('toc-overlay');
+            const mobile = document.getElementById('toc-mobile');
+            const close = document.getElementById('toc-close');
+            
+            function openTOC() {
+                overlay.classList.add('active');
+                mobile.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            function closeTOC() {
+                overlay.classList.remove('active');
+                mobile.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            
+            toggle.addEventListener('click', openTOC);
+            overlay.addEventListener('click', closeTOC);
+            close.addEventListener('click', closeTOC);
+            
+            // 点击目录链接后关闭移动端目录
+            mobile.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    closeTOC();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

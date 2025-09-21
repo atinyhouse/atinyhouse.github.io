@@ -35,6 +35,265 @@
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 文章内容样式更新 */
+.post-content {
+  position: relative;
+  max-width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .post-content {
+    margin-left: 240px; /* 为左侧目录留出空间 */
+    margin-right: 0;
+  }
+}
+
+/* 文章标题样式 */
+.post-title {
+  color: var(--text-shade);
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+  font-size: 2.25rem;
+  margin: 0 0 24px 0;
+  text-align: left;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 600px) {
+  .post-title {
+    font-size: 1.875rem;
+  }
+}
+
+/* 文章信息样式 */
+.post-info {
+  color: var(--text-tint);
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+  font-size: 0.875rem;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.post-info span {
+  font-style: normal;
+}
+
+/* 文章段落样式 */
+.post-content p {
+  margin: 1.5em 0;
+  text-align: left;
+  text-indent: 0;
+  line-height: 1.8;
+  color: var(--text-color);
+  font-size: 1.05em;
+}
+
+/* 前言部分样式 - 灰色字体，非斜体 */
+.post-content p em {
+  color: var(--text-tint);
+  font-style: normal !important;
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+/* 引用样式优化 - Notion风格黑白色系 */
+.post-content blockquote {
+  border-left: 3px solid var(--text-color);
+  color: var(--text-color);
+  margin: 3em 0;
+  padding: 2em 2.5em;
+  background-color: var(--grey-4);
+  border-radius: 0;
+  font-style: normal;
+  position: relative;
+  line-height: 1.8;
+  font-size: 1.05em;
+}
+
+.post-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* 引用标记 */
+.post-content blockquote::before {
+  content: """;
+  font-size: 3rem;
+  color: var(--text-tint);
+  position: absolute;
+  top: -0.3em;
+  left: 0.3em;
+  font-family: serif;
+  line-height: 1;
+  opacity: 0.4;
+}
+
+/* 引用内容 */
+.post-content blockquote p {
+  margin: 1em 0;
+  position: relative;
+  z-index: 1;
+  padding-left: 1.5em;
+}
+
+/* 引用来源 */
+.post-content blockquote div[style*="text-align: right"] {
+  margin-top: 2em;
+  font-size: 0.9em;
+  color: var(--text-tint);
+  font-style: normal;
+  text-align: right;
+  font-weight: 500;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1em;
+}
+
+/* 标题样式优化 */
+.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
+  color: var(--text-shade);
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+  line-height: 1.3;
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  scroll-margin-top: 80px; /* 目录跳转时的偏移 */
+}
+
+.post-content h1 {
+  font-size: 1.75rem;
+  margin-top: 0;
+  margin-bottom: 1em;
+  font-weight: 700;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5em;
+}
+
+.post-content h2 {
+  font-size: 1.5rem;
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  font-weight: 600;
+  color: var(--text-shade);
+}
+
+.post-content h3 {
+  font-size: 1.25rem;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  color: var(--text-shade);
+}
+
+.post-content h4, .post-content h5, .post-content h6 {
+  font-size: 1.1rem;
+  margin-top: 1.25em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  color: var(--text-shade);
+}
+
+/* 列表样式优化 */
+.post-content ul, .post-content ol {
+  padding-left: 1.5em;
+  margin: 1.5em 0;
+}
+
+.post-content ul li, .post-content ol li {
+  margin: 0.5em 0;
+  line-height: 1.6;
+}
+
+/* 代码样式优化 */
+.post-content code {
+  background-color: var(--grey-4);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+  font-family: 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+  color: #e16259;
+  border: 1px solid var(--border-color);
+}
+
+.post-content pre {
+  background-color: var(--grey-4);
+  padding: 1.5em;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 1.5em 0;
+  border: 1px solid var(--border-color);
+  font-size: 0.9em;
+}
+
+.post-content pre code {
+  background: none;
+  padding: 0;
+  border: none;
+  color: inherit;
+}
+
+/* 图片样式 */
+.post-content img {
+  margin: 1.5em auto;
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.post-content img + em {
+  color: var(--text-tint);
+  display: block;
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+  font-size: 0.875rem;
+  font-style: normal;
+  text-align: center;
+  margin-top: 0.5em;
+  margin-bottom: 1.5em;
+}
+
+/* 表格样式 */
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: 0.9em;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+.post-content th, .post-content td {
+  padding: 0.75em 1em;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: top;
+}
+
+.post-content th {
+  background-color: var(--grey-4);
+  font-weight: 600;
+  color: var(--text-shade);
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.post-content tr:hover {
+  background-color: rgba(241, 241, 239, 0.5);
+}
+
+[data-theme="dark"] .post-content tr:hover {
+  background-color: rgba(37, 37, 37, 0.5);
+}
+
+/* 水平分割线 */
+.post-content hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-color), transparent);
+  margin: 3em 0;
 }
 
 .nav {
