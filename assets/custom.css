@@ -622,6 +622,227 @@ body {
   color: var(--text-shade) !important;
 }
 
+/* 目录样式 */
+.table-of-contents {
+  position: fixed;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  width: 220px;
+  max-height: 70vh;
+  overflow-y: auto;
+  background: var(--bg-color);
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  z-index: 100;
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 1199px) {
+  .table-of-contents {
+    display: none;
+  }
+}
+
+.table-of-contents-title {
+  font-weight: 600;
+  color: var(--text-tint);
+  margin-bottom: 1em;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.6em 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table-of-contents-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.table-of-contents-list li {
+  margin: 0;
+  list-style: none;
+}
+
+.table-of-contents-list li::before {
+  display: none;
+}
+
+.table-of-contents-list a {
+  color: var(--text-tint);
+  text-decoration: none;
+  display: block;
+  padding: 0.5em 0.6em;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  font-size: 0.85rem;
+  border-left: 3px solid transparent;
+  margin-bottom: 0.2em;
+}
+
+.table-of-contents-list a:hover {
+  color: var(--text-color);
+  background-color: var(--grey-4);
+  padding-left: 0.8em;
+}
+
+.table-of-contents-list a.active {
+  color: var(--text-color);
+  font-weight: 600;
+  background-color: var(--grey-4);
+  border-left-color: var(--text-color);
+  padding-left: 0.8em;
+}
+
+.table-of-contents-list ul {
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--border-color);
+  margin-left: 0.8em;
+  margin-top: 0.3em;
+}
+
+.table-of-contents-list ul li {
+  margin: 0;
+}
+
+.table-of-contents-list ul a {
+  font-size: 0.8rem;
+  color: var(--text-tint);
+  padding: 0.4em 0.6em;
+  margin-left: 0.3em;
+  border-left: none;
+}
+
+.table-of-contents-list ul a:hover {
+  color: var(--text-color);
+  background-color: var(--grey-4);
+  padding-left: 0.6em;
+}
+
+.table-of-contents-list ul a.active {
+  color: var(--text-color);
+  font-weight: 600;
+  background-color: var(--grey-4);
+  padding-left: 0.6em;
+}
+
+/* 移动端目录按钮 */
+.toc-toggle {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.5em;
+  cursor: pointer;
+  z-index: 101;
+  display: none;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+@media (max-width: 1199px) {
+  .toc-toggle {
+    display: block;
+  }
+}
+
+.toc-toggle svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--text-color);
+}
+
+/* 移动端目录覆盖层 */
+.toc-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  display: none;
+}
+
+.toc-overlay.active {
+  display: block;
+}
+
+.toc-mobile {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 280px;
+  height: 100vh;
+  background: var(--bg-color);
+  border-right: 1px solid var(--border-color);
+  padding: 2em 1.5em;
+  overflow-y: auto;
+  z-index: 100;
+  transition: left 0.3s ease;
+}
+
+.toc-mobile.active {
+  left: 0;
+}
+
+.toc-close {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-tint);
+}
+
+/* 分页样式 */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3rem 0;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.pagination .arrow {
+  color: var(--text-tint);
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.pagination .arrow:hover {
+  color: var(--text-color);
+  background-color: var(--grey-4);
+}
+
+.pagination .top {
+  color: var(--text-tint);
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.pagination .top:hover {
+  color: var(--text-color);
+  background-color: var(--grey-4);
+}
+
 /* 页面宽度调整 */
 .container {
   max-width: 800px;
