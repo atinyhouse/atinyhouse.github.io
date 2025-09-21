@@ -46,7 +46,7 @@ body {
 
 @media (min-width: 1200px) {
   .post-content {
-    margin-left: 240px; /* 为左侧目录留出空间 */
+    margin-left: 0;
     margin-right: 0;
   }
 }
