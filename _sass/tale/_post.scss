@@ -131,7 +131,7 @@
 
     // 引用标记
     &::before {
-      content: """;
+      content: "\201C";
       font-size: 3rem;
       color: var(--text-tint);
       position: absolute;
