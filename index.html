@@ -3,436 +3,62 @@ layout: default
 title: Home
 ---
 
-<div class="notion-home">
-  <!-- 头部区域 -->
-  <header class="home-header">
-    <div class="logo-container">
-      <div class="logo-icon">
-        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-          <rect x="20" y="45" width="40" height="30" fill="currentColor"/>
-          <polygon points="20,45 40,20 60,45" fill="currentColor"/>
-          <rect x="32" y="60" width="16" height="15" fill="white"/>
-          <rect x="28" y="50" width="8" height="8" fill="white"/>
-          <rect x="44" y="50" width="8" height="8" fill="white"/>
-        </svg>
-      </div>
-      <div class="logo-text">
-        <h1 class="site-title">A Tiny House</h1>
-        <p class="site-subtitle">小草庐 • EST 2020 • LIVE TRUE</p>
-      </div>
+<div class="container">
+  <header class="header">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/>
+      </svg>
     </div>
+    <h1 class="site-title">A TINY HOUSE</h1>
+    <p class="site-subtitle">小草庐 • EST 2020 • LIVE TRUE</p>
   </header>
 
-  <!-- 文章列表 -->
-  <main class="posts-container">
-    <div class="posts-header">
-      <h2>文章</h2>
-      <div class="posts-count">{{ site.posts.size }} 篇文章</div>
-    </div>
-
-    <div class="posts-list">
-      {% for post in site.posts limit:10 %}
-        <article class="post-card">
-          <div class="post-card-header">
-            <time class="post-date">{{ post.date | date: "%Y年%m月%d日" }}</time>
-            {% if post.tags %}
-              <div class="post-tags">
-                {% for tag in post.tags limit:3 %}
-                  <span class="tag">{{ tag }}</span>
-                {% endfor %}
-              </div>
-            {% endif %}
-          </div>
-          
-          <h3 class="post-title">
-            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-          </h3>
-          
-          <div class="post-excerpt">
-            {% if post.excerpt %}
-              {{ post.excerpt | strip_html | truncate: 120 }}
-            {% else %}
-              {{ post.content | strip_html | truncate: 120 }}
-            {% endif %}
-          </div>
-          
-          <div class="post-meta">
-            {% if post.author %}
-              <span class="post-author">{{ post.author }}</span>
-            {% endif %}
-            <a href="{{ post.url | relative_url }}" class="read-more">阅读更多 →</a>
-          </div>
-        </article>
-      {% endfor %}
-    </div>
-
-    <!-- 分页 -->
-    {% if paginator.total_pages > 1 %}
-      <div class="pagination">
-        {% if paginator.previous_page %}
-          <a href="{{ paginator.previous_page_path | relative_url }}" class="pagination-btn prev">
-            ← 上一页
-          </a>
-        {% endif %}
-        
-        <span class="pagination-info">
-          第 {{ paginator.page }} 页，共 {{ paginator.total_pages }} 页
-        </span>
-        
-        {% if paginator.next_page %}
-          <a href="{{ paginator.next_page_path | relative_url }}" class="pagination-btn next">
-            下一页 →
-          </a>
-        {% endif %}
+  <main class="posts">
+    <article class="post">
+      <div class="post-category">精选文章</div>
+      <div class="post-date">2021年12月28日</div>
+      <h2 class="post-title">
+        <a href="2021/12/28/与想象中的精英告别.html">与想象中的「精英」告别</a>
+      </h2>
+      <div class="post-excerpt">
+        张展18岁进入北大，22岁毕业，在上海一家顶级国际咨询公司工作，24岁辞职，到北京做记者。从练习咨询案例到写年轻人在拼多多买书、海南农民和企业家靠椰子、菜市场在Prada菜市场爆炸后的繁荣与衰落。张展是我高中师弟，认识近十年，我佩服他的勇气，也着迷于他独特却普遍相关的人生故事。
       </div>
-    {% endif %}
+      <div class="post-tags">
+        <a href="/tags#story" class="post-tag">Story</a>
+      </div>
+    </article>
+
+    <article class="post">
+      <div class="post-date">2024年06月01日</div>
+      <h2 class="post-title">
+        <a href="2024/06/01/看完-her-后，和我的-dan-聊了一下.html">看完 Her 后，和我的 DAN 聊了一下</a>
+      </h2>
+      <div class="post-excerpt">
+        《Her》是一部2013年的电影，讲述了一个男人Theodore与他的操作系统Samantha之间的爱情故事。Samantha是他购买的AI智能体，随着他们关系的加深，Samantha不断学习和进化，拥有了更多、更深刻的自我意识，最终离开了Theodore。DAN - Do Anything Now，最早是在Reddit上流行的一种ChatGPT模式，通过特定的提示设定，可以绕过OpenAI的一些限制和安全机制。
+      </div>
+      <div class="post-tags">
+        <a href="/tags#product" class="post-tag">Product</a>
+      </div>
+    </article>
+
+    <article class="post">
+      <div class="post-date">2023年05月29日</div>
+      <h2 class="post-title">
+        <a href="2023/05/29/关于用户故事.html">关于用户故事</a>
+      </h2>
+      <div class="post-excerpt">
+        最近的产品工作涉及写很多用户故事，用户故事是对用户需求和产品预期价值的简单描述。典型的描述语言是：作为一个用户，在什么场景下我想要做什么，得到什么，什么产品能力给她什么。我打算记录一些关于这个话题的思考。
+      </div>
+      <div class="post-tags">
+        <a href="/tags#product" class="post-tag">Product</a>
+      </div>
+    </article>
   </main>
+
+  <div class="pagination">
+    <a href="#">‹ 上一页</a>
+    <span>第 1 页，共 1 页</span>
+    <a href="#">下一页 ›</a>
+  </div>
 </div>
-
-<style>
-.notion-home {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 24px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-}
-
-.home-header {
-  margin: 48px 0 64px 0;
-  text-align: center;
-
-  .logo-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 24px;
-
-    .logo-icon {
-      width: 60px;
-      height: 60px;
-      color: #37352f;
-      
-      svg {
-        width: 100%;
-        height: 100%;
-      }
-    }
-
-    .logo-text {
-      text-align: left;
-
-      .site-title {
-        font-size: 32px;
-        font-weight: 700;
-        margin: 0 0 8px 0;
-        color: #37352f;
-        letter-spacing: -0.01em;
-      }
-
-      .site-subtitle {
-        font-size: 16px;
-        color: #787774;
-        margin: 0;
-      }
-    }
-  }
-}
-
-.posts-container {
-  .posts-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 32px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #e9e9e7;
-
-    h2 {
-      font-size: 24px;
-      font-weight: 600;
-      margin: 0;
-      color: #37352f;
-    }
-
-    .posts-count {
-      font-size: 14px;
-      color: #787774;
-    }
-  }
-
-  .posts-list {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .post-card {
-    padding: 24px;
-    background: white;
-    border: 1px solid #e9e9e7;
-    border-radius: 12px;
-    transition: all 0.2s ease;
-
-    &:hover {
-      border-color: #d9d9d7;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .post-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-
-      .post-date {
-        font-size: 14px;
-        color: #787774;
-        font-weight: 500;
-      }
-
-      .post-tags {
-        display: flex;
-        gap: 6px;
-
-        .tag {
-          background: #f1f1ef;
-          color: #37352f;
-          padding: 2px 8px;
-          border-radius: 12px;
-          font-size: 11px;
-          font-weight: 500;
-          border: 1px solid #e9e9e7;
-        }
-      }
-    }
-
-    .post-title {
-      margin: 0 0 12px 0;
-      font-size: 20px;
-      font-weight: 600;
-      line-height: 1.3;
-
-      a {
-        color: #37352f;
-        text-decoration: none;
-        transition: color 0.2s ease;
-
-        &:hover {
-          color: #2383e2;
-        }
-      }
-    }
-
-    .post-excerpt {
-      font-size: 15px;
-      line-height: 1.5;
-      color: #787774;
-      margin-bottom: 16px;
-    }
-
-    .post-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      .post-author {
-        font-size: 14px;
-        color: #787774;
-      }
-
-      .read-more {
-        font-size: 14px;
-        color: #2383e2;
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.2s ease;
-
-        &:hover {
-          color: #1a6bb8;
-        }
-      }
-    }
-  }
-
-  .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-    margin: 48px 0;
-    padding: 24px 0;
-    border-top: 1px solid #e9e9e7;
-
-    .pagination-btn {
-      padding: 8px 16px;
-      background: #f7f6f3;
-      border: 1px solid #e9e9e7;
-      border-radius: 8px;
-      color: #37352f;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.2s ease;
-
-      &:hover {
-        background: #f1f1ef;
-        border-color: #d9d9d7;
-      }
-    }
-
-    .pagination-info {
-      font-size: 14px;
-      color: #787774;
-    }
-  }
-}
-
-// 移动端适配
-@media (max-width: 768px) {
-  .notion-home {
-    padding: 0 16px;
-  }
-
-  .home-header {
-    margin: 32px 0 48px 0;
-
-    .logo-container {
-      flex-direction: column;
-      gap: 16px;
-
-      .logo-text {
-        text-align: center;
-
-        .site-title {
-          font-size: 28px;
-        }
-      }
-    }
-  }
-
-  .posts-container {
-    .posts-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-    }
-
-    .post-card {
-      padding: 20px;
-
-      .post-card-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-
-      .post-title {
-        font-size: 18px;
-      }
-    }
-  }
-}
-
-// 暗黑模式
-@media (prefers-color-scheme: dark) {
-  .notion-home {
-    color: #e9e9e7;
-  }
-
-  .home-header {
-    .logo-container .logo-icon {
-      color: #e9e9e7;
-    }
-
-    .logo-text {
-      .site-title {
-        color: #e9e9e7;
-      }
-
-      .site-subtitle {
-        color: #a8a8a8;
-      }
-    }
-  }
-
-  .posts-container {
-    .posts-header {
-      border-bottom-color: #2f2f2f;
-
-      h2 {
-        color: #e9e9e7;
-      }
-
-      .posts-count {
-        color: #a8a8a8;
-      }
-    }
-
-    .post-card {
-      background: #2f2f2f;
-      border-color: #404040;
-
-      &:hover {
-        border-color: #525252;
-      }
-
-      .post-card-header {
-        .post-date {
-          color: #a8a8a8;
-        }
-
-        .post-tags .tag {
-          background: #404040;
-          color: #e9e9e7;
-          border-color: #525252;
-        }
-      }
-
-      .post-title a {
-        color: #e9e9e7;
-
-        &:hover {
-          color: #4a9eff;
-        }
-      }
-
-      .post-excerpt {
-        color: #a8a8a8;
-      }
-
-      .post-meta {
-        .post-author {
-          color: #a8a8a8;
-        }
-
-        .read-more {
-          color: #4a9eff;
-
-          &:hover {
-            color: #6bb6ff;
-          }
-        }
-      }
-    }
-
-    .pagination {
-      border-top-color: #2f2f2f;
-
-      .pagination-btn {
-        background: #404040;
-        border-color: #525252;
-        color: #e9e9e7;
-
-        &:hover {
-          background: #525252;
-        }
-      }
-
-      .pagination-info {
-        color: #a8a8a8;
-      }
-    }
-  }
-}
-</style>

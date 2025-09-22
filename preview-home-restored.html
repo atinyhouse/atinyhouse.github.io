@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小草庐 | A Tiny House</title>
+  <meta name="description" content="Minimal Jekyll theme for storytellers">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/main.css">
+  <link rel="stylesheet" href="assets/custom.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+
+  <!-- Dark Mode Script -->
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+      
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+          themeToggle.setAttribute('data-theme', 'dark');
+        }
+      }
+    });
+  </script>
+
+  <style>
+    /* CSS Variables */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #333333;
+      --heading-color: #1a1a1a;
+      --link-color: #007bff;
+      --border-color: #e0e0e0;
+      --text-muted: #6c757d;
+      --shadow-light: rgba(0, 0, 0, 0.05) 0px 1px 3px, rgba(0, 0, 0, 0.02) 0px 1px 2px;
+      --shadow-medium: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+      --transition: all 0.2s ease;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #1a1a1a;
+      --text-color: #e0e0e0;
+      --heading-color: #ffffff;
+      --link-color: #61afef;
+      --border-color: #3e4451;
+      --text-muted: #abb2bf;
+      --shadow-light: rgba(0, 0, 0, 0.2) 0px 1px 3px, rgba(0, 0, 0, 0.1) 0px 1px 2px;
+      --shadow-medium: rgba(0, 0, 0, 0.3) 0px 4px 6px -1px, rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
+    }
+
+    /* Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      font-size: 16px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Navigation */
+    .nav {
+      background-color: var(--bg-color);
+      border-bottom: 1px solid var(--border-color);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--heading-color);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .nav-title:hover {
+      color: var(--link-color);
+    }
+
+    .nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav ul li a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav ul li a:hover {
+      color: var(--link-color);
+    }
+
+    .nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: var(--link-color);
+      transition: width 0.3s ease;
+    }
+
+    .nav ul li a:hover::after {
+      width: 100%;
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      background: var(--border-color);
+      border: none;
+      border-radius: 20px;
+      width: 40px;
+      height: 22px;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+      z-index: 1000;
+      box-shadow: var(--shadow-light);
+    }
+
+    .theme-toggle:hover {
+      box-shadow: var(--shadow-medium);
+    }
+
+    .theme-toggle-slider {
+      width: 18px;
+      height: 18px;
+      background-color: var(--bg-color);
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: var(--transition);
+      box-shadow: var(--shadow-light);
+    }
+
+    .theme-toggle[data-theme="dark"] .theme-toggle-slider {
+      transform: translateX(18px);
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 50px 0 40px;
+    }
+
+    .logo {
+      margin-bottom: 20px;
+    }
+
+    .logo svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--text-color);
+      transition: var(--transition);
+    }
+
+    .logo:hover svg {
+      fill: var(--link-color);
+      transform: scale(1.1);
+    }
+
+    .site-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--heading-color);
+      margin: 20px 0 10px;
+      letter-spacing: 1px;
+      transition: var(--transition);
+    }
+
+    .site-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+
+    /* Posts */
+    .posts {
+      padding: 30px 0;
+    }
+
+    .post {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .post:last-child {
+      border-bottom: none;
+    }
+
+    .post:hover {
+      transform: translateY(-2px);
+    }
+
+    .post-category {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .post-date {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+
+    .post-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--heading-color);
+      margin-bottom: 10px;
+      line-height: 1.4;
+      transition: var(--transition);
+    }
+
+    .post-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .post-title a:hover {
+      color: var(--link-color);
+    }
+
+    .post-excerpt {
+      font-size: 0.95rem;
+      color: var(--text-color);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .post-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .post-tag {
+      background-color: var(--border-color);
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      text-decoration: none;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .post-tag:hover {
+      background-color: var(--link-color);
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    /* Pagination */
+    .pagination {
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .pagination a {
+      color: var(--link-color);
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 8px 16px;
+      border-radius: 4px;
+    }
+
+    .pagination a:hover {
+      background-color: var(--border-color);
+      text-decoration: none;
+    }
+
+    .pagination span {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      max-width: 1000px;
+      margin: 0 auto;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    footer a {
+      color: var(--link-color);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 15px;
+      }
+      
+      .nav-container {
+        padding: 0 15px;
+      }
+      
+      .nav ul {
+        gap: 15px;
+      }
+      
+      .theme-toggle {
+        top: 15px;
+        left: 15px;
+        width: 36px;
+        height: 20px;
+      }
+      
+      .theme-toggle-slider {
+        width: 16px;
+        height: 16px;
+      }
+      
+      .theme-toggle[data-theme="dark"] .theme-toggle-slider {
+        transform: translateX(16px);
+      }
+      
+      .site-title {
+        font-size: 1.7rem;
+      }
+      
+      .post-title {
+        font-size: 1.2rem;
+      }
+      
+      .header {
+        padding: 40px 0 30px;
+      }
+      
+      .posts {
+        padding: 20px 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav ul {
+        gap: 10px;
+      }
+      
+      .nav ul li a {
+        font-size: 0.8rem;
+      }
+      
+      .site-title {
+        font-size: 1.5rem;
+      }
+      
+      .post-title {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+    <div class="theme-toggle-slider"></div>
+  </button>
+
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="/" class="nav-title">A Tiny House</a>
+      <ul>
+        <li><a href="/">Posts</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/tags">Tags</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/>
+        </svg>
+      </div>
+      <h1 class="site-title">A TINY HOUSE</h1>
+      <p class="site-subtitle">小草庐 • EST 2020 • LIVE TRUE</p>
+    </header>
+
+    <main class="posts">
+      <article class="post">
+        <div class="post-category">精选文章</div>
+        <div class="post-date">2021年12月28日</div>
+        <h2 class="post-title">
+          <a href="2021/12/28/与想象中的精英告别.html">与想象中的「精英」告别</a>
+        </h2>
+        <div class="post-excerpt">
+          张展18岁进入北大，22岁毕业，在上海一家顶级国际咨询公司工作，24岁辞职，到北京做记者。从练习咨询案例到写年轻人在拼多多买书、海南农民和企业家靠椰子、菜市场在Prada菜市场爆炸后的繁荣与衰落。张展是我高中师弟，认识近十年，我佩服他的勇气，也着迷于他独特却普遍相关的人生故事。
+        </div>
+        <div class="post-tags">
+          <a href="/tags#story" class="post-tag">Story</a>
+        </div>
+      </article>
+
+      <article class="post">
+        <div class="post-date">2024年06月01日</div>
+        <h2 class="post-title">
+          <a href="2024/06/01/看完-her-后，和我的-dan-聊了一下.html">看完 Her 后，和我的 DAN 聊了一下</a>
+        </h2>
+        <div class="post-excerpt">
+          《Her》是一部2013年的电影，讲述了一个男人Theodore与他的操作系统Samantha之间的爱情故事。Samantha是他购买的AI智能体，随着他们关系的加深，Samantha不断学习和进化，拥有了更多、更深刻的自我意识，最终离开了Theodore。DAN - Do Anything Now，最早是在Reddit上流行的一种ChatGPT模式，通过特定的提示设定，可以绕过OpenAI的一些限制和安全机制。
+        </div>
+        <div class="post-tags">
+          <a href="/tags#product" class="post-tag">Product</a>
+        </div>
+      </article>
+
+      <article class="post">
+        <div class="post-date">2023年05月29日</div>
+        <h2 class="post-title">
+          <a href="2023/05/29/关于用户故事.html">关于用户故事</a>
+        </h2>
+        <div class="post-excerpt">
+          最近的产品工作涉及写很多用户故事，用户故事是对用户需求和产品预期价值的简单描述。典型的描述语言是：作为一个用户，在什么场景下我想要做什么，得到什么，什么产品能力给她什么。我打算记录一些关于这个话题的思考。
+        </div>
+        <div class="post-tags">
+          <a href="/tags#product" class="post-tag">Product</a>
+        </div>
+      </article>
+    </main>
+
+    <div class="pagination">
+      <a href="#">‹ 上一页</a>
+      <span>第 1 页，共 1 页</span>
+      <a href="#">下一页 ›</a>
+    </div>
+  </div>
+
+  <footer>
+    <span>
+      &copy; <time datetime="2024">2024</time> 小草庐. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    </span>
+  </footer>
+</body>
+</html>
