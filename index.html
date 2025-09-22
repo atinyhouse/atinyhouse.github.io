@@ -15,50 +15,42 @@ title: Home
   </header>
 
   <main class="posts">
-    <article class="post">
-      <div class="post-category">精选文章</div>
-      <div class="post-date">2021年12月28日</div>
-      <h2 class="post-title">
-        <a href="2021/12/28/与想象中的精英告别.html">与想象中的「精英」告别</a>
-      </h2>
-      <div class="post-excerpt">
-        张展18岁进入北大，22岁毕业，在上海一家顶级国际咨询公司工作，24岁辞职，到北京做记者。从练习咨询案例到写年轻人在拼多多买书、海南农民和企业家靠椰子、菜市场在Prada菜市场爆炸后的繁荣与衰落。张展是我高中师弟，认识近十年，我佩服他的勇气，也着迷于他独特却普遍相关的人生故事。
-      </div>
-      <div class="post-tags">
-        <a href="/tags#story" class="post-tag">Story</a>
-      </div>
-    </article>
-
-    <article class="post">
-      <div class="post-date">2024年06月01日</div>
-      <h2 class="post-title">
-        <a href="2024/06/01/看完-her-后，和我的-dan-聊了一下.html">看完 Her 后，和我的 DAN 聊了一下</a>
-      </h2>
-      <div class="post-excerpt">
-        《Her》是一部2013年的电影，讲述了一个男人Theodore与他的操作系统Samantha之间的爱情故事。Samantha是他购买的AI智能体，随着他们关系的加深，Samantha不断学习和进化，拥有了更多、更深刻的自我意识，最终离开了Theodore。DAN - Do Anything Now，最早是在Reddit上流行的一种ChatGPT模式，通过特定的提示设定，可以绕过OpenAI的一些限制和安全机制。
-      </div>
-      <div class="post-tags">
-        <a href="/tags#product" class="post-tag">Product</a>
-      </div>
-    </article>
-
-    <article class="post">
-      <div class="post-date">2023年05月29日</div>
-      <h2 class="post-title">
-        <a href="2023/05/29/关于用户故事.html">关于用户故事</a>
-      </h2>
-      <div class="post-excerpt">
-        最近的产品工作涉及写很多用户故事，用户故事是对用户需求和产品预期价值的简单描述。典型的描述语言是：作为一个用户，在什么场景下我想要做什么，得到什么，什么产品能力给她什么。我打算记录一些关于这个话题的思考。
-      </div>
-      <div class="post-tags">
-        <a href="/tags#product" class="post-tag">Product</a>
-      </div>
-    </article>
+    {% for post in site.posts limit:10 %}
+      <article class="post">
+        {% if forloop.first %}
+          <div class="post-category">精选文章</div>
+        {% endif %}
+        <div class="post-date">{{ post.date | date: "%Y年%m月%d日" }}</div>
+        <h2 class="post-title">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </h2>
+        <div class="post-excerpt">
+          {% if post.excerpt %}
+            {{ post.excerpt | strip_html | truncate: 200 }}
+          {% else %}
+            {{ post.content | strip_html | truncate: 200 }}
+          {% endif %}
+        </div>
+        {% if post.tags %}
+          <div class="post-tags">
+            {% for tag in post.tags limit:3 %}
+              <a href="/tags#{{ tag | downcase }}" class="post-tag">{{ tag }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </article>
+    {% endfor %}
   </main>
 
-  <div class="pagination">
-    <a href="#">‹ 上一页</a>
-    <span>第 1 页，共 1 页</span>
-    <a href="#">下一页 ›</a>
-  </div>
+  {% if paginator.total_pages > 1 %}
+    <div class="pagination">
+      {% if paginator.previous_page %}
+        <a href="{{ paginator.previous_page_path | relative_url }}">‹ 上一页</a>
+      {% endif %}
+      <span>第 {{ paginator.page }} 页，共 {{ paginator.total_pages }} 页</span>
+      {% if paginator.next_page %}
+        <a href="{{ paginator.next_page_path | relative_url }}">下一页 ›</a>
+      {% endif %}
+    </div>
+  {% endif %}
 </div>
