@@ -673,49 +673,35 @@ body {
 
 /* 分页样式更新 */
 .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 50px 0;
+  padding: 30px 0;
   border-top: 1px solid var(--border-color);
   font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
-  padding: 32px 0;
-  position: relative;
-  text-align: center;
-  margin-top: 48px;
 }
 
-.pagination-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.pagination-btn {
-  padding: 8px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  background-color: var(--bg-color);
-  color: var(--text-tint);
+.pagination a {
+  color: var(--blue);
   text-decoration: none;
-  font-size: 0.875rem;
+  margin: 0 15px;
+  font-size: 0.9rem;
+  font-weight: 500;
   transition: all 0.2s ease;
-  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
 }
 
-.pagination-btn:hover:not([disabled]) {
+.pagination a:hover {
   background-color: var(--grey-4);
-  border-color: var(--text-tint);
-  color: var(--text-color);
   text-decoration: none;
 }
 
-.pagination-btn[disabled] {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.pagination-info {
-  color: var(--text-shade);
-  font-size: 0.875rem;
+.pagination span {
+  color: var(--text-tint);
+  font-size: 0.9rem;
 }
 
 /* 强调文本样式 */
@@ -907,43 +893,6 @@ body {
   color: var(--text-tint);
 }
 
-/* 分页样式 */
-.pagination {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 3rem 0;
-  padding: 2rem 0;
-  border-top: 1px solid var(--border-color);
-}
-
-.pagination .arrow {
-  color: var(--text-tint);
-  text-decoration: none;
-  font-size: 1.2rem;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-}
-
-.pagination .arrow:hover {
-  color: var(--text-color);
-  background-color: var(--grey-4);
-}
-
-.pagination .top {
-  color: var(--text-tint);
-  text-decoration: none;
-  font-size: 0.9rem;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-}
-
-.pagination .top:hover {
-  color: var(--text-color);
-  background-color: var(--grey-4);
-}
 
 /* 页面宽度调整 */
 .container {
@@ -1149,6 +1098,4 @@ footer {
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 20px;
-}
-
 }

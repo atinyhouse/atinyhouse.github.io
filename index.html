@@ -15,7 +15,7 @@ title: Home
   </header>
 
   <main class="posts">
-    {% for post in site.posts limit:10 %}
+    {% for post in paginator.posts %}
       <article class="post">
         {% if forloop.first %}
           <div class="post-category">精选文章</div>
