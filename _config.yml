@@ -4,6 +4,9 @@ description:    "Minimal Jekyll theme for storytellers"
 baseurl:        ""
 url:            "https://atinyhouse.github.io/"
 
+# Theme settings
+theme:          null
+
 # Google Analytics
 # google_analytics: UA—XXXXXXXX-X
 
