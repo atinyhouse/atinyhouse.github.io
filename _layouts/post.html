@@ -1,294 +1,217 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title }} - {{ site.title }}</title>
-  
-  <!-- CSS -->
-  <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
-  <link rel="stylesheet" href="{{ "/assets/custom.css" | relative_url }}">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
+---
+layout: default
+---
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ "/assets/favicon-32x32.png" | relative_url }}">
-  <link rel="icon" type="image/png" sizes="16x16" href="{{ "/assets/favicon-16x16.png" | relative_url }}">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ "/assets/apple-touch-icon.png" | relative_url }}">
+<main>
+  <article class="post">
+    <div class="post-info">
+      <span>Written by</span>
+      {% if page.author %}
+          {{ page.author }}
+      {% else %}
+          {{ site.author.name }}
+      {% endif %}
 
-  <!-- Dark Mode CSS Variables -->
-  <style>
-    :root {
-      --bg-color: #ffffff;
-      --text-color: #37352f;
-      --text-shade: #2f2f2f;
-      --text-tint: #8b8b8b;
-      --grey-1: #6b6b6b;
-      --grey-2: #e9e9e7;
-      --grey-3: #f7f6f3;
-      --grey-4: #f1f1ef;
-      --blue: #2383e2;
-      --blue-light: #e8f4fd;
-      --border-color: #e9e9e7;
-      --shadow-color: rgba(0, 0, 0, .04);
-      --white: #ffffff;
+      {% if page.date %}
+        <br>
+        <span>on&nbsp;</span><time datetime="{{ page.date }}">{{ page.date | date: "%Y年%m月%d日" }}</time>
+      {% endif %}
+    </div>
+
+    <h1 class="post-title">{{ page.title }}</h1>
+    <div class="post-line"></div>
+
+    <div class="post-content">
+      {{ content }}
+    </div>
+  </article>
+</main>
+
+<!-- 桌面端目录 -->
+<div class="table-of-contents" id="toc">
+  <div class="table-of-contents-title">目录</div>
+  <ul class="table-of-contents-list" id="toc-list">
+    <!-- 目录内容将通过JavaScript生成 -->
+  </ul>
+</div>
+
+<!-- 移动端目录按钮 -->
+<button class="toc-toggle" id="toc-toggle">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</button>
+
+<!-- 移动端目录覆盖层 -->
+<div class="toc-overlay" id="toc-overlay"></div>
+
+<!-- 移动端目录 -->
+<div class="toc-mobile" id="toc-mobile">
+  <button class="toc-close" id="toc-close">&times;</button>
+  <div class="table-of-contents-title">目录</div>
+  <ul class="table-of-contents-list" id="toc-mobile-list">
+    <!-- 目录内容将通过JavaScript生成 -->
+  </ul>
+</div>
+
+{% if page.comments %}
+  {% include disqus_comments.html %}
+{% endif %}
+
+<div class="pagination">
+  {% if page.next.url %}
+    <a href="{{ page.next.url | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+  {% endif %}
+  {% if page.previous.url %}
+    <a href="{{ page.previous.url | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+  {% endif %}
+
+  <a href="#" class="top">Top</a>
+</div>
+
+<!-- 目录功能JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 生成目录
+  function generateTOC() {
+    const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
+    const tocList = document.getElementById('toc-list');
+    const tocMobileList = document.getElementById('toc-mobile-list');
+    
+    if (headings.length === 0) {
+      document.getElementById('toc').style.display = 'none';
+      document.getElementById('toc-toggle').style.display = 'none';
+      return;
     }
 
-    [data-theme="dark"] {
-      --bg-color: #1a1a1a;
-      --text-color: #e0e0e0;
-      --text-shade: #ffffff;
-      --text-tint: #a0a0a0;
-      --grey-1: #808080;
-      --grey-2: #2a2a2a;
-      --grey-3: #1f1f1f;
-      --grey-4: #252525;
-      --blue: #4a9eff;
-      --blue-light: #1a3a5c;
-      --border-color: #2a2a2a;
-      --shadow-color: rgba(0, 0, 0, .3);
-      --white: #ffffff;
-    }
-  </style>
-
-  <!-- Dark Mode Script -->
-  <script>
-    function toggleTheme() {
-      const body = document.body;
-      const themeToggle = document.getElementById('themeToggle');
+    let tocHTML = '';
+    let currentLevel = 0;
+    
+    headings.forEach((heading, index) => {
+      const level = parseInt(heading.tagName.charAt(1));
+      const id = `heading-${index}`;
+      heading.id = id;
       
-      if (body.getAttribute('data-theme') === 'dark') {
-        body.removeAttribute('data-theme');
-        themeToggle.removeAttribute('data-theme');
-        localStorage.setItem('theme', 'light');
-      } else {
-        body.setAttribute('data-theme', 'dark');
-        themeToggle.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark') {
-        document.body.setAttribute('data-theme', 'dark');
-        const themeToggle = document.getElementById('themeToggle');
-        if (themeToggle) {
-          themeToggle.setAttribute('data-theme', 'dark');
-        }
-      }
-
-      // TOC Script
-      function generateTOC() {
-        const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
-        const tocList = document.getElementById('toc-list');
-        const tocMobileList = document.getElementById('toc-mobile-list');
-
-        if (headings.length === 0) {
-          const toc = document.getElementById('toc');
-          const tocToggle = document.getElementById('toc-toggle');
-          if (toc) toc.style.display = 'none';
-          if (tocToggle) tocToggle.style.display = 'none';
-          return;
-        }
-
-        let tocHTML = '';
-        let currentLevel = 0;
-
-        headings.forEach((heading, index) => {
-          const level = parseInt(heading.tagName.charAt(1));
-          const id = `heading-${index}`;
-          heading.id = id;
-
-          const text = heading.textContent.trim();
-          const link = `<a href="#${id}" data-target="${id}">${text}</a>`;
-
-          if (level > currentLevel) {
-            tocHTML += '<ul>';
-            currentLevel = level;
-          } else if (level < currentLevel) {
-            for (let i = level; i < currentLevel; i++) {
-              tocHTML += '</ul>';
-            }
-            currentLevel = level;
-          }
-
-          tocHTML += `<li>${link}</li>`;
-        });
-
-        for (let i = 0; i < currentLevel; i++) {
+      const text = heading.textContent.trim();
+      const link = `<a href="#${id}" data-target="${id}">${text}</a>`;
+      
+      if (level > currentLevel) {
+        // 开始新的嵌套级别
+        tocHTML += '<ul>';
+        currentLevel = level;
+      } else if (level < currentLevel) {
+        // 结束嵌套级别
+        for (let i = level; i < currentLevel; i++) {
           tocHTML += '</ul>';
         }
-
-        if (tocList) tocList.innerHTML = tocHTML;
-        if (tocMobileList) tocMobileList.innerHTML = tocHTML;
+        currentLevel = level;
       }
-
-      function updateActiveState(targetId) {
-        document.querySelectorAll('.table-of-contents-list a').forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('data-target') === targetId) {
-            link.classList.add('active');
-          }
-        });
-      }
-
-      function highlightCurrentSection() {
-        const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
-
-        function updateActiveLink() {
-          let current = '';
-
-          headings.forEach(heading => {
-            const rect = heading.getBoundingClientRect();
-            if (rect.top <= 100) {
-              current = heading.id;
-            }
-          });
-
-          if (current) {
-            updateActiveState(current);
-          }
-        }
-
-        window.addEventListener('scroll', updateActiveLink);
-        updateActiveLink();
-      }
-
-      function initMobileTOC() {
-        const toggle = document.getElementById('toc-toggle');
-        const overlay = document.getElementById('toc-overlay');
-        const mobile = document.getElementById('toc-mobile');
-        const close = document.getElementById('toc-close');
-
-        if (toggle) toggle.addEventListener('click', openTOC);
-        if (overlay) overlay.addEventListener('click', closeTOC);
-        if (close) close.addEventListener('click', closeTOC);
-
-        function openTOC() {
-          if (overlay) overlay.classList.add('active');
-          if (mobile) mobile.classList.add('active');
-          document.body.style.overflow = 'hidden';
-        }
-
-        function closeTOC() {
-          if (overlay) overlay.classList.remove('active');
-          if (mobile) mobile.classList.remove('active');
-          document.body.style.overflow = '';
-        }
-
-        if (mobile) {
-          mobile.addEventListener('click', function(e) {
-            if (e.target.tagName === 'A') {
-              closeTOC();
-            }
-          });
-        }
-      }
-
-      function initSmoothScroll() {
-        document.addEventListener('click', function(e) {
-          if (e.target.matches('.table-of-contents-list a')) {
-            e.preventDefault();
-            const targetId = e.target.getAttribute('data-target');
-            const targetElement = document.getElementById(targetId);
-
-            if (targetElement) {
-              updateActiveState(targetId);
-
-              const offsetTop = targetElement.offsetTop - 80;
-              window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-              });
-            }
-          }
-        });
-      }
-
-      generateTOC();
-      highlightCurrentSection();
-      initMobileTOC();
-      initSmoothScroll();
+      
+      tocHTML += `<li>${link}</li>`;
     });
-  </script>
-</head>
-<body>
-  <!-- 导航栏 -->
-  <nav class="nav">
-    <div class="nav-container">
-      <a href="{{ site.baseurl }}/" class="nav-title">A Tiny House</a>
-      <ul>
-        <li><a href="{{ site.baseurl }}/">Posts</a></li>
-        <li><a href="{{ '/about' | prepend: site.baseurl }}">About</a></li>
-        <li><a href="{{ '/tags' | prepend: site.baseurl }}">Tags</a></li>
-      </ul>
-      <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
-        <div class="theme-toggle-slider"></div>
-      </button>
-    </div>
-  </nav>
+    
+    // 关闭所有未关闭的ul标签
+    for (let i = 0; i < currentLevel; i++) {
+      tocHTML += '</ul>';
+    }
+    
+    tocList.innerHTML = tocHTML;
+    tocMobileList.innerHTML = tocHTML;
+  }
 
-  <main>
-    <article class="post">
-      <div class="post-info">
-        <span>Written by</span>
-        {% if page.author %}
-            {{ page.author }}
-        {% else %}
-            {{ site.author.name }}
-        {% endif %}
+  // 更新选中状态的函数
+  function updateActiveState(targetId) {
+    document.querySelectorAll('.table-of-contents-list a').forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('data-target') === targetId) {
+        link.classList.add('active');
+      }
+    });
+  }
 
-        {% if page.date %}
-          <br>
-          <span>on&nbsp;</span><time datetime="{{ page.date }}">{{ page.date | date: "%Y年%m月%d日" }}</time>
-        {% endif %}
-      </div>
+  // 高亮当前章节
+  function highlightCurrentSection() {
+    const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
+    
+    function updateActiveLink() {
+      let current = '';
+      
+      headings.forEach(heading => {
+        const rect = heading.getBoundingClientRect();
+        if (rect.top <= 100) {
+          current = heading.id;
+        }
+      });
+      
+      if (current) {
+        updateActiveState(current);
+      }
+    }
+    
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+  }
 
-      <h1 class="post-title">{{ page.title }}</h1>
-      <div class="post-line"></div>
+  // 移动端目录控制
+  function initMobileTOC() {
+    const toggle = document.getElementById('toc-toggle');
+    const overlay = document.getElementById('toc-overlay');
+    const mobile = document.getElementById('toc-mobile');
+    const close = document.getElementById('toc-close');
+    
+    function openTOC() {
+      overlay.classList.add('active');
+      mobile.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeTOC() {
+      overlay.classList.remove('active');
+      mobile.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    toggle.addEventListener('click', openTOC);
+    overlay.addEventListener('click', closeTOC);
+    close.addEventListener('click', closeTOC);
+    
+    // 点击目录链接后关闭移动端目录
+    mobile.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A') {
+        closeTOC();
+      }
+    });
+  }
 
-      <div class="post-content">
-        {{ content }}
-      </div>
-    </article>
-  </main>
+  // 平滑滚动
+  function initSmoothScroll() {
+    // 使用事件委托来处理动态生成的链接
+    document.addEventListener('click', function(e) {
+      if (e.target.matches('.table-of-contents-list a')) {
+        e.preventDefault();
+        const targetId = e.target.getAttribute('data-target');
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          // 立即更新选中状态
+          updateActiveState(targetId);
+          
+          const offsetTop = targetElement.offsetTop - 80;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
+  }
 
-  <!-- 桌面端目录 -->
-  <div class="table-of-contents" id="toc">
-    <div class="table-of-contents-title">目录</div>
-    <ul class="table-of-contents-list" id="toc-list">
-      <!-- 目录内容将通过JavaScript生成 -->
-    </ul>
-  </div>
-
-  <!-- 移动端目录按钮 -->
-  <button class="toc-toggle" id="toc-toggle">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <line x1="3" y1="12" x2="21" y2="12"></line>
-      <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-  </button>
-
-  <!-- 移动端目录覆盖层 -->
-  <div class="toc-overlay" id="toc-overlay"></div>
-
-  <!-- 移动端目录 -->
-  <div class="toc-mobile" id="toc-mobile">
-    <button class="toc-close" id="toc-close">&times;</button>
-    <div class="table-of-contents-title">目录</div>
-    <ul class="table-of-contents-list" id="toc-mobile-list">
-      <!-- 目录内容将通过JavaScript生成 -->
-    </ul>
-  </div>
-
-  <!-- 页脚 -->
-  <footer>
-    <span>&copy; 2024 {{ site.author.name }}. Made with Jekyll using the Tale theme.</span>
-  </footer>
-
-  {% if page.comments %}
-    {% include disqus_comments.html %}
-  {% endif %}
-</body>
-</html>
+  // 初始化所有功能
+  generateTOC();
+  highlightCurrentSection();
+  initMobileTOC();
+  initSmoothScroll();
+});
+</script>
