@@ -4,6 +4,9 @@ description: "Minimal Jekyll theme for storytellers"
 baseurl: ""
 url: "https://atinyhouse.github.io/"
 
+# Encoding
+encoding: utf-8
+
 # Author
 author:
   name: "小草庐"
