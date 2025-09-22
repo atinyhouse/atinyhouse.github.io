@@ -150,8 +150,8 @@
       padding-left: 1.5em;
     }
 
-    // 引用来源
-    div[style*="text-align: right"] {
+    // 引用来源样式
+    .quote-source {
       margin-top: 2em;
       font-size: 0.9em;
       color: var(--text-tint);
