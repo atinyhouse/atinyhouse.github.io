@@ -370,28 +370,47 @@ body {
 }
 
 /* Logo样式 */
-.home-header {
+.header {
   padding: 48px 0;
   text-align: center;
   position: relative;
 }
 
-.logo-container {
+.logo {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 20px;
   position: relative;
   display: inline-block;
-  margin: 0 auto;
 }
 
-.logo-house {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 24px;
-  position: relative;
-}
-
-.logo-house svg {
+.logo svg {
   width: 100%;
   height: 100%;
+  fill: var(--text-color);
+  transition: fill 0.3s ease;
+}
+
+.logo:hover svg {
+  fill: var(--blue);
+  transform: scale(1.1);
+}
+
+.site-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-shade);
+  margin: 20px 0 10px;
+  letter-spacing: 1px;
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.site-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-tint);
+  margin-bottom: 0;
+  font-weight: 400;
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
 }
 
 /* 明亮模式显示深色logo */
@@ -487,6 +506,89 @@ body {
 }
 
 /* 文章列表样式更新 */
+.posts {
+  padding: 30px 0;
+}
+
+.post {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.post:last-child {
+  border-bottom: none;
+}
+
+.post:hover {
+  transform: translateY(-2px);
+}
+
+.post-category {
+  font-size: 0.75rem;
+  color: var(--text-tint);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.post-date {
+  font-size: 0.85rem;
+  color: var(--text-tint);
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+
+.post-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-shade);
+  margin-bottom: 10px;
+  line-height: 1.4;
+  transition: all 0.2s ease;
+}
+
+.post-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.post-title a:hover {
+  color: var(--blue);
+}
+
+.post-excerpt {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.post-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.post-tag {
+  background-color: var(--grey-4);
+  color: var(--text-tint);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.post-tag:hover {
+  background-color: var(--blue);
+  color: white;
+  transform: translateY(-1px);
+}
+
 .catalogue-item {
   border-bottom: 1px solid var(--border-color);
   color: var(--text-color);
@@ -845,7 +947,9 @@ body {
 
 /* 页面宽度调整 */
 .container {
-  max-width: 800px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 /* 目录样式 */
@@ -1025,36 +1129,26 @@ body {
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 900px;
+    max-width: 1000px;
   }
 }
 
 .nav-container {
-  max-width: 800px;
-}
-
-@media (min-width: 1200px) {
-  .nav-container {
-    max-width: 900px;
-  }
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 main {
-  max-width: 800px;
-}
-
-@media (min-width: 1200px) {
-  main {
-    max-width: 900px;
-  }
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 footer {
-  max-width: 800px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-@media (min-width: 1200px) {
-  footer {
-    max-width: 900px;
-  }
 }
