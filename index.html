@@ -1,4 +1,130 @@
----
-layout: home
-title: Home
----
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小草庐 | A Tiny House</title>
+  <meta name="description" content="Minimal Jekyll theme for storytellers">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/main.css">
+  <link rel="stylesheet" href="assets/custom.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+
+  <!-- Dark Mode Script -->
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+      
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+          themeToggle.setAttribute('data-theme', 'dark');
+        }
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="/" class="nav-title">A Tiny House</a>
+      <ul>
+        <li><a href="/">Posts</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/tags">Tags</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+        <div class="theme-toggle-slider"></div>
+      </button>
+    </div>
+  </nav>
+
+  <div class="home-header">
+    <div class="logo-container">
+      <!-- 装饰线条 -->
+      <div class="logo-decoration left"></div>
+      <div class="logo-decoration right"></div>
+      
+      <!-- 小房子图标 -->
+      <div class="logo-house">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <!-- 主体建筑 -->
+          <rect x="20" y="45" width="40" height="30" fill="var(--text-color)" class="house-light"/>
+          <rect x="20" y="45" width="40" height="30" fill="white" class="house-dark"/>
+          
+          <!-- 屋顶 -->
+          <polygon points="20,45 40,20 60,45" fill="var(--text-color)" class="house-light"/>
+          <polygon points="20,45 40,20 60,45" fill="white" class="house-dark"/>
+          
+          <!-- 门 -->
+          <rect x="32" y="60" width="16" height="15" fill="var(--bg-color)" class="house-light"/>
+          <rect x="32" y="60" width="16" height="15" fill="var(--bg-color)" class="house-dark"/>
+          
+          <!-- 窗户 -->
+          <rect x="28" y="50" width="8" height="8" fill="var(--bg-color)" class="house-light"/>
+          <rect x="44" y="50" width="8" height="8" fill="var(--bg-color)" class="house-light"/>
+          <rect x="28" y="50" width="8" height="8" fill="var(--bg-color)" class="house-dark"/>
+          <rect x="44" y="50" width="8" height="8" fill="var(--bg-color)" class="house-dark"/>
+        </svg>
+      </div>
+      
+      <!-- 文字部分 -->
+      <div class="logo-text">
+        <div class="logo-text-main">A TINY HOUSE</div>
+        <div class="logo-text-subtitle">小草庐 • EST 2020 • LIVE TRUE</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="catalogue">
+    <a href="2024/06/01/看完-her-后，和我的-dan-聊了一下.html" class="catalogue-item">
+      <div class="catalogue-time">2024年06月01日</div>
+      <div class="catalogue-title">看完 Her 后，和我的 DAN 聊了一下</div>
+      <div class="catalogue-excerpt">《Her》是一部2013年的电影，讲述了一个男人Theodore与他的操作系统Samantha之间的爱情故事。Samantha是他购买的AI智能体，随着他们关系的加深，Samantha不断学习和进化，拥有了更多、更深刻的自我意识，最终离开了Theodore。</div>
+      <div class="catalogue-tags">
+        <span class="tag">Product</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="pagination">
+    <div class="pagination-container">
+      <span class="pagination-btn" disabled>‹ 上一页</span>
+      <div class="pagination-info">
+        <span>第 1 页，共 1 页</span>
+      </div>
+      <span class="pagination-btn" disabled>下一页 ›</span>
+    </div>
+  </div>
+
+  <footer>
+    <span>
+      &copy; <time datetime="2024">2024</time> 小草庐. Made with Jekyll using the <a href="https://github.com/chesterhow/tale/">Tale</a> theme.
+    </span>
+  </footer>
+</body>
+</html>
