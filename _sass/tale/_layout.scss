@@ -15,21 +15,25 @@
 }
 
 main,
-footer,
-.nav-container {
+footer {
   display: block;
   margin: 0 auto;
-  max-width: 680px;
+  max-width: 1000px;
   width: 100%;
-  padding: 0 24px;
+  padding: 48px 24px 0 24px;
   
   @media (min-width: 768px) {
-    padding: 0 40px;
+    padding: 56px 40px 0 40px;
   }
   
   @media (min-width: 1200px) {
-    max-width: 720px;
-    padding: 0 48px;
+    max-width: 1200px;
+    padding: 64px 48px 0 48px;
+  }
+  
+  @media (min-width: 1400px) {
+    max-width: 1400px;
+    padding: 72px 60px 0 60px;
   }
 }
 
@@ -43,41 +47,41 @@ footer,
     margin: 0 auto;
     position: relative;
     text-align: left;
-    padding: 16px 0;
-    max-width: 1400px;
+    padding: 24px 0;
+    max-width: 1600px;
     width: 100%;
-    padding-left: 24px;
-    padding-right: 24px;
+    padding-left: 32px;
+    padding-right: 32px;
   }
 
   @media (min-width: 768px) {
     &-container {
-      padding-left: 40px;
-      padding-right: 40px;
-    }
-  }
-
-  @media (min-width: 1200px) {
-    &-container {
-      max-width: 1600px;
       padding-left: 48px;
       padding-right: 48px;
     }
   }
 
-  @media (min-width: 1400px) {
+  @media (min-width: 1200px) {
     &-container {
       max-width: 1800px;
-      padding-left: 60px;
-      padding-right: 60px;
+      padding-left: 64px;
+      padding-right: 64px;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    &-container {
+      max-width: 2000px;
+      padding-left: 80px;
+      padding-right: 80px;
     }
   }
 
   @media (min-width: 1600px) {
     &-container {
-      max-width: 2000px;
-      padding-left: 80px;
-      padding-right: 80px;
+      max-width: 2200px;
+      padding-left: 100px;
+      padding-right: 100px;
     }
   }
 
@@ -124,7 +128,7 @@ footer,
     @include transition(all .2s ease-out);
     color: var(--text-tint);
     display: inline-block;
-    margin-left: 40px;
+    margin-left: 48px;
 
     &:hover,
     &:focus {
