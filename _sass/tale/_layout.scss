@@ -18,22 +18,28 @@ main,
 footer {
   display: block;
   margin: 0 auto;
-  max-width: 1000px;
+  max-width: 90%;
   width: 100%;
-  padding: 48px 24px 0 24px;
+  padding: 48px 5% 0 5%;
   
   @media (min-width: 768px) {
-    padding: 56px 40px 0 40px;
+    max-width: 85%;
+    padding: 56px 7.5% 0 7.5%;
   }
   
   @media (min-width: 1200px) {
-    max-width: 1200px;
-    padding: 64px 48px 0 48px;
+    max-width: 80%;
+    padding: 64px 10% 0 10%;
   }
   
   @media (min-width: 1400px) {
-    max-width: 1400px;
-    padding: 72px 60px 0 60px;
+    max-width: 75%;
+    padding: 72px 12.5% 0 12.5%;
+  }
+  
+  @media (min-width: 1600px) {
+    max-width: 70%;
+    padding: 80px 15% 0 15%;
   }
 }
 
@@ -48,40 +54,41 @@ footer {
     position: relative;
     text-align: left;
     padding: 24px 0;
-    max-width: 1600px;
+    max-width: 95%;
     width: 100%;
-    padding-left: 32px;
-    padding-right: 32px;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
   }
 
   @media (min-width: 768px) {
     &-container {
-      padding-left: 48px;
-      padding-right: 48px;
+      max-width: 90%;
+      padding-left: 5%;
+      padding-right: 5%;
     }
   }
 
   @media (min-width: 1200px) {
     &-container {
-      max-width: 1800px;
-      padding-left: 64px;
-      padding-right: 64px;
+      max-width: 85%;
+      padding-left: 7.5%;
+      padding-right: 7.5%;
     }
   }
 
   @media (min-width: 1400px) {
     &-container {
-      max-width: 2000px;
-      padding-left: 80px;
-      padding-right: 80px;
+      max-width: 80%;
+      padding-left: 10%;
+      padding-right: 10%;
     }
   }
 
   @media (min-width: 1600px) {
     &-container {
-      max-width: 2200px;
-      padding-left: 100px;
-      padding-right: 100px;
+      max-width: 75%;
+      padding-left: 12.5%;
+      padding-right: 12.5%;
     }
   }
 
@@ -128,7 +135,7 @@ footer {
     @include transition(all .2s ease-out);
     color: var(--text-tint);
     display: inline-block;
-    margin-left: 48px;
+    margin-left: 64px;
 
     &:hover,
     &:focus {
