@@ -7,10 +7,11 @@
   line-height: 1.6;
   color: #37352f;
 
-  // 文章头部
+  // 文章头部 - 与首页导航栏保持一致
   .post-header {
     margin-bottom: 48px;
-    padding-bottom: 24px;
+    padding: 48px 0 32px 0;
+    text-align: center;
     border-bottom: 1px solid #e9e9e7;
 
     .post-meta {
@@ -19,6 +20,7 @@
       margin-bottom: 16px;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
 
       .post-date {
@@ -31,18 +33,20 @@
     }
 
     .post-title {
-      font-size: 42px;
+      font-size: 2.5rem;
       font-weight: 700;
       line-height: 1.2;
       margin: 0 0 24px 0;
       color: #37352f;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.02em;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
     }
 
     .post-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
+      justify-content: center;
 
       .tag {
         background: #f1f1ef;
@@ -260,40 +264,186 @@
   }
 }
 
-// 目录组件
-.table-of-contents {
+// Notion风格目录组件
+.notion-toc {
   position: fixed;
   top: 50%;
   right: 30px;
   transform: translateY(-50%);
-  width: 240px;
-  z-index: 50;
-  max-height: 60vh;
-  overflow-y: auto;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  padding: 16px;
-  box-shadow: none;
-  opacity: 1;
-  visibility: visible;
-  transition: none;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  &::-webkit-scrollbar {
-    width: 4px;
+  &.active {
+    opacity: 1;
+    visibility: visible;
   }
 
-  &::-webkit-scrollbar-track {
-    background: transparent;
+  @media (max-width: 1199px) {
+    display: none;
   }
 
-  &::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 2px;
+  .toc-card {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(20px);
+    width: 280px;
+    max-height: 70vh;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      transform: translateY(-2px);
+    }
   }
 
-  &::-webkit-scrollbar-thumb:hover {
-    background: var(--text-muted);
+  .toc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--grey-4);
+
+    .toc-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-shade);
+
+      svg {
+        color: var(--text-tint);
+        flex-shrink: 0;
+      }
+    }
+
+    .toc-close {
+      background: none;
+      border: none;
+      padding: 4px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text-tint);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background: var(--border-color);
+        color: var(--text-color);
+      }
+
+      svg {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+
+  .toc-content {
+    padding: 8px 0;
+    max-height: calc(70vh - 60px);
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: var(--text-tint);
+    }
+  }
+
+  .toc-nav {
+    .toc-item {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      .toc-link {
+        display: block;
+        padding: 8px 20px;
+        color: var(--text-tint);
+        text-decoration: none;
+        font-size: 13px;
+        line-height: 1.4;
+        transition: all 0.2s ease;
+        border-radius: 0;
+        position: relative;
+
+        &:hover {
+          color: var(--text-color);
+          background: var(--grey-4);
+        }
+
+        &.active {
+          color: var(--text-color);
+          background: var(--grey-4);
+          font-weight: 500;
+
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--blue);
+            border-radius: 0 2px 2px 0;
+          }
+        }
+      }
+
+      // 子级目录样式
+      .toc-sublist {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-left: 1px solid var(--border-color);
+        margin-left: 16px;
+        margin-top: 4px;
+
+        .toc-item {
+          .toc-link {
+            padding: 6px 16px 6px 20px;
+            font-size: 12px;
+            color: var(--text-tint);
+
+            &:hover {
+              color: var(--text-color);
+              background: var(--grey-4);
+            }
+
+            &.active {
+              color: var(--text-color);
+              background: var(--grey-4);
+              font-weight: 500;
+
+              &::before {
+                left: 16px;
+                width: 2px;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -360,6 +510,42 @@
     }
   }
 
+// 目录切换按钮
+.toc-toggle {
+  position: fixed;
+  top: 80px;
+  right: 30px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  z-index: 1001;
+  display: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  color: var(--text-color);
+
+  &:hover {
+    background: var(--grey-4);
+    border-color: var(--text-tint);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  @media (max-width: 1199px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+    color: var(--text-color);
+  }
+}
+
 // 移动端目录覆盖层
 .toc-overlay {
   position: fixed;
@@ -372,6 +558,7 @@
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
 
   &.active {
     opacity: 1;
@@ -413,6 +600,42 @@
   }
 }
 
+// 移动端目录样式
+@media (max-width: 1199px) {
+  .notion-toc {
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 300px;
+    height: 100vh;
+    transform: none;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+
+    &.active {
+      right: 0;
+    }
+
+    .toc-card {
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      border-left: 1px solid var(--border-color);
+      box-shadow: -8px 0 32px rgba(0, 0, 0, 0.12);
+      max-height: none;
+
+      &:hover {
+        transform: none;
+        box-shadow: -8px 0 32px rgba(0, 0, 0, 0.12);
+      }
+    }
+
+    .toc-content {
+      max-height: calc(100vh - 60px);
+    }
+  }
+}
+
 // 移动端适配
 @media (max-width: 768px) {
   .notion-post {
@@ -431,8 +654,10 @@
     }
   }
 
-  .table-of-contents {
-    display: none; /* Hide TOC on small screens */
+  .toc-toggle {
+    top: 70px;
+    right: 20px;
+    padding: 10px;
   }
 
   .back-to-top {
@@ -526,19 +751,36 @@
     }
   }
 
-  .table-of-contents {
-    background: #2f2f2f;
-    border-color: #404040;
+  .notion-toc {
+    .toc-card {
+      background: #2f2f2f;
+      border-color: #404040;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 
-    .toc-header {
-      border-bottom-color: #404040;
-
-      h3 {
-        color: #e9e9e7;
+      &:hover {
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
       }
     }
 
-    .toc-content .toc-list li a {
+    .toc-header {
+      background: #404040;
+      border-bottom-color: #404040;
+
+      .toc-title {
+        color: #e9e9e7;
+      }
+
+      .toc-close {
+        color: #a8a8a8;
+
+        &:hover {
+          background: #404040;
+          color: #e9e9e7;
+        }
+      }
+    }
+
+    .toc-nav .toc-item .toc-link {
       color: #a8a8a8;
 
       &:hover {
@@ -549,7 +791,44 @@
       &.active {
         background: #404040;
         color: #e9e9e7;
+
+        &::before {
+          background: #4a9eff;
+        }
       }
+    }
+
+    .toc-nav .toc-item .toc-sublist {
+      border-left-color: #404040;
+
+      .toc-item .toc-link {
+        color: #a8a8a8;
+
+        &:hover {
+          background: #404040;
+          color: #e9e9e7;
+        }
+
+        &.active {
+          background: #404040;
+          color: #e9e9e7;
+        }
+      }
+    }
+  }
+
+  .toc-toggle {
+    background: #2f2f2f;
+    border-color: #404040;
+    color: #e9e9e7;
+
+    &:hover {
+      background: #404040;
+      border-color: #a8a8a8;
+    }
+
+    svg {
+      color: #e9e9e7;
     }
   }
 }

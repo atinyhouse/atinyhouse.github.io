@@ -47,17 +47,6 @@ layout: default
   </footer>
 </article>
 
-<!-- 目录组件 -->
-<div class="table-of-contents" id="toc">
-  <div class="toc-header">
-    <h3 title="{{ page.title }}">{{ page.title }}</h3>
-  </div>
-  <div class="toc-content" id="toc-content">
-    <ul class="toc-list" id="toc-list">
-      <!-- 目录内容将通过JavaScript生成 -->
-    </ul>
-  </div>
-</div>
 
 <!-- 回到顶部按钮 -->
 <button class="back-to-top" id="back-to-top">
@@ -69,130 +58,6 @@ layout: default
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // 生成目录
-  function generateTOC() {
-    const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
-    const tocList = document.getElementById('toc-list');
-    
-    if (headings.length === 0) {
-      document.getElementById('toc').style.display = 'none';
-      return;
-    }
-
-    let tocHTML = '';
-    let currentLevel = 0;
-    
-    headings.forEach((heading, index) => {
-      const level = parseInt(heading.tagName.charAt(1));
-      const id = `heading-${index}`;
-      heading.id = id;
-      
-      const text = heading.textContent.trim();
-      const link = `<a href="#${id}" data-target="${id}">${text}</a>`;
-      
-      if (level > currentLevel) {
-        tocHTML += '<ul>';
-        currentLevel = level;
-      } else if (level < currentLevel) {
-        for (let i = level; i < currentLevel; i++) {
-          tocHTML += '</ul>';
-        }
-        currentLevel = level;
-      }
-      
-      tocHTML += `<li class="toc-level-${level}">${link}</li>`;
-    });
-    
-    for (let i = 0; i < currentLevel; i++) {
-      tocHTML += '</ul>';
-    }
-    
-    tocList.innerHTML = tocHTML;
-  }
-
-  // 更新选中状态
-  function updateActiveState(targetId) {
-    document.querySelectorAll('.toc-list a').forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('data-target') === targetId) {
-        link.classList.add('active');
-      }
-    });
-  }
-
-  // 高亮当前章节
-  function highlightCurrentSection() {
-    const headings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6');
-    
-    function updateActiveLink() {
-      let current = '';
-      
-      headings.forEach(heading => {
-        const rect = heading.getBoundingClientRect();
-        if (rect.top <= 100) {
-          current = heading.id;
-        }
-      });
-      
-      if (current) {
-        updateActiveState(current);
-      }
-    }
-    
-    window.addEventListener('scroll', updateActiveLink);
-    updateActiveLink();
-  }
-
-  // 目录控制
-  function initTOC() {
-    const toggle = document.getElementById('toc-toggle');
-    const overlay = document.getElementById('toc-overlay');
-    const toc = document.getElementById('toc');
-    
-    function toggleTOC() {
-      toc.classList.toggle('active');
-      overlay.classList.toggle('active');
-      document.body.classList.toggle('toc-open');
-    }
-    
-    function closeTOC() {
-      toc.classList.remove('active');
-      overlay.classList.remove('active');
-      document.body.classList.remove('toc-open');
-    }
-    
-    toggle.addEventListener('click', toggleTOC);
-    overlay.addEventListener('click', closeTOC);
-    
-    // 点击目录链接后关闭目录
-    document.addEventListener('click', function(e) {
-      if (e.target.matches('.toc-list a')) {
-        closeTOC();
-      }
-    });
-  }
-
-  // 平滑滚动
-  function initSmoothScroll() {
-    document.addEventListener('click', function(e) {
-      if (e.target.matches('.toc-list a')) {
-        e.preventDefault();
-        const targetId = e.target.getAttribute('data-target');
-        const targetElement = document.getElementById(targetId);
-        
-        if (targetElement) {
-          updateActiveState(targetId);
-          
-          const offsetTop = targetElement.offsetTop - 80;
-          window.scrollTo({
-            top: offsetTop,
-            behavior: 'smooth'
-          });
-        }
-      }
-    });
-  }
-
   // 回到顶部
   function initBackToTop() {
     const backToTop = document.getElementById('back-to-top');
@@ -213,11 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // 初始化所有功能
-  generateTOC();
-  highlightCurrentSection();
-  initTOC();
-  initSmoothScroll();
+  // 初始化功能
   initBackToTop();
 });
 </script>

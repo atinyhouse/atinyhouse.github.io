@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网站预览导航</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .preview-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .preview-card {
+            border: 1px solid #e1e5e9;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.2s ease;
+        }
+        .preview-card:hover {
+            border-color: #007bff;
+            box-shadow: 0 4px 12px rgba(0,123,255,0.15);
+        }
+        .preview-card h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .preview-card p {
+            margin: 0 0 15px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        .preview-card a {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+        .preview-card a:hover {
+            background: #0056b3;
+        }
+        .status {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 网站预览导航</h1>
+        
+        <div class="status">
+            ✅ 本地服务器运行中 - http://localhost:8080
+        </div>
+        
+        <div class="preview-links">
+            <div class="preview-card">
+                <h3>🏠 首页预览</h3>
+                <p>展示博客首页设计，包括文章列表和导航</p>
+                <a href="preview-home-restored.html" target="_blank">查看首页</a>
+            </div>
+            
+            <div class="preview-card">
+                <h3>📄 文章页面预览</h3>
+                <p>展示单篇文章页面，包括目录组件和文章内容</p>
+                <a href="preview-single-post.html" target="_blank">查看文章页</a>
+            </div>
+            
+            <div class="preview-card">
+                <h3>📝 原始文章预览</h3>
+                <p>查看原始的文章预览页面</p>
+                <a href="preview-her-article.html" target="_blank">查看原始文章</a>
+            </div>
+            
+            <div class="preview-card">
+                <h3>🔧 其他预览页面</h3>
+                <p>查看其他可用的预览页面</p>
+                <a href="preview.html" target="_blank">查看其他页面</a>
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e1e5e9; text-align: center; color: #666; font-size: 14px;">
+            <p>💡 提示：点击链接会在新标签页中打开预览页面</p>
+            <p>🔄 如需停止服务器，请在终端中按 Ctrl+C</p>
+        </div>
+    </div>
+</body>
+</html>
+
