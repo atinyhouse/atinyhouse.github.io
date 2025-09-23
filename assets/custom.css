@@ -518,15 +518,19 @@ body {
 }
 
 .logo-house {
-  width: 60px;
-  height: 60px;
+  width: 60px !important;
+  height: 60px !important;
+  max-width: 60px !important;
+  max-height: 60px !important;
   margin: 0 auto 24px;
   display: block;
 }
 
 .logo-house svg {
-  width: 100%;
-  height: 100%;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 60px !important;
+  max-height: 60px !important;
   transition: transform 0.3s ease;
 }
 
@@ -540,9 +544,45 @@ body {
   }
   
   .logo-house {
-    width: 48px;
-    height: 48px;
+    width: 48px !important;
+    height: 48px !important;
+    max-width: 48px !important;
+    max-height: 48px !important;
     margin-bottom: 16px;
+  }
+  
+  .logo-house svg {
+    max-width: 48px !important;
+    max-height: 48px !important;
+  }
+}
+
+/* 确保在所有设备上都有正确的尺寸 */
+@media (max-width: 480px) {
+  .logo-house {
+    width: 40px !important;
+    height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+  }
+  
+  .logo-house svg {
+    max-width: 40px !important;
+    max-height: 40px !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .logo-house {
+    width: 56px !important;
+    height: 56px !important;
+    max-width: 56px !important;
+    max-height: 56px !important;
+  }
+  
+  .logo-house svg {
+    max-width: 56px !important;
+    max-height: 56px !important;
   }
 }
 
