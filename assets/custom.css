@@ -1908,10 +1908,19 @@ article .post-info br {
   display: none !important;
 }
 
-/* 通用标签样式 */
+/* 通用标签样式 - 区别对待 */
+/* 文章页面的标签居中 */
 .post-tags,
+article .post-tags {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  justify-content: center !important;
+  margin-top: 12px !important;
+}
+
+/* 首页列表的标签居左 */
 .catalogue-tags,
-article .post-tags,
 article .catalogue-tags {
   display: flex !important;
   flex-wrap: wrap !important;
