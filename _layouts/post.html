@@ -4,7 +4,9 @@ layout: default
 
 <article class="notion-post">
   <!-- 文章头部 -->
-  <header class="post-header">
+  <header class="post-header" style="margin-top: 32px !important; padding: 64px 0 48px 0 !important; margin-bottom: 48px !important; max-width: 600px !important; margin-left: auto !important; margin-right: auto !important; position: relative !important; text-align: center !important; border-bottom: 1px solid #e9e9e7 !important;">
+    <!-- 装饰线 -->
+    <div style="position: absolute !important; top: 0 !important; left: 50% !important; transform: translateX(-50%) !important; width: 60px !important; height: 2px !important; background: linear-gradient(90deg, transparent, #d9d9d7, transparent) !important; border-radius: 1px !important;"></div>
     <div class="post-meta">
       <time datetime="{{ page.date | date_to_xmlschema }}" class="post-date">
         {{ page.date | date: "%Y年%m月%d日" }}
@@ -29,18 +31,18 @@ layout: default
   </div>
 
   <!-- 文章底部 -->
-  <footer class="post-footer">
-    <div class="post-navigation">
+  <footer class="post-footer" style="margin-top: 48px !important; padding-top: 24px !important; border-top: 1px solid #e9e9e7 !important;">
+    <div class="post-navigation" style="display: flex !important; justify-content: space-between !important; gap: 24px !important; margin-bottom: 32px !important;">
       {% if page.previous %}
-        <a href="{{ page.previous.url | relative_url }}" class="nav-link prev">
-          <span class="nav-direction">← 上一篇</span>
-          <span class="nav-title">{{ page.previous.title }}</span>
+        <a href="{{ page.previous.url | relative_url }}" class="nav-link prev" style="flex: 1 !important; padding: 16px 20px !important; background: #f1f1ef !important; border: 1px solid #e9e9e7 !important; border-radius: 8px !important; text-decoration: none !important; color: #37352f !important; transition: all 0.2s ease !important; display: block !important;">
+          <span class="nav-direction" style="display: block !important; font-size: 0.75rem !important; color: #787774 !important; margin-bottom: 4px !important; font-weight: 500 !important; text-transform: uppercase !important; letter-spacing: 0.05em !important;">← 上一篇</span>
+          <span class="nav-title" style="display: block !important; font-weight: 600 !important; font-size: 0.9rem !important; line-height: 1.4 !important; color: #2f2f2f !important;">{{ page.previous.title }}</span>
         </a>
       {% endif %}
       {% if page.next %}
-        <a href="{{ page.next.url | relative_url }}" class="nav-link next">
-          <span class="nav-direction">下一篇 →</span>
-          <span class="nav-title">{{ page.next.title }}</span>
+        <a href="{{ page.next.url | relative_url }}" class="nav-link next" style="flex: 1 !important; padding: 16px 20px !important; background: #f1f1ef !important; border: 1px solid #e9e9e7 !important; border-radius: 8px !important; text-decoration: none !important; color: #37352f !important; transition: all 0.2s ease !important; display: block !important; text-align: right !important;">
+          <span class="nav-direction" style="display: block !important; font-size: 0.75rem !important; color: #787774 !important; margin-bottom: 4px !important; font-weight: 500 !important; text-transform: uppercase !important; letter-spacing: 0.05em !important;">下一篇 →</span>
+          <span class="nav-title" style="display: block !important; font-weight: 600 !important; font-size: 0.9rem !important; line-height: 1.4 !important; color: #2f2f2f !important;">{{ page.next.title }}</span>
         </a>
       {% endif %}
     </div>
