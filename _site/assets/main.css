@@ -940,6 +940,86 @@ html body article div.post-info br {
   display: none !important;
 }
 
+/* 终极强制修复 - 确保日期和作者间距正确 */
+.post-info {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  gap: 12px !important;
+  font-size: 14px !important;
+  color: #787774 !important;
+  margin-bottom: 20px !important;
+  flex-wrap: wrap !important;
+  line-height: 1.5 !important;
+}
+
+.post-info span {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 14px !important;
+  color: #787774 !important;
+  margin-right: 4px !important;
+}
+
+.post-info time {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 14px !important;
+  color: #787774 !important;
+  margin-left: 4px !important;
+}
+
+/* 强制覆盖所有可能的post-info结构 - 终极版本 */
+html body .post-info,
+html body div.post-info,
+html body article .post-info,
+html body article div.post-info {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  gap: 12px !important;
+  font-size: 14px !important;
+  color: #787774 !important;
+  margin-bottom: 20px !important;
+  flex-wrap: wrap !important;
+  line-height: 1.5 !important;
+}
+
+html body .post-info span,
+html body div.post-info span,
+html body article .post-info span,
+html body article div.post-info span {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 14px !important;
+  color: #787774 !important;
+  margin-right: 4px !important;
+}
+
+html body .post-info time,
+html body div.post-info time,
+html body article .post-info time,
+html body article div.post-info time {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 14px !important;
+  color: #787774 !important;
+  margin-left: 4px !important;
+}
+
+html body .post-info br,
+html body div.post-info br,
+html body article .post-info br,
+html body article div.post-info br {
+  display: none !important;
+}
+
 /* 强制标签样式 */
 .post-tags,
 .catalogue-tags {
