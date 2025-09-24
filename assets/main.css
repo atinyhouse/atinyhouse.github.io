@@ -551,7 +551,10 @@ body {
 }
 
 /* 终极强制修复 - 确保线上生效 */
-html body main article.notion-post header.post-header {
+html body main article.notion-post header.post-header,
+html body article.notion-post header.post-header,
+article.notion-post header.post-header,
+header.post-header {
   margin-top: 32px !important;
   padding: 64px 0 48px 0 !important;
   margin-bottom: 48px !important;
@@ -564,7 +567,10 @@ html body main article.notion-post header.post-header {
 }
 
 /* 添加细灰色装饰线 */
-html body main article.notion-post header.post-header::before {
+html body main article.notion-post header.post-header::before,
+html body article.notion-post header.post-header::before,
+article.notion-post header.post-header::before,
+header.post-header::before {
   content: '' !important;
   position: absolute !important;
   top: 0 !important;
@@ -657,7 +663,10 @@ html body footer:hover span {
 
 /* 移动端优化 */
 @media (max-width: 768px) {
-  html body main article.notion-post header.post-header {
+  html body main article.notion-post header.post-header,
+  html body article.notion-post header.post-header,
+  article.notion-post header.post-header,
+  header.post-header {
     margin-top: 24px !important;
     padding: 48px 0 32px 0 !important;
     max-width: 90% !important;
@@ -665,7 +674,10 @@ html body footer:hover span {
 }
 
 @media (max-width: 480px) {
-  html body main article.notion-post header.post-header {
+  html body main article.notion-post header.post-header,
+  html body article.notion-post header.post-header,
+  article.notion-post header.post-header,
+  header.post-header {
     margin-top: 20px !important;
     padding: 40px 0 28px 0 !important;
     max-width: 95% !important;
