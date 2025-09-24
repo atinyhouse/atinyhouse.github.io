@@ -683,3 +683,79 @@ html body footer:hover span {
     max-width: 95% !important;
   }
 }
+
+/* 终极强制修复 - 确保所有文章标题都生效 */
+.post-header,
+header.post-header,
+article .post-header,
+article header.post-header,
+.post-info,
+.post-meta,
+h1.post-title,
+.post-title {
+  max-width: 600px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+  position: relative !important;
+}
+
+/* 强制装饰线 */
+.post-header::before,
+header.post-header::before,
+article .post-header::before,
+article header.post-header::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 60px !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, #d9d9d7, transparent) !important;
+  border-radius: 1px !important;
+}
+
+/* 强制标题样式 */
+h1.post-title,
+.post-title {
+  font-size: 2.5rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  margin: 0 0 24px 0 !important;
+  color: #37352f !important;
+}
+
+/* 强制元信息样式 */
+.post-meta,
+.post-info {
+  font-size: 14px !important;
+  color: #787774 !important;
+  margin-bottom: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+}
+
+/* 强制标签样式 */
+.post-tags,
+.catalogue-tags {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  justify-content: center !important;
+  margin-top: 12px !important;
+}
+
+.post-tags .tag,
+.catalogue-tags .tag {
+  background: #f1f1ef !important;
+  color: #787774 !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
