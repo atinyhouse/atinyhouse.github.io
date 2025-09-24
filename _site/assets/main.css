@@ -946,7 +946,7 @@ html body article div.post-info br {
   display: flex !important;
   flex-wrap: wrap !important;
   gap: 8px !important;
-  justify-content: center !important;
+  justify-content: flex-start !important;
   margin-top: 12px !important;
 }
 
