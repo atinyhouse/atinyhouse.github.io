@@ -19,7 +19,7 @@
     margin-right: auto;
     position: relative;
     
-    // 添加细灰色装饰线
+    /* 添加细灰色装饰线 */
     &::before {
       content: '';
       position: absolute;

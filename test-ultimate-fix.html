@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>终极修复测试 - 所有问题一次性解决</title>
+    <style>
+        :root {
+            --text-color: #37352f;
+            --text-shade: #2f2f2f;
+            --text-tint: #787774;
+            --bg-color: #ffffff;
+            --grey-3: #f7f6f3;
+            --grey-4: #f1f1ef;
+            --border-color: #e9e9e7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        /* 导航栏样式 */
+        .nav {
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+        }
+
+        .nav-container {
+            margin: 0 auto;
+            position: relative;
+            text-align: left;
+            padding: 24px 0;
+            max-width: 95%;
+            width: 100%;
+            padding-left: 2.5%;
+            padding-right: 2.5%;
+        }
+
+        .nav-title {
+            color: var(--text-shade);
+            display: inline-block;
+            margin: 0;
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            transition: all 0.2s ease-out;
+            text-decoration: none;
+        }
+
+        .nav-title:hover {
+            background-color: var(--grey-4);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: right;
+            position: absolute;
+            right: 2.5%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 6px;
+        }
+
+        .nav li {
+            color: var(--text-tint);
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease-out;
+        }
+
+        .nav a {
+            color: inherit;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .nav a:hover {
+            background-color: var(--grey-4);
+            color: var(--text-color);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 文章容器 */
+        .notion-post {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #37352f;
+        }
+
+        /* 终极修复样式 - 所有问题一次性解决 */
+        html body main article.notion-post header.post-header {
+            margin-top: 32px !important;
+            padding: 64px 0 48px 0 !important;
+            margin-bottom: 48px !important;
+            max-width: 600px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            position: relative !important;
+            text-align: center !important;
+            border-bottom: 1px solid #e9e9e7 !important;
+        }
+
+        /* 添加细灰色装饰线 */
+        html body main article.notion-post header.post-header::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            width: 60px !important;
+            height: 2px !important;
+            background: linear-gradient(90deg, transparent, #d9d9d7, transparent) !important;
+            border-radius: 1px !important;
+        }
+
+        .post-meta {
+            font-size: 14px;
+            color: #787774;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .post-date {
+            font-weight: 500;
+        }
+
+        .post-author {
+            color: #787774;
+        }
+
+        .post-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 0 0 24px 0;
+            color: #37352f;
+            letter-spacing: -0.02em;
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .tag {
+            background: var(--grey-4);
+            color: var(--text-tint);
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* 文章底部样式 */
+        .post-footer {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid #e9e9e7;
+        }
+
+        .post-navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .nav-link {
+            flex: 1;
+            padding: 16px 20px;
+            background: var(--grey-4);
+            border: 1px solid #e9e9e7;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+            display: block;
+        }
+
+        .nav-link:hover {
+            background: var(--grey-3);
+            border-color: var(--text-tint);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-direction {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-tint);
+            margin-bottom: 4px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-title {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: var(--text-shade);
+        }
+
+        .nav-link.next {
+            text-align: right;
+        }
+
+        /* 页面底部版权信息 */
+        footer {
+            max-width: 1000px;
+            margin: 48px auto 0 auto;
+            padding: 24px 20px 32px 20px;
+            text-align: center;
+            border-top: 1px solid #e9e9e7;
+            display: block;
+        }
+
+        footer span {
+            color: #8b8b8b;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+            display: inline;
+        }
+
+        footer:hover span {
+            opacity: 0.9;
+        }
+
+        .test-section {
+            background: var(--grey-4);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .test-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-shade);
+        }
+
+        .test-description {
+            color: var(--text-tint);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .highlight {
+            background: #ffeb3b;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        /* 移动端优化 */
+        @media (max-width: 768px) {
+            html body main article.notion-post header.post-header {
+                margin-top: 24px !important;
+                padding: 48px 0 32px 0 !important;
+                max-width: 90% !important;
+            }
+            
+            .post-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            html body main article.notion-post header.post-header {
+                margin-top: 20px !important;
+                padding: 40px 0 28px 0 !important;
+                max-width: 95% !important;
+            }
+            
+            .post-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="nav-title">A Tiny House</a>
+            <ul>
+                <li><a href="#">Posts</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Tags</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="test-section">
+        <div class="test-title">终极修复测试 - 所有问题一次性解决</div>
+        <div class="test-description">
+            这个页面测试所有修复是否能够正确生效：<br>
+            1. <span class="highlight">文章头部间距</span> - 导航栏和文章元信息之间应该有足够间距<br>
+            2. <span class="highlight">标题区域宽度</span> - 限制到600px，添加细灰色装饰线<br>
+            3. <span class="highlight">文章底部模块</span> - 灰色系样式，居中对齐<br>
+            4. <span class="highlight">页面底部版权</span> - 弱化设计，完全居中
+        </div>
+        <div class="status success">应该能看到所有修复效果</div>
+    </div>
+
+    <!-- 测试文章 -->
+    <main>
+        <article class="notion-post">
+            <header class="post-header">
+                <div class="post-meta">
+                    <time datetime="2021-11-07" class="post-date">2021年11月07日</time>
+                    <span class="post-author">• Lucca</span>
+                </div>
+                <h1 class="post-title">滴答清单优化记</h1>
+                <div class="post-tags">
+                    <span class="tag">Product</span>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <p>这是文章内容区域，用于测试整体布局效果。</p>
+            </div>
+
+            <!-- 文章底部模块 -->
+            <footer class="post-footer">
+                <div class="post-navigation">
+                    <a href="#" class="nav-link prev">
+                        <span class="nav-direction">← 上一篇</span>
+                        <span class="nav-title">与想象中的「精英」告别</span>
+                    </a>
+                    <a href="#" class="nav-link next">
+                        <span class="nav-direction">下一篇 →</span>
+                        <span class="nav-title">当突然落入生活的B面</span>
+                    </a>
+                </div>
+            </footer>
+        </article>
+    </main>
+
+    <!-- 页面底部版权信息 -->
+    <footer>
+        <span>© 2025 小草庐. Made with Jekyll.</span>
+    </footer>
+
+    <script>
+        // 检查所有修复效果
+        function checkAllFixes() {
+            const header = document.querySelector('header.post-header');
+            const footer = document.querySelector('footer');
+            const pageFooter = document.querySelector('body > footer');
+            
+            const results = {
+                header: {
+                    marginTop: window.getComputedStyle(header).marginTop,
+                    padding: window.getComputedStyle(header).padding,
+                    maxWidth: window.getComputedStyle(header).maxWidth,
+                    hasBefore: window.getComputedStyle(header, '::before').content !== 'none'
+                },
+                footer: {
+                    textAlign: window.getComputedStyle(footer).textAlign,
+                    marginBottom: window.getComputedStyle(footer).marginBottom
+                },
+                pageFooter: {
+                    textAlign: window.getComputedStyle(pageFooter).textAlign,
+                    fontSize: window.getComputedStyle(pageFooter.querySelector('span')).fontSize,
+                    opacity: window.getComputedStyle(pageFooter.querySelector('span')).opacity
+                }
+            };
+            
+            console.log('所有修复检查结果:', results);
+            
+            // 显示结果
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'test-section';
+            resultDiv.innerHTML = `
+                <div class="test-title">所有修复检查结果</div>
+                <div class="test-description">
+                    <strong>文章头部间距:</strong> ${results.header.marginTop}<br>
+                    <strong>文章头部内边距:</strong> ${results.header.padding}<br>
+                    <strong>标题区域最大宽度:</strong> ${results.header.maxWidth}<br>
+                    <strong>装饰线:</strong> ${results.header.hasBefore ? '有' : '无'}<br>
+                    <strong>文章底部对齐:</strong> ${results.footer.textAlign}<br>
+                    <strong>页面底部对齐:</strong> ${results.pageFooter.textAlign}<br>
+                    <strong>版权信息字体大小:</strong> ${results.pageFooter.fontSize}<br>
+                    <strong>版权信息透明度:</strong> ${results.pageFooter.opacity}
+                </div>
+            `;
+            document.body.appendChild(resultDiv);
+        }
+
+        // 页面加载完成后检查所有修复效果
+        document.addEventListener('DOMContentLoaded', checkAllFixes);
+    </script>
+</body>
+</html>
