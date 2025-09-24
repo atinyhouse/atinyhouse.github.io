@@ -14,6 +14,23 @@
     text-align: center;
     border-bottom: 1px solid #e9e9e7;
     margin-top: 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    
+    // 添加细灰色装饰线
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #d9d9d7, transparent);
+      border-radius: 1px;
+    }
 
     .post-meta {
       font-size: 14px;

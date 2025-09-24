@@ -1714,24 +1714,80 @@ html body main article.notion-post header.post-header {
   margin-top: 32px !important;
   padding: 64px 0 48px 0 !important;
   margin-bottom: 48px !important;
+  max-width: 600px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  position: relative !important;
+}
+
+/* 添加细灰色装饰线 */
+html body main article.notion-post header.post-header::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 60px !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, #d9d9d7, transparent) !important;
+  border-radius: 1px !important;
 }
 
 html body main article header.post-header {
   margin-top: 32px !important;
   padding: 64px 0 48px 0 !important;
   margin-bottom: 48px !important;
+  max-width: 600px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  position: relative !important;
+}
+
+/* 为其他选择器添加装饰线 */
+html body main article header.post-header::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 60px !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, #d9d9d7, transparent) !important;
+  border-radius: 1px !important;
 }
 
 html body article.notion-post header.post-header {
   margin-top: 32px !important;
   padding: 64px 0 48px 0 !important;
   margin-bottom: 48px !important;
+  max-width: 600px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  position: relative !important;
 }
 
 html body article header.post-header {
   margin-top: 32px !important;
   padding: 64px 0 48px 0 !important;
   margin-bottom: 48px !important;
+  max-width: 600px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  position: relative !important;
+}
+
+/* 为剩余选择器添加装饰线 */
+html body article.notion-post header.post-header::before,
+html body article header.post-header::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 60px !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, #d9d9d7, transparent) !important;
+  border-radius: 1px !important;
 }
 
 /* 移动端终极修复 */
