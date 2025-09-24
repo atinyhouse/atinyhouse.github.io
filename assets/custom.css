@@ -1708,3 +1708,49 @@ article.notion-post header.post-header {
     padding: 40px 0 28px 0 !important;
   }
 }
+
+/* 终极强制修复 - 文章头部间距问题 - 最高优先级 */
+html body main article.notion-post header.post-header {
+  margin-top: 32px !important;
+  padding: 64px 0 48px 0 !important;
+  margin-bottom: 48px !important;
+}
+
+html body main article header.post-header {
+  margin-top: 32px !important;
+  padding: 64px 0 48px 0 !important;
+  margin-bottom: 48px !important;
+}
+
+html body article.notion-post header.post-header {
+  margin-top: 32px !important;
+  padding: 64px 0 48px 0 !important;
+  margin-bottom: 48px !important;
+}
+
+html body article header.post-header {
+  margin-top: 32px !important;
+  padding: 64px 0 48px 0 !important;
+  margin-bottom: 48px !important;
+}
+
+/* 移动端终极修复 */
+@media (max-width: 768px) {
+  html body main article.notion-post header.post-header,
+  html body main article header.post-header,
+  html body article.notion-post header.post-header,
+  html body article header.post-header {
+    margin-top: 24px !important;
+    padding: 48px 0 32px 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  html body main article.notion-post header.post-header,
+  html body main article header.post-header,
+  html body article.notion-post header.post-header,
+  html body article header.post-header {
+    margin-top: 20px !important;
+    padding: 40px 0 28px 0 !important;
+  }
+}
