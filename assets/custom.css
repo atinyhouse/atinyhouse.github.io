@@ -1868,6 +1868,44 @@ article .post-info {
   align-items: center !important;
   justify-content: center !important;
   gap: 8px !important;
+  text-align: center !important;
+}
+
+/* 修复日期和作者对齐问题 */
+.post-meta time,
+.post-info time,
+article .post-meta time,
+article .post-info time {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.post-meta .post-author,
+.post-info .post-author,
+article .post-meta .post-author,
+article .post-info .post-author {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  margin-left: 8px !important;
+}
+
+/* 强制修复所有可能的元信息结构 */
+.post-meta span,
+.post-info span,
+article .post-meta span,
+article .post-info span {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.post-meta br,
+.post-info br,
+article .post-meta br,
+article .post-info br {
+  display: none !important;
 }
 
 /* 通用标签样式 */

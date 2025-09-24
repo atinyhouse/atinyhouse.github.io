@@ -736,6 +736,36 @@ h1.post-title,
   align-items: center !important;
   justify-content: center !important;
   gap: 8px !important;
+  text-align: center !important;
+}
+
+/* 修复日期和作者对齐问题 */
+.post-meta time,
+.post-info time {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.post-meta .post-author,
+.post-info .post-author {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  margin-left: 8px !important;
+}
+
+/* 强制修复所有可能的元信息结构 */
+.post-meta span,
+.post-info span {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.post-meta br,
+.post-info br {
+  display: none !important;
 }
 
 /* 强制标签样式 */
