@@ -1895,3 +1895,96 @@ article .catalogue-tags .tag {
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
 }
+
+/* 翻页器组件样式修复 */
+.pagination {
+  border-top: 1px solid #e9e9e7 !important;
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif !important;
+  padding: 32px 0 !important;
+  position: relative !important;
+  text-align: center !important;
+  margin-top: 48px !important;
+}
+
+.pagination-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 16px !important;
+  flex-wrap: wrap !important;
+}
+
+.pagination-btn {
+  color: #787774 !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  padding: 8px 16px !important;
+  border: 1px solid #e9e9e7 !important;
+  border-radius: 6px !important;
+  background-color: #ffffff !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+  display: inline-block !important;
+  min-width: 80px !important;
+  text-align: center !important;
+}
+
+.pagination-btn:hover {
+  background-color: #f1f1ef !important;
+  border-color: #787774 !important;
+  color: #37352f !important;
+  text-decoration: none !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.pagination-btn:disabled {
+  color: #c4c4c4 !important;
+  background-color: #f9f9f9 !important;
+  border-color: #e9e9e7 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.pagination-info {
+  color: #787774 !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  margin: 0 16px !important;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .pagination-container {
+    gap: 12px !important;
+  }
+  
+  .pagination-btn {
+    padding: 6px 12px !important;
+    font-size: 0.8rem !important;
+    min-width: 70px !important;
+  }
+  
+  .pagination-info {
+    font-size: 0.8rem !important;
+    margin: 0 8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination-container {
+    gap: 8px !important;
+  }
+  
+  .pagination-btn {
+    padding: 5px 10px !important;
+    font-size: 0.75rem !important;
+    min-width: 60px !important;
+  }
+  
+  .pagination-info {
+    font-size: 0.75rem !important;
+    margin: 0 4px !important;
+  }
+}
