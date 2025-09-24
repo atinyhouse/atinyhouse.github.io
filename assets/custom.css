@@ -1645,3 +1645,35 @@ main + footer span {
     color: var(--text-tint, #a0a0a0) !important;
   }
 }
+
+/* 终极强制覆盖 - 确保线上生效 */
+html body footer {
+  max-width: 1000px !important;
+  margin: 48px auto 0 auto !important;
+  padding: 24px 20px 32px 20px !important;
+  text-align: center !important;
+  border-top: 1px solid #e9e9e7 !important;
+  display: block !important;
+  font-family: 'Libre Baskerville', serif !important;
+}
+
+html body footer span {
+  color: #8b8b8b !important;
+  font-size: 0.75rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.02em !important;
+  opacity: 0.7 !important;
+  transition: opacity 0.2s ease !important;
+  display: inline !important;
+}
+
+html body footer:hover span {
+  opacity: 0.9 !important;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  html body footer {
+    padding: 20px 16px 28px 16px !important;
+  }
+}
