@@ -1021,13 +1021,21 @@ html body article div.post-info br {
 }
 
 /* 强制标签样式 - 区别对待 */
-/* 文章页面的标签居中 */
-.post-tags {
+/* 文章页面的标签居中 - 终极强制修复 */
+.post-tags,
+article .post-tags,
+html body .post-tags,
+html body article .post-tags,
+.post-header .post-tags,
+article .post-header .post-tags,
+html body .post-header .post-tags,
+html body article .post-header .post-tags {
   display: flex !important;
   flex-wrap: wrap !important;
   gap: 8px !important;
   justify-content: center !important;
   margin-top: 12px !important;
+  text-align: center !important;
 }
 
 /* 首页列表的标签居左 */
