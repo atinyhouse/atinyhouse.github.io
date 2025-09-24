@@ -140,6 +140,26 @@ body {
   padding-left: 1.2em;
 }
 
+/* 引用中的链接样式 */
+.post-content blockquote a {
+  color: var(--text-color);
+  text-decoration: underline;
+  text-decoration-color: var(--text-tint);
+  text-underline-offset: 2px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.post-content blockquote a:hover {
+  color: var(--text-shade);
+  text-decoration-color: var(--text-color);
+  text-decoration-thickness: 2px;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 1px 3px;
+  border-radius: 3px;
+  margin: -1px -3px;
+}
+
 /* 引用来源 */
 .post-content blockquote div[style*="text-align: right"] {
   margin-top: 1.5em;
@@ -156,6 +176,36 @@ body {
 .post-content blockquote div {
   margin: 0;
   padding: 0;
+}
+
+/* 文章内容中的链接样式 - 与整体设计一致 */
+.post-content a {
+  color: var(--text-color);
+  text-decoration: underline;
+  text-decoration-color: var(--text-tint);
+  text-underline-offset: 2px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.post-content a:hover {
+  color: var(--text-shade);
+  text-decoration-color: var(--text-color);
+  text-decoration-thickness: 2px;
+  background-color: var(--grey-4);
+  padding: 2px 4px;
+  border-radius: 3px;
+  margin: -2px -4px;
+}
+
+.post-content a:visited {
+  color: var(--text-tint);
+}
+
+.post-content a:focus {
+  outline: 2px solid var(--text-color);
+  outline-offset: 2px;
+  border-radius: 3px;
 }
 
 /* 标题样式优化 */
@@ -212,6 +262,26 @@ body {
 .post-content ul li, .post-content ol li {
   margin: 0.5em 0;
   line-height: 1.6;
+}
+
+/* 列表中的链接样式 */
+.post-content ul a, .post-content ol a {
+  color: var(--text-color);
+  text-decoration: underline;
+  text-decoration-color: var(--text-tint);
+  text-underline-offset: 2px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.post-content ul a:hover, .post-content ol a:hover {
+  color: var(--text-shade);
+  text-decoration-color: var(--text-color);
+  text-decoration-thickness: 2px;
+  background-color: var(--grey-4);
+  padding: 1px 3px;
+  border-radius: 3px;
+  margin: -1px -3px;
 }
 
 /* 代码样式优化 */
