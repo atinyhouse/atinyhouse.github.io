@@ -1810,3 +1810,88 @@ html body article header.post-header::before {
     padding: 40px 0 28px 0 !important;
   }
 }
+
+/* 通用文章标题修复 - 确保所有文章都生效 */
+.post-header,
+header.post-header,
+article .post-header,
+article header.post-header {
+  margin-top: 32px !important;
+  padding: 64px 0 48px 0 !important;
+  margin-bottom: 48px !important;
+  max-width: 600px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  position: relative !important;
+  text-align: center !important;
+  border-bottom: 1px solid #e9e9e7 !important;
+}
+
+/* 通用装饰线 */
+.post-header::before,
+header.post-header::before,
+article .post-header::before,
+article header.post-header::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 60px !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, #d9d9d7, transparent) !important;
+  border-radius: 1px !important;
+}
+
+/* 通用文章标题样式 */
+.post-title,
+h1.post-title,
+article .post-title,
+article h1.post-title {
+  margin: 0 0 24px 0 !important;
+  font-size: 2.5rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  color: #37352f !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* 通用文章元信息样式 */
+.post-meta,
+.post-info,
+article .post-meta,
+article .post-info {
+  font-size: 14px !important;
+  color: #787774 !important;
+  margin-bottom: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+}
+
+/* 通用标签样式 */
+.post-tags,
+.catalogue-tags,
+article .post-tags,
+article .catalogue-tags {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  justify-content: center !important;
+  margin-top: 12px !important;
+}
+
+.post-tags .tag,
+.catalogue-tags .tag,
+article .post-tags .tag,
+article .catalogue-tags .tag {
+  background: #f1f1ef !important;
+  color: #787774 !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
