@@ -1677,3 +1677,34 @@ html body footer:hover span {
     padding: 20px 16px 28px 16px !important;
   }
 }
+
+/* 文章头部间距修复 - 确保线上生效 */
+.notion-post .post-header {
+  margin-top: 32px !important;
+  padding: 64px 0 48px 0 !important;
+  margin-bottom: 48px !important;
+}
+
+/* 强制覆盖文章头部间距 */
+article.notion-post header.post-header {
+  margin-top: 32px !important;
+  padding: 64px 0 48px 0 !important;
+  margin-bottom: 48px !important;
+}
+
+/* 移动端文章头部优化 */
+@media (max-width: 768px) {
+  .notion-post .post-header,
+  article.notion-post header.post-header {
+    margin-top: 24px !important;
+    padding: 48px 0 32px 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .notion-post .post-header,
+  article.notion-post header.post-header {
+    margin-top: 20px !important;
+    padding: 40px 0 28px 0 !important;
+  }
+}
