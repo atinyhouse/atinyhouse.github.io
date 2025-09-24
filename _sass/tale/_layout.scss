@@ -98,11 +98,11 @@ footer {
     display: inline-block;
     margin: 0;
     font-family: $chinese-sans, $sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.35rem;
     font-weight: 700;
-    letter-spacing: 0.05em;
-    padding: 12px 20px;
-    border-radius: 8px;
+    letter-spacing: 0.02em;
+    padding: 8px 16px;
+    border-radius: 6px;
     text-transform: uppercase;
 
     &:hover,
@@ -123,34 +123,34 @@ footer {
     top: 50%;
     transform: translateY(-50%);
     display: flex;
-    gap: 8px;
+    gap: 6px;
   }
 
   @media (min-width: 768px) {
     ul {
       right: 5%;
-      gap: 12px;
+      gap: 8px;
     }
   }
 
   @media (min-width: 1200px) {
     ul {
       right: 7.5%;
-      gap: 16px;
+      gap: 10px;
     }
   }
 
   @media (min-width: 1400px) {
     ul {
       right: 10%;
-      gap: 20px;
+      gap: 12px;
     }
   }
 
   @media (min-width: 1600px) {
     ul {
       right: 12.5%;
-      gap: 24px;
+      gap: 14px;
     }
   }
 
@@ -170,21 +170,21 @@ footer {
     color: inherit;
     font-family: $chinese-sans, $sans-serif;
     font-weight: 600;
-    font-size: 1rem;
-    padding: 12px 20px;
-    border-radius: 8px;
+    font-size: 0.95rem;
+    padding: 8px 14px;
+    border-radius: 6px;
     transition: all 0.3s ease;
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
     position: relative;
     display: inline-block;
 
     &:hover {
       background-color: var(--grey-4);
       color: var(--text-color);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     &:active {
@@ -214,17 +214,17 @@ footer {
     }
 
     &-title {
-      font-size: 1.25rem;
-      padding: 8px 16px;
+      font-size: 1.2rem;
+      padding: 6px 12px;
     }
 
     ul {
-      gap: 4px;
+      gap: 3px;
     }
 
     a {
       font-size: 0.85rem;
-      padding: 8px 12px;
+      padding: 6px 10px;
     }
   }
 }
@@ -237,7 +237,7 @@ footer {
 
     &-title {
       font-size: 1.1rem;
-      padding: 6px 12px;
+      padding: 5px 10px;
     }
 
     ul {
@@ -246,7 +246,7 @@ footer {
 
     a {
       font-size: 0.8rem;
-      padding: 6px 10px;
+      padding: 5px 8px;
     }
   }
 }
