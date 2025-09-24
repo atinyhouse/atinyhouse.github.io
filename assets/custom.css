@@ -1932,6 +1932,32 @@ article .catalogue-tags .tag {
   font-weight: 500 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin-top: 8px !important;
+  margin-bottom: 0 !important;
+}
+
+/* 修复首页标签位置 - 移到文章标题下方 */
+.catalogue-item .catalogue-tags {
+  margin-top: 8px !important;
+  margin-bottom: 0 !important;
+  order: 3 !important;
+}
+
+.catalogue-item .catalogue-excerpt {
+  order: 4 !important;
+  margin-top: 12px !important;
+}
+
+/* 移除标签的红色边框和阴影 */
+.catalogue-tags .tag,
+.post-tags .tag {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background: #f1f1ef !important;
+  color: #787774 !important;
 }
 
 /* 翻页器组件样式修复 */
