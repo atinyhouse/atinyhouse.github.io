@@ -768,6 +768,100 @@ h1.post-title,
   display: none !important;
 }
 
+/* 终极强制修复 - 确保线上生效 */
+html body .post-meta,
+html body .post-info,
+html body article .post-meta,
+html body article .post-info {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  gap: 8px !important;
+  font-size: 14px !important;
+  color: #787774 !important;
+  margin-bottom: 16px !important;
+}
+
+html body .post-meta time,
+html body .post-info time,
+html body article .post-meta time,
+html body article .post-info time {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 14px !important;
+  color: #787774 !important;
+}
+
+html body .post-meta .post-author,
+html body .post-info .post-author,
+html body article .post-meta .post-author,
+html body article .post-info .post-author {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  margin-left: 8px !important;
+  font-size: 14px !important;
+  color: #787774 !important;
+}
+
+html body .post-meta span,
+html body .post-info span,
+html body article .post-meta span,
+html body article .post-info span {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 14px !important;
+  color: #787774 !important;
+}
+
+html body .post-meta br,
+html body .post-info br,
+html body article .post-meta br,
+html body article .post-info br {
+  display: none !important;
+}
+
+/* 强制覆盖所有可能的元信息结构 */
+div[class*="post-meta"],
+div[class*="post-info"],
+span[class*="post-meta"],
+span[class*="post-info"] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  gap: 8px !important;
+}
+
+div[class*="post-meta"] time,
+div[class*="post-info"] time,
+span[class*="post-meta"] time,
+span[class*="post-info"] time {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+div[class*="post-meta"] .post-author,
+div[class*="post-info"] .post-author,
+span[class*="post-meta"] .post-author,
+span[class*="post-info"] .post-author {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  margin-left: 8px !important;
+}
+
+div[class*="post-meta"] br,
+div[class*="post-info"] br,
+span[class*="post-meta"] br,
+span[class*="post-info"] br {
+  display: none !important;
+}
+
 /* 强制标签样式 */
 .post-tags,
 .catalogue-tags {
