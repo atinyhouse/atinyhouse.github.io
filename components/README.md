@@ -161,12 +161,12 @@ import PageHeaderCSSModules from './components/PageHeaderCSSModules';
   publishedAt="2024-01-15"
   author="作者名"
   enableJsonLd={true}
-  jsonLdData={{
+  jsonLdData={% raw %}{{
     "publisher": {
       "@type": "Organization",
       "name": "我的网站"
     }
-  }}
+  }}{% endraw %}
 />
 ```
 
