@@ -27,6 +27,9 @@
         <li><a href="{{ '/about' | relative_url }}">About</a></li>
         <li><a href="{{ '/tags' | relative_url }}">Tags</a></li>
       </ul>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+        <div class="theme-toggle-slider"></div>
+      </button>
     </div>
   </nav>
 
@@ -39,5 +42,34 @@
       &copy; <time datetime="{{ site.time | date: '%Y' }}">{{ site.time | date: '%Y' }}</time> {{ site.author.name }}. Made with Jekyll.
     </span>
   </footer>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+      
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // 页面加载时检查保存的主题
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+          themeToggle.setAttribute('data-theme', 'dark');
+        }
+      }
+    });
+  </script>
 </body>
 </html>

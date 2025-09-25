@@ -395,14 +395,14 @@ body {
   color: var(--bg-color);
 }
 
-/* 暗黑模式切换按钮 */
+/* 暗黑模式切换按钮 - 黑白风格 */
 .theme-toggle {
   position: fixed;
   top: 20px;
   left: 20px;
   z-index: 1000;
   background: var(--bg-color);
-  border: 2px solid var(--border-color);
+  border: 2px solid var(--text-color);
   border-radius: 25px;
   width: 50px;
   height: 25px;
@@ -411,12 +411,13 @@ body {
   display: flex;
   align-items: center;
   padding: 2px;
-  box-shadow: 0 2px 8px var(--shadow-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .theme-toggle:hover {
-  border-color: var(--blue);
-  box-shadow: 0 4px 12px var(--shadow-color);
+  border-color: var(--text-shade);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
 }
 
 .theme-toggle-slider {
@@ -429,21 +430,23 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 10px;
+  color: var(--bg-color);
 }
 
 .theme-toggle[data-theme="dark"] .theme-toggle-slider {
   transform: translateX(25px);
-  background: var(--blue);
+  background: var(--bg-color);
+  color: var(--text-color);
 }
 
 .theme-toggle[data-theme="dark"] .theme-toggle-slider::before {
   content: "☀";
-  color: #000;
+  color: var(--text-color);
 }
 
 .theme-toggle:not([data-theme="dark"]) .theme-toggle-slider::before {
   content: "☾";
-  color: #000;
+  color: var(--bg-color);
 }
 
 /* Logo样式 */

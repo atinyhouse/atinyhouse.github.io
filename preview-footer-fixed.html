@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>底部版权信息修复预览</title>
+    <style>
+        :root {
+            --text-color: #37352f;
+            --text-shade: #2f2f2f;
+            --text-tint: #787774;
+            --bg-color: #ffffff;
+            --grey-3: #f7f6f3;
+            --grey-4: #f1f1ef;
+            --border-color: #e9e9e7;
+            --link-color: #37352f;
+            --transition: all 0.2s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-color: #e9e9e7;
+                --text-shade: #ffffff;
+                --text-tint: #a0a0a0;
+                --bg-color: #1a1a1a;
+                --grey-3: #404040;
+                --grey-4: #2f2f2f;
+                --border-color: #2f2f2f;
+                --link-color: #e9e9e7;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .article-content {
+            margin-bottom: 60px;
+        }
+
+        .article-content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--text-shade);
+            letter-spacing: -0.02em;
+        }
+
+        .article-content p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            color: var(--text-color);
+        }
+
+        /* 文章底部模块样式 */
+        .post-footer {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .post-navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .nav-link {
+            flex: 1;
+            padding: 16px 20px;
+            background: var(--grey-4);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+            display: block;
+        }
+
+        .nav-link:hover {
+            background: var(--grey-3);
+            border-color: var(--text-tint);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-direction {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-tint);
+            margin-bottom: 4px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-title {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: var(--text-shade);
+        }
+
+        .nav-link.next {
+            text-align: right;
+        }
+
+        /* 页面底部版权信息 - 弱化设计 */
+        footer {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px 20px 32px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: 48px;
+        }
+
+        footer span {
+            color: var(--text-tint);
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        footer:hover span {
+            opacity: 0.9;
+        }
+
+        /* 暗黑模式下的底部样式 */
+        @media (prefers-color-scheme: dark) {
+            footer {
+                border-top-color: var(--border-color);
+            }
+            
+            footer span {
+                color: var(--text-tint);
+            }
+        }
+
+        /* 移动端优化 */
+        @media (max-width: 768px) {
+            .post-navigation {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-link {
+                padding: 12px 16px;
+            }
+
+            .container {
+                padding: 20px 16px;
+            }
+
+            .article-content h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .demo-section {
+            background: var(--grey-4);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .demo-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-shade);
+        }
+
+        .demo-text {
+            color: var(--text-tint);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="article-content">
+            <h1>底部版权信息修复预览</h1>
+            
+            <p>这是修复后的页面底部版权信息样式。主要改进包括：</p>
+            
+            <div class="demo-section">
+                <div class="demo-title">修复内容</div>
+                <div class="demo-text">
+                    • 确保版权信息完全居中显示<br>
+                    • 弱化视觉设计，降低存在感<br>
+                    • 使用更小的字体和更淡的颜色<br>
+                    • 添加微妙的悬停效果<br>
+                    • 支持明亮和暗黑模式
+                </div>
+            </div>
+
+            <p>现在版权信息会以更低调的方式显示在页面底部，不会干扰主要内容，同时保持良好的可读性。</p>
+        </div>
+
+        <!-- 文章底部模块 -->
+        <footer class="post-footer">
+            <div class="post-navigation">
+                <a href="#" class="nav-link prev">
+                    <span class="nav-direction">← 上一篇</span>
+                    <span class="nav-title">与想象中的「精英」告别</span>
+                </a>
+                <a href="#" class="nav-link next">
+                    <span class="nav-direction">下一篇 →</span>
+                    <span class="nav-title">当突然落入生活的B面</span>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 页面底部版权信息 -->
+    <footer>
+        <span>© 2025 小草庐. Made with Jekyll.</span>
+    </footer>
+
+    <script>
+        // 模拟暗黑模式切换
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // 添加暗黑模式切换按钮
+        const toggleBtn = document.createElement('button');
+        toggleBtn.textContent = '切换暗黑模式';
+        toggleBtn.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            background: var(--grey-4);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+        `;
+        toggleBtn.addEventListener('click', toggleDarkMode);
+        document.body.appendChild(toggleBtn);
+
+        // 暗黑模式样式
+        const darkModeStyle = document.createElement('style');
+        darkModeStyle.textContent = `
+            body.dark-mode {
+                --text-color: #e9e9e7;
+                --text-shade: #ffffff;
+                --text-tint: #a0a0a0;
+                --bg-color: #1a1a1a;
+                --grey-3: #404040;
+                --grey-4: #2f2f2f;
+                --border-color: #2f2f2f;
+                --link-color: #e9e9e7;
+            }
+        `;
+        document.head.appendChild(darkModeStyle);
+    </script>
+</body>
+</html>
+

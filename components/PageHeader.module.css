@@ -1,0 +1,267 @@
+/* PageHeader CSS Modules 样式 */
+
+.container {
+  max-width: 64rem; /* 1024px */
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 3rem 2rem;
+  }
+}
+
+/* 标题样式 */
+.title {
+  font-size: 1.875rem; /* 30px */
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+@media (min-width: 640px) {
+  .title {
+    font-size: 2.25rem; /* 36px */
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: 3rem; /* 48px */
+  }
+}
+
+/* 副标题样式 */
+.subtitle {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+@media (min-width: 640px) {
+  .subtitle {
+    font-size: 1.25rem; /* 20px */
+    margin-bottom: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .subtitle {
+    font-size: 1.5rem; /* 24px */
+  }
+}
+
+/* 元信息容器 */
+.metaContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem; /* 14px */
+}
+
+@media (min-width: 640px) {
+  .metaContainer {
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    font-size: 1rem; /* 16px */
+  }
+}
+
+/* 元信息项 */
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.metaIcon {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+}
+
+.metaLabel {
+  font-weight: 500;
+}
+
+.metaValue {
+  /* 可以通过 className 覆盖 */
+}
+
+/* 标签容器 */
+.tagContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .tagContainer {
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* 标签样式 */
+.tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem; /* 12px */
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+@media (min-width: 640px) {
+  .tag {
+    font-size: 0.875rem; /* 14px */
+  }
+}
+
+/* Skeleton 样式 */
+.skeleton {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  border-radius: 0.25rem;
+}
+
+.skeletonTitle {
+  height: 3rem;
+  width: 75%;
+  margin-bottom: 1rem;
+}
+
+.skeletonSubtitle {
+  height: 1.5rem;
+  width: 50%;
+  margin-bottom: 1.5rem;
+}
+
+.skeletonMeta {
+  height: 1rem;
+  width: 6rem;
+  margin-right: 1rem;
+}
+
+.skeletonTag {
+  height: 1.5rem;
+  width: 4rem;
+  border-radius: 9999px;
+  margin-right: 0.5rem;
+}
+
+/* 暗色模式 */
+.dark .title {
+  color: #ffffff;
+}
+
+.dark .subtitle {
+  color: #d1d5db;
+}
+
+.dark .metaContainer {
+  color: #9ca3af;
+}
+
+.dark .tag {
+  background-color: #374151;
+  color: #d1d5db;
+}
+
+.dark .tag:hover {
+  background-color: #4b5563;
+}
+
+.dark .skeleton {
+  background-color: #4b5563;
+}
+
+/* 亮色模式 */
+.light .title {
+  color: #111827;
+}
+
+.light .subtitle {
+  color: #6b7280;
+}
+
+.light .metaContainer {
+  color: #6b7280;
+}
+
+.light .tag {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.light .tag:hover {
+  background-color: #e5e7eb;
+}
+
+.light .skeleton {
+  background-color: #d1d5db;
+}
+
+/* 动画 */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* 响应式工具类 */
+.hidden {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .sm\:block {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:block {
+    display: block;
+  }
+}
+
+/* 文本截断 */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 多行文本截断 */
+.lineClamp2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.lineClamp3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+

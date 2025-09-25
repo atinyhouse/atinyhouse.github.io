@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>底部样式测试</title>
+    <style>
+        :root {
+            --text-color: #37352f;
+            --text-shade: #2f2f2f;
+            --text-tint: #787774;
+            --bg-color: #ffffff;
+            --grey-3: #f7f6f3;
+            --grey-4: #f1f1ef;
+            --border-color: #e9e9e7;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-color: #e9e9e7;
+                --text-shade: #ffffff;
+                --text-tint: #a0a0a0;
+                --bg-color: #1a1a1a;
+                --grey-3: #404040;
+                --grey-4: #2f2f2f;
+                --border-color: #2f2f2f;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--text-shade);
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--text-color);
+        }
+
+        /* 模拟 Jekyll 的默认样式 */
+        .jekyll-default-footer {
+            font-family: 'Libre Baskerville', serif;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .jekyll-default-footer span {
+            color: #37352f;
+            font-size: .8rem;
+        }
+
+        /* 我们的修复样式 - 从 SCSS 编译后的样式 */
+        .our-footer {
+            font-family: 'Libre Baskerville', serif;
+            padding: 24px 20px 32px 20px !important;
+            text-align: center !important;
+            border-top: 1px solid var(--border-color, #e9e9e7) !important;
+            margin-top: 48px !important;
+            max-width: 1000px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+
+        .our-footer span {
+            color: var(--text-tint, #8b8b8b) !important;
+            font-size: 0.75rem !important;
+            font-weight: 400 !important;
+            letter-spacing: 0.02em !important;
+            opacity: 0.7 !important;
+            transition: opacity 0.2s ease !important;
+        }
+
+        .our-footer:hover span {
+            opacity: 0.9 !important;
+        }
+
+        /* 强制覆盖样式 */
+        .force-footer {
+            max-width: 1000px !important;
+            margin: 48px auto 0 auto !important;
+            padding: 24px 20px 32px 20px !important;
+            text-align: center !important;
+            border-top: 1px solid var(--border-color, #e9e9e7) !important;
+            display: block !important;
+        }
+
+        .force-footer span {
+            color: var(--text-tint, #8b8b8b) !important;
+            font-size: 0.75rem !important;
+            font-weight: 400 !important;
+            letter-spacing: 0.02em !important;
+            opacity: 0.7 !important;
+            transition: opacity 0.2s ease !important;
+            display: inline !important;
+        }
+
+        .force-footer:hover span {
+            opacity: 0.9 !important;
+        }
+
+        .test-section {
+            background: var(--grey-4);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .test-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-shade);
+        }
+
+        .test-description {
+            color: var(--text-tint);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>底部样式测试</h1>
+        
+        <p>这个页面用于测试底部版权信息的样式修复是否能够正确生效。</p>
+
+        <div class="test-section">
+            <div class="test-title">测试 1: Jekyll 默认样式</div>
+            <div class="test-description">这是 Jekyll 主题的默认 footer 样式（可能存在的问题）</div>
+            <div class="status warning">可能不居中，字体较大</div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">测试 2: 我们的修复样式（SCSS 编译）</div>
+            <div class="test-description">这是从 _sass/tale/_layout.scss 编译后的样式</div>
+            <div class="status success">应该居中，字体较小，弱化设计</div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">测试 3: 强制覆盖样式（custom.css）</div>
+            <div class="test-description">这是 assets/custom.css 中的强制覆盖样式</div>
+            <div class="status success">最高优先级，确保生效</div>
+        </div>
+
+        <p>请检查下面的三个 footer 示例，确认样式是否正确应用。</p>
+    </div>
+
+    <!-- 测试 1: Jekyll 默认样式 -->
+    <footer class="jekyll-default-footer">
+        <span>© 2025 小草庐. Made with Jekyll.</span>
+    </footer>
+
+    <!-- 测试 2: 我们的修复样式 -->
+    <footer class="our-footer">
+        <span>© 2025 小草庐. Made with Jekyll.</span>
+    </footer>
+
+    <!-- 测试 3: 强制覆盖样式 -->
+    <footer class="force-footer">
+        <span>© 2025 小草庐. Made with Jekyll.</span>
+    </footer>
+
+    <script>
+        // 检查样式是否正确应用
+        function checkStyles() {
+            const footers = document.querySelectorAll('footer');
+            const results = [];
+            
+            footers.forEach((footer, index) => {
+                const computedStyle = window.getComputedStyle(footer);
+                const spanStyle = window.getComputedStyle(footer.querySelector('span'));
+                
+                results.push({
+                    index: index + 1,
+                    textAlign: computedStyle.textAlign,
+                    fontSize: spanStyle.fontSize,
+                    opacity: spanStyle.opacity,
+                    color: spanStyle.color
+                });
+            });
+            
+            console.log('Footer 样式检查结果:', results);
+            
+            // 显示检查结果
+            const resultDiv = document.createElement('div');
+            resultDiv.innerHTML = `
+                <div class="test-section">
+                    <div class="test-title">样式检查结果</div>
+                    <div class="test-description">
+                        检查控制台 (F12) 查看详细的样式计算结果
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(resultDiv);
+        }
+
+        // 页面加载完成后检查样式
+        document.addEventListener('DOMContentLoaded', checkStyles);
+    </script>
+</body>
+</html>
+

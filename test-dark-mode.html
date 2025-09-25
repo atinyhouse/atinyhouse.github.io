@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>暗黑模式测试</title>
+  <link rel="stylesheet" href="assets/main.css">
+  <link rel="stylesheet" href="assets/custom.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="/" class="nav-title">A Tiny House</a>
+      <ul>
+        <li><a href="/">Posts</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/tags">Tags</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+        <div class="theme-toggle-slider"></div>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="post">
+      <h1 class="post-title">暗黑模式测试页面</h1>
+      <div class="post-content">
+        <p>这是一个测试页面，用来验证暗黑模式切换按钮是否正常工作。</p>
+        <p>点击左上角的按钮可以在明亮模式和暗黑模式之间切换。</p>
+        <p>按钮应该显示为黑白风格，位于页面左上角。</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>
+      &copy; 2024 A Tiny House. Made with Jekyll.
+    </span>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+      
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // 页面加载时检查保存的主题
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+          themeToggle.setAttribute('data-theme', 'dark');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
