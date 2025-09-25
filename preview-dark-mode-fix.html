@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>暗黑模式按钮修复预览</title>
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/custom.css">
+  <style>
+    /* 添加一些调试样式来显示布局 */
+    .debug-info {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      z-index: 9999;
+      font-family: monospace;
+    }
+    
+    .nav-debug {
+      border: 2px solid red !important;
+      background: rgba(255, 0, 0, 0.1) !important;
+    }
+    
+    .button-debug {
+      border: 2px solid blue !important;
+      background: rgba(0, 0, 255, 0.1) !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- 调试信息 -->
+  <div class="debug-info" id="debugInfo">
+    调试信息加载中...
+  </div>
+
+  <nav class="nav nav-debug">
+    <div class="nav-container">
+      <a href="/" class="nav-title">A Tiny House</a>
+      <ul>
+        <li><a href="/">Posts</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/tags">Tags</a></li>
+      </ul>
+      <button class="theme-toggle button-debug" onclick="toggleTheme()" id="themeToggle">
+        <div class="theme-toggle-slider"></div>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="post">
+      <h1 class="post-title">暗黑模式按钮修复预览</h1>
+      <div class="post-content">
+        <p><strong>当前修复状态：</strong></p>
+        <ul>
+          <li>✅ 按钮位置：导航栏下方 (top: 60px)</li>
+          <li>✅ 图标显示：月亮/太阳图标正确居中</li>
+          <li>✅ 响应式适配：移动端自动调整</li>
+          <li>✅ 黑白风格：保持设计一致性</li>
+        </ul>
+        
+        <h2>测试说明</h2>
+        <p>1. 查看左上角的暗黑模式按钮是否在导航栏下方</p>
+        <p>2. 检查按钮是否压到了header的底线</p>
+        <p>3. 点击按钮测试主题切换功能</p>
+        <p>4. 调整浏览器窗口大小测试响应式效果</p>
+        
+        <h2>布局信息</h2>
+        <div id="layoutInfo">
+          <p>导航栏高度: <span id="navHeight">计算中...</span></p>
+          <p>按钮位置: <span id="buttonPosition">计算中...</span></p>
+          <p>按钮是否与导航栏重叠: <span id="overlapStatus">检查中...</span></p>
+        </div>
+        
+        <h2>响应式测试</h2>
+        <p>请尝试以下操作：</p>
+        <ul>
+          <li>将浏览器窗口调整到手机尺寸 (≤480px)</li>
+          <li>将浏览器窗口调整到平板尺寸 (≤768px)</li>
+          <li>观察按钮位置和大小是否自动调整</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>
+      &copy; 2024 A Tiny House. Made with Jekyll.
+    </span>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+      
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+      
+      updateDebugInfo();
+    }
+
+    function updateDebugInfo() {
+      try {
+        const nav = document.querySelector('.nav');
+        const button = document.querySelector('.theme-toggle');
+        
+        if (!nav || !button) {
+          document.getElementById('debugInfo').innerHTML = '元素未找到';
+          return;
+        }
+        
+        const navHeight = nav.offsetHeight;
+        const buttonTop = parseInt(getComputedStyle(button).top);
+        const buttonHeight = button.offsetHeight;
+        
+        const isOverlapping = buttonTop < navHeight;
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        const buttonIcon = currentTheme === 'dark' ? '☀' : '☾';
+        
+        document.getElementById('debugInfo').innerHTML = `
+          主题: ${currentTheme} | 图标: ${buttonIcon}<br>
+          导航栏: ${navHeight}px | 按钮: ${buttonTop}px<br>
+          重叠: ${isOverlapping ? '是' : '否'}
+        `;
+        
+        // 更新布局信息
+        const navHeightEl = document.getElementById('navHeight');
+        const buttonPositionEl = document.getElementById('buttonPosition');
+        const overlapStatusEl = document.getElementById('overlapStatus');
+        
+        if (navHeightEl) navHeightEl.textContent = navHeight + 'px';
+        if (buttonPositionEl) buttonPositionEl.textContent = `top: ${buttonTop}px, height: ${buttonHeight}px`;
+        if (overlapStatusEl) overlapStatusEl.textContent = isOverlapping ? '❌ 重叠' : '✅ 不重叠';
+        
+      } catch (error) {
+        document.getElementById('debugInfo').innerHTML = '调试信息错误: ' + error.message;
+      }
+    }
+
+    // 页面加载时检查保存的主题
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+          themeToggle.setAttribute('data-theme', 'dark');
+        }
+      }
+      
+      // 延迟更新调试信息，确保样式已加载
+      setTimeout(updateDebugInfo, 100);
+    });
+
+    // 监听窗口大小变化
+    window.addEventListener('resize', updateDebugInfo);
+  </script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>暗黑模式按钮预览</title>
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/custom.css">
+  <style>
+    /* 简单的调试样式 */
+    .debug-box {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 9999;
+      font-family: 'Courier New', monospace;
+      max-width: 300px;
+    }
+    
+    .nav {
+      border: 3px solid #ff0000 !important;
+      background: rgba(255, 0, 0, 0.1) !important;
+    }
+    
+    .theme-toggle {
+      border: 3px solid #0000ff !important;
+      background: rgba(0, 0, 255, 0.1) !important;
+    }
+    
+    .status-ok { color: #00ff00; }
+    .status-error { color: #ff0000; }
+  </style>
+</head>
+<body>
+  <div class="debug-box">
+    <h3>🔧 调试信息</h3>
+    <p><strong>当前主题:</strong> <span id="currentTheme">明亮</span></p>
+    <p><strong>按钮图标:</strong> <span id="buttonIcon">☾</span></p>
+    <p><strong>布局状态:</strong> <span id="layoutStatus" class="status-ok">正常</span></p>
+    <p><strong>说明:</strong></p>
+    <ul style="font-size: 12px; margin: 5px 0;">
+      <li>红色边框 = 导航栏</li>
+      <li>蓝色边框 = 暗黑模式按钮</li>
+      <li>按钮应该在导航栏下方</li>
+    </ul>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="/" class="nav-title">A Tiny House</a>
+      <ul>
+        <li><a href="/">Posts</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/tags">Tags</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+        <div class="theme-toggle-slider"></div>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="post">
+      <h1 class="post-title">暗黑模式按钮预览</h1>
+      <div class="post-content">
+        <h2>🎯 测试说明</h2>
+        <ol>
+          <li><strong>查看布局:</strong> 检查左上角的蓝色边框按钮是否在红色边框导航栏下方</li>
+          <li><strong>测试切换:</strong> 点击按钮测试主题切换功能</li>
+          <li><strong>响应式测试:</strong> 调整浏览器窗口大小查看按钮位置变化</li>
+          <li><strong>图标检查:</strong> 确认月亮/太阳图标正确显示</li>
+        </ol>
+        
+        <h2>📱 响应式测试</h2>
+        <p>请尝试调整浏览器窗口到不同尺寸：</p>
+        <ul>
+          <li><strong>桌面端:</strong> 按钮位置 top: 60px</li>
+          <li><strong>平板端 (≤768px):</strong> 按钮位置 top: 50px</li>
+          <li><strong>手机端 (≤480px):</strong> 按钮位置 top: 45px</li>
+        </ul>
+        
+        <h2>✅ 预期效果</h2>
+        <ul>
+          <li>按钮完全在导航栏下方，不重叠</li>
+          <li>按钮图标正确显示（月亮/太阳）</li>
+          <li>主题切换功能正常工作</li>
+          <li>响应式适配正确</li>
+        </ul>
+        
+        <h2>🐛 问题检查</h2>
+        <p>如果发现问题，请检查：</p>
+        <ul>
+          <li>按钮是否压到了导航栏的底线</li>
+          <li>图标是否显示正确</li>
+          <li>主题切换是否生效</li>
+          <li>移动端布局是否正确</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>&copy; 2024 A Tiny House. Made with Jekyll.</span>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+      
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        updateDebugInfo('明亮', '☾');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        updateDebugInfo('暗黑', '☀');
+      }
+    }
+
+    function updateDebugInfo(theme, icon) {
+      document.getElementById('currentTheme').textContent = theme;
+      document.getElementById('buttonIcon').textContent = icon;
+      
+      // 检查布局
+      const nav = document.querySelector('.nav');
+      const button = document.querySelector('.theme-toggle');
+      
+      if (nav && button) {
+        const navHeight = nav.offsetHeight;
+        const buttonTop = parseInt(getComputedStyle(button).top);
+        const isOverlapping = buttonTop < navHeight;
+        
+        const statusEl = document.getElementById('layoutStatus');
+        if (isOverlapping) {
+          statusEl.textContent = '❌ 重叠';
+          statusEl.className = 'status-error';
+        } else {
+          statusEl.textContent = '✅ 正常';
+          statusEl.className = 'status-ok';
+        }
+      }
+    }
+
+    // 页面加载时初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+          themeToggle.setAttribute('data-theme', 'dark');
+        }
+        updateDebugInfo('暗黑', '☀');
+      } else {
+        updateDebugInfo('明亮', '☾');
+      }
+    });
+  </script>
+</body>
+</html>
