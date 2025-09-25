@@ -400,7 +400,7 @@ body {
 /* 暗黑模式切换按钮 - 简化版本 */
 .theme-toggle {
   position: fixed;
-  top: 20px;
+  top: 10px;
   left: 20px;
   z-index: 1001;
   background: var(--bg-color);
@@ -455,7 +455,7 @@ body {
 /* 暗黑模式按钮响应式设计 */
 @media (max-width: 768px) {
   .theme-toggle {
-    top: 15px;
+    top: 8px;
     left: 15px;
     width: 45px;
     height: 22px;
@@ -478,7 +478,7 @@ body {
 
 @media (max-width: 480px) {
   .theme-toggle {
-    top: 12px;
+    top: 6px;
     left: 12px;
     width: 40px;
     height: 20px;
