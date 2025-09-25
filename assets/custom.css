@@ -400,8 +400,8 @@ body {
 /* 暗黑模式切换按钮 - 黑白风格 */
 .theme-toggle {
   position: fixed;
-  top: 60px;
-  left: 30px;
+  top: 20px;
+  left: 20px;
   z-index: 1001;
   background: var(--bg-color);
   border: 2px solid var(--text-color);
@@ -412,6 +412,7 @@ body {
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   padding: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -431,20 +432,27 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--bg-color);
   position: relative;
+  margin: 0;
+  padding: 0;
 }
 
 .theme-toggle-slider::before {
   content: "☾";
   color: var(--bg-color);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .theme-toggle[data-theme="dark"] .theme-toggle-slider {
@@ -456,18 +464,23 @@ body {
 .theme-toggle[data-theme="dark"] .theme-toggle-slider::before {
   content: "☀";
   color: var(--text-color);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 /* 暗黑模式按钮响应式设计 */
 @media (max-width: 768px) {
   .theme-toggle {
-    top: 50px;
+    top: 15px;
     left: 15px;
     width: 45px;
     height: 22px;
@@ -476,17 +489,25 @@ body {
   .theme-toggle-slider {
     width: 17px;
     height: 17px;
-    font-size: 9px;
+    font-size: 10px;
+  }
+  
+  .theme-toggle-slider::before {
+    font-size: 10px;
   }
   
   .theme-toggle[data-theme="dark"] .theme-toggle-slider {
     transform: translateX(23px);
   }
+  
+  .theme-toggle[data-theme="dark"] .theme-toggle-slider::before {
+    font-size: 10px;
+  }
 }
 
 @media (max-width: 480px) {
   .theme-toggle {
-    top: 45px;
+    top: 12px;
     left: 12px;
     width: 40px;
     height: 20px;
@@ -495,11 +516,19 @@ body {
   .theme-toggle-slider {
     width: 16px;
     height: 16px;
-    font-size: 8px;
+    font-size: 9px;
+  }
+  
+  .theme-toggle-slider::before {
+    font-size: 9px;
   }
   
   .theme-toggle[data-theme="dark"] .theme-toggle-slider {
     transform: translateX(20px);
+  }
+  
+  .theme-toggle[data-theme="dark"] .theme-toggle-slider::before {
+    font-size: 9px;
   }
 }
 

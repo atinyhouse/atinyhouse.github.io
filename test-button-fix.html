@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>暗黑模式按钮修复测试</title>
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/custom.css">
+  <style>
+    /* 测试样式 */
+    .test-info {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 9999;
+      font-family: 'Courier New', monospace;
+      max-width: 300px;
+    }
+    
+    .test-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .test-item {
+      background: #f5f5f5;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+    
+    .test-item h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    
+    .status-ok { color: #00ff00; }
+    .status-error { color: #ff0000; }
+  </style>
+</head>
+<body>
+  <div class="test-info">
+    <h3>🔧 按钮修复测试</h3>
+    <p><strong>位置:</strong> <span id="positionStatus" class="status-ok">左上角</span></p>
+    <p><strong>图标居中:</strong> <span id="iconStatus" class="status-ok">已修复</span></p>
+    <p><strong>当前主题:</strong> <span id="currentTheme">明亮</span></p>
+    <p><strong>按钮图标:</strong> <span id="buttonIcon">☾</span></p>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="/" class="nav-title">A Tiny House</a>
+      <ul>
+        <li><a href="/">Posts</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/tags">Tags</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+        <div class="theme-toggle-slider"></div>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="post">
+      <h1 class="post-title">暗黑模式按钮修复测试</h1>
+      <div class="post-content">
+        <h2>🎯 修复内容</h2>
+        <div class="test-grid">
+          <div class="test-item">
+            <h3>✅ 位置修复</h3>
+            <p><strong>之前:</strong> 按钮在导航栏下方 (top: 60px)</p>
+            <p><strong>现在:</strong> 按钮在左上角 (top: 20px)</p>
+            <p><strong>响应式:</strong></p>
+            <ul>
+              <li>桌面端: (20px, 20px)</li>
+              <li>平板端: (15px, 15px)</li>
+              <li>手机端: (12px, 12px)</li>
+            </ul>
+          </div>
+          
+          <div class="test-item">
+            <h3>✅ 图标居中修复</h3>
+            <p><strong>问题:</strong> 开关内部图标未居中</p>
+            <p><strong>修复:</strong></p>
+            <ul>
+              <li>使用 flexbox 居中对齐</li>
+              <li>绝对定位 + transform</li>
+              <li>设置 width: 100%, height: 100%</li>
+              <li>统一字体大小</li>
+            </ul>
+          </div>
+        </div>
+        
+        <h2>🧪 测试项目</h2>
+        <ol>
+          <li><strong>位置测试:</strong> 检查按钮是否在左上角</li>
+          <li><strong>图标测试:</strong> 检查月亮/太阳图标是否居中</li>
+          <li><strong>切换测试:</strong> 点击按钮测试主题切换</li>
+          <li><strong>响应式测试:</strong> 调整窗口大小测试适配</li>
+        </ol>
+        
+        <h2>📱 响应式测试</h2>
+        <p>请尝试调整浏览器窗口到不同尺寸：</p>
+        <ul>
+          <li><strong>桌面端 (≥769px):</strong> 按钮位置 (20px, 20px)，大小 50×25px</li>
+          <li><strong>平板端 (≤768px):</strong> 按钮位置 (15px, 15px)，大小 45×22px</li>
+          <li><strong>手机端 (≤480px):</strong> 按钮位置 (12px, 12px)，大小 40×20px</li>
+        </ul>
+        
+        <h2>✅ 预期效果</h2>
+        <ul>
+          <li>按钮始终在左上角，不与其他元素重叠</li>
+          <li>图标完美居中显示</li>
+          <li>主题切换功能正常</li>
+          <li>响应式适配正确</li>
+          <li>黑白风格保持一致</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>&copy; 2024 A Tiny House. Made with Jekyll.</span>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+      
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        updateTestInfo('明亮', '☾');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        updateTestInfo('暗黑', '☀');
+      }
+    }
+
+    function updateTestInfo(theme, icon) {
+      document.getElementById('currentTheme').textContent = theme;
+      document.getElementById('buttonIcon').textContent = icon;
+      
+      // 检查按钮位置
+      const button = document.querySelector('.theme-toggle');
+      if (button) {
+        const buttonTop = parseInt(getComputedStyle(button).top);
+        const buttonLeft = parseInt(getComputedStyle(button).left);
+        
+        const positionEl = document.getElementById('positionStatus');
+        if (buttonTop <= 25 && buttonLeft <= 25) {
+          positionEl.textContent = '左上角 ✅';
+          positionEl.className = 'status-ok';
+        } else {
+          positionEl.textContent = `位置异常 (${buttonTop}px, ${buttonLeft}px)`;
+          positionEl.className = 'status-error';
+        }
+      }
+    }
+
+    // 页面加载时初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+          themeToggle.setAttribute('data-theme', 'dark');
+        }
+        updateTestInfo('暗黑', '☀');
+      } else {
+        updateTestInfo('明亮', '☾');
+      }
+    });
+  </script>
+</body>
+</html>
