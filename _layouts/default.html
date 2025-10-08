@@ -19,12 +19,13 @@
   <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/apple-touch-icon.png' | relative_url }}">
 </head>
 <body>
+  <!-- 暗黑模式切换按钮 - 固定在页面最左边 -->
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" aria-label="切换暗黑模式">
+    <div class="theme-toggle-slider"></div>
+  </button>
+
   <nav class="nav">
     <div class="nav-container">
-      <!-- 暗黑模式切换按钮 - 在导航栏内 -->
-      <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" aria-label="切换暗黑模式">
-        <div class="theme-toggle-slider"></div>
-      </button>
       <a href="{{ '/' | relative_url }}" class="nav-title">A Tiny House</a>
       <ul>
         <li><a href="{{ '/' | relative_url }}">Posts</a></li>
