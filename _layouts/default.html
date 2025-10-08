@@ -27,11 +27,13 @@
         <li><a href="{{ '/about' | relative_url }}">About</a></li>
         <li><a href="{{ '/tags' | relative_url }}">Tags</a></li>
       </ul>
-      <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
-        <div class="theme-toggle-slider"></div>
-      </button>
     </div>
   </nav>
+
+  <!-- 暗黑模式切换按钮 - 独立于导航栏 -->
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" aria-label="切换暗黑模式">
+    <div class="theme-toggle-slider"></div>
+  </button>
 
   <main>
     {{ content }}

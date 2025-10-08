@@ -397,126 +397,124 @@ body {
   color: var(--bg-color);
 }
 
-/* 暗黑模式切换按钮 - 简化版本 */
+/* 暗黑模式切换按钮 - 现代设计 */
 .theme-toggle {
   position: fixed;
-  top: 10px;
-  left: 20px;
+  top: 20px;
+  right: 20px;
   z-index: 1001;
   background: var(--bg-color);
-  border: 2px solid var(--text-color);
-  border-radius: 25px;
-  width: 50px;
-  height: 25px;
+  border: 2px solid var(--border-color);
+  border-radius: 30px;
+  width: 64px;
+  height: 32px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
-  padding: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 3px;
+  box-shadow: 0 2px 8px var(--shadow-color), 0 1px 2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
 
 .theme-toggle:hover {
-  border-color: var(--text-shade);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--text-color);
+  box-shadow: 0 4px 12px var(--shadow-color), 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.theme-toggle:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px var(--shadow-color);
 }
 
 .theme-toggle-slider {
-  width: 19px;
-  height: 19px;
-  background: var(--text-color);
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #FDB813 0%, #FFAA00 100%);
   border-radius: 50%;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  color: var(--bg-color);
+  font-size: 13px;
+  color: #fff;
   position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .theme-toggle-slider::before {
-  content: "☾";
-  color: var(--bg-color);
-  font-size: 12px;
+  content: "☀";
+  color: #fff;
+  font-size: 14px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   line-height: 1;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+}
+
+.theme-toggle[data-theme="dark"] {
+  background: var(--bg-color);
+  border-color: var(--border-color);
 }
 
 .theme-toggle[data-theme="dark"] .theme-toggle-slider {
-  transform: translateX(25px);
-  background: var(--bg-color);
-  color: var(--text-color);
+  transform: translateX(32px);
+  background: linear-gradient(135deg, #4A5568 0%, #2D3748 100%);
+  box-shadow: 0 0 8px rgba(147, 197, 253, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .theme-toggle[data-theme="dark"] .theme-toggle-slider::before {
-  content: "☀";
-  color: var(--text-color);
-  font-size: 12px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  line-height: 1;
+  content: "☾";
+  color: #93C5FD;
+  font-size: 14px;
+  filter: drop-shadow(0 0 3px rgba(147, 197, 253, 0.6));
 }
 
 /* 暗黑模式按钮响应式设计 */
 @media (max-width: 768px) {
   .theme-toggle {
-    top: 8px;
-    left: 15px;
-    width: 45px;
+    top: 15px;
+    right: 15px;
+    width: 56px;
+    height: 28px;
+  }
+
+  .theme-toggle-slider {
+    width: 22px;
     height: 22px;
   }
-  
-  .theme-toggle-slider {
-    width: 17px;
-    height: 17px;
-    font-size: 10px;
-  }
-  
+
   .theme-toggle-slider::before {
-    font-size: 10px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    line-height: 1;
+    font-size: 12px;
   }
-  
+
   .theme-toggle[data-theme="dark"] .theme-toggle-slider {
-    transform: translateX(23px);
+    transform: translateX(28px);
   }
 }
 
 @media (max-width: 480px) {
   .theme-toggle {
-    top: 6px;
-    left: 12px;
-    width: 40px;
+    top: 12px;
+    right: 12px;
+    width: 52px;
+    height: 26px;
+  }
+
+  .theme-toggle-slider {
+    width: 20px;
     height: 20px;
   }
-  
-  .theme-toggle-slider {
-    width: 16px;
-    height: 16px;
-    font-size: 9px;
-  }
-  
+
   .theme-toggle-slider::before {
-    font-size: 9px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    line-height: 1;
+    font-size: 11px;
   }
-  
+
   .theme-toggle[data-theme="dark"] .theme-toggle-slider {
-    transform: translateX(20px);
+    transform: translateX(26px);
   }
 }
 
