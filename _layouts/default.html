@@ -21,6 +21,10 @@
 <body>
   <nav class="nav">
     <div class="nav-container">
+      <!-- 暗黑模式切换按钮 - 在导航栏内 -->
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" aria-label="切换暗黑模式">
+        <div class="theme-toggle-slider"></div>
+      </button>
       <a href="{{ '/' | relative_url }}" class="nav-title">A Tiny House</a>
       <ul>
         <li><a href="{{ '/' | relative_url }}">Posts</a></li>
@@ -29,11 +33,6 @@
       </ul>
     </div>
   </nav>
-
-  <!-- 暗黑模式切换按钮 - 独立于导航栏 -->
-  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" aria-label="切换暗黑模式">
-    <div class="theme-toggle-slider"></div>
-  </button>
 
   <main>
     {{ content }}
