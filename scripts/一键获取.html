@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>即刻动态一键获取工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .method {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .method:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .method-title {
+            font-size: 1.5rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .badge.recommended {
+            background: #28a745;
+        }
+
+        .steps {
+            margin-top: 20px;
+        }
+
+        .step {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .step-content {
+            color: #666;
+            line-height: 1.8;
+            margin-left: 40px;
+        }
+
+        .code-box {
+            background: #2d3748;
+            color: #68d391;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            position: relative;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #5568d3;
+            transform: translateY(-1px);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .btn-secondary:hover {
+            background: #dee2e6;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .alert {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #155724;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border-color: #ffeaa7;
+            color: #856404;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .method {
+                padding: 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 即刻动态获取工具</h1>
+            <p>三种方法，总有一款适合你</p>
+        </div>
+
+        <div class="content">
+            <!-- 方法一：浏览器控制台 -->
+            <div class="method">
+                <div class="method-title">
+                    <span class="step-number">1</span>
+                    方法一：浏览器控制台
+                    <span class="badge recommended">⭐️ 推荐</span>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>💡 最简单：</strong> 不需要安装任何东西，复制代码到浏览器即可！
+                </div>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            打开即刻主页
+                        </div>
+                        <div class="step-content">
+                            <a href="https://web.okjike.com/u/71A6B3C3-1382-4121-A17A-2A4C05CB55E8" target="_blank" class="btn btn-primary" style="flex: none; display: inline-block;">
+                                🚀 打开我的即刻主页
+                            </a>
+                            <div style="margin-top: 10px;">
+                                <strong>⚠️ 重要：</strong> 确保已登录即刻账号！
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            打开开发者工具
+                        </div>
+                        <div class="step-content">
+                            <strong>Mac：</strong> 按 <span class="highlight">Command ⌘ + Option ⌥ + I</span><br>
+                            <strong>Windows：</strong> 按 <span class="highlight">Ctrl + Shift + I</span><br>
+                            或者按 <span class="highlight">F12</span>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            切换到 Console 标签
+                        </div>
+                        <div class="step-content">
+                            在开发者工具顶部找到 <span class="highlight">Console</span> 标签并点击
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            复制并执行代码
+                        </div>
+                        <div class="step-content">
+                            点击下面的按钮复制代码，然后在 Console 中粘贴并按回车：
+
+                            <div class="code-box" id="scriptCode" style="display: none;">
+// 代码太长，请点击"查看完整代码"按钮
+                            </div>
+
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="showFullScript()">
+                                    📋 查看完整代码
+                                </button>
+                                <button class="btn btn-primary" onclick="copyScript()">
+                                    📋 一键复制代码
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">5</span>
+                            下载文件
+                        </div>
+                        <div class="step-content">
+                            执行成功后会自动下载 <strong>thoughts.yml</strong> 文件到你的"下载"文件夹
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">6</span>
+                            替换文件
+                        </div>
+                        <div class="step-content">
+                            将下载的文件复制到：
+                            <div class="code-box">
+/Users/didi/Desktop/b/atinyhouse.github.io/_data/thoughts.yml
+                            </div>
+                            <strong>直接替换</strong>原文件即可！
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 方法二：浏览器书签 -->
+            <div class="method">
+                <div class="method-title">
+                    <span class="step-number">2</span>
+                    方法二：浏览器书签按钮
+                    <span class="badge">快捷</span>
+                </div>
+
+                <div class="alert">
+                    <strong>✨ 一键操作：</strong> 设置一次，以后每次点击书签即可提取！
+                </div>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-title">拖拽此按钮到书签栏</div>
+                        <div class="step-content">
+                            <a href="javascript:(function(){alert('请先打开 scripts/jike_bookmarklet.html 文件！');})();"
+                               class="btn btn-primary"
+                               style="flex: none; display: inline-block; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                🔖 即刻提取器
+                            </a>
+                            <div style="margin-top: 15px;">
+                                <button class="btn btn-secondary" onclick="window.location.href='file:///Users/didi/Desktop/b/atinyhouse.github.io/scripts/jike_bookmarklet.html'">
+                                    📖 打开书签工具页面
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 方法三：Python 脚本 -->
+            <div class="method">
+                <div class="method-title">
+                    <span class="step-number">3</span>
+                    方法三：Python 脚本
+                    <span class="badge">技术向</span>
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>⚙️ 需要：</strong> Python 3 环境和一些技术基础
+                </div>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-title">方案 A：直接 API 获取（可能失败）</div>
+                        <div class="step-content">
+                            <div class="code-box">
+cd /Users/didi/Desktop/b/atinyhouse.github.io
+pip3 install pyyaml requests
+python3 scripts/fetch_jike.py
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">方案 B：解析网络数据（推荐）</div>
+                        <div class="step-content">
+                            详细步骤请查看完整指南文档
+                            <div style="margin-top: 10px;">
+                                <button class="btn btn-secondary" onclick="window.location.href='file:///Users/didi/Desktop/b/atinyhouse.github.io/scripts/获取即刻动态完整指南.md'">
+                                    📖 查看详细指南
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 验证和使用 -->
+            <div class="alert alert-info" style="margin-top: 30px;">
+                <h3 style="margin-bottom: 10px;">✅ 获取成功后</h3>
+                <ol style="margin-left: 20px; line-height: 2;">
+                    <li>查看生成的 thoughts.yml 文件确认数据正确</li>
+                    <li>提交并推送到 GitHub</li>
+                    <li>访问 <a href="https://atinyhouse.github.io/thoughts/" target="_blank">https://atinyhouse.github.io/thoughts/</a> 查看效果</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>遇到问题？查看详细指南或检查浏览器控制台的错误信息</p>
+            <p style="margin-top: 5px; opacity: 0.7;">Made with ❤️ by Claude Code</p>
+        </div>
+    </div>
+
+    <script>
+        // 完整的提取脚本（这里我会放入优化后的版本）
+        const fullScript = `// ===== 即刻动态提取脚本 =====
+(function() {
+    console.log('🚀 开始提取即刻动态...');
+
+    const posts = [];
+    const selectors = [
+        '[class*="FeedItem"]',
+        '[class*="feed-item"]',
+        'article',
+        '[data-type="ORIGINAL_POST"]'
+    ];
+
+    let postElements = null;
+    for (const selector of selectors) {
+        postElements = document.querySelectorAll(selector);
+        if (postElements.length > 0) {
+            console.log(\`✅ 找到 \${postElements.length} 个元素\`);
+            break;
+        }
+    }
+
+    if (!postElements || postElements.length === 0) {
+        alert('❌ 未找到动态！请确保：\\n1. 页面已加载\\n2. 已登录即刻');
+        return;
+    }
+
+    postElements.forEach((el, idx) => {
+        if (idx > 50) return;
+        const post = {};
+
+        // 提取时间
+        const timeEl = el.querySelector('time') || el.querySelector('[class*="time"]');
+        if (timeEl) {
+            try {
+                const date = new Date(timeEl.getAttribute('datetime') || timeEl.textContent);
+                if (!isNaN(date.getTime())) {
+                    post.date = date.toISOString().split('T')[0];
+                    post.time = date.toTimeString().substring(0, 5);
+                }
+            } catch(e) {}
+        }
+
+        // 提取内容
+        const contentEl = el.querySelector('[class*="content"]') || el.querySelector('p');
+        if (contentEl) {
+            let text = (contentEl.innerText || contentEl.textContent).trim();
+            text = text.replace(/\\n{3,}/g, '\\n\\n').replace(/[ \\t]+/g, ' ');
+            if (text.length > 1000) text = text.substring(0, 1000) + '...';
+            if (text) post.content = text;
+        }
+
+        // 提取图片
+        const imgs = el.querySelectorAll('img');
+        const imageUrls = [];
+        imgs.forEach(img => {
+            const src = img.src || img.getAttribute('data-src');
+            if (src && !src.includes('avatar') && src.includes('jike')) {
+                imageUrls.push(src);
+            }
+        });
+        if (imageUrls.length > 0) post.images = imageUrls.slice(0, 9);
+
+        // 提取链接
+        const links = el.querySelectorAll('a[href^="http"]');
+        links.forEach(link => {
+            if (!link.href.includes('okjike.com') && !link.href.includes('ruguoapp.com')) {
+                post.link = link.href;
+                post.link_title = link.textContent.trim() || '查看链接';
+            }
+        });
+
+        if (post.content || post.images) posts.push(post);
+    });
+
+    if (posts.length === 0) {
+        alert('❌ 没有有效内容！');
+        return;
+    }
+
+    console.log(\`✅ 提取 \${posts.length} 条动态\`);
+
+    // 生成 YAML
+    let yaml = \`# Thoughts 数据 - 自动生成\\n# 时间: \${new Date().toLocaleString('zh-CN')}\\n# 数量: \${posts.length}\\n\\n\`;
+
+    posts.forEach(post => {
+        yaml += \`- date: \${post.date || '2025-01-01'}\\n\`;
+        if (post.time) yaml += \`  time: "\${post.time}"\\n\`;
+
+        if (post.content) {
+            const lines = post.content.split('\\n');
+            if (lines.length > 1) {
+                yaml += '  content: |\\n';
+                lines.forEach(line => yaml += \`    \${line}\\n\`);
+            } else {
+                yaml += \`  content: "\${post.content.replace(/\\\\/g, '\\\\\\\\').replace(/"/g, '\\\\"')}"\\n\`;
+            }
+        }
+
+        if (post.images) {
+            yaml += '  images:\\n';
+            post.images.forEach(img => yaml += \`    - \${img}\\n\`);
+        }
+
+        if (post.link) {
+            yaml += \`  link: \${post.link}\\n\`;
+            yaml += \`  link_title: "\${post.link_title}"\\n\`;
+        }
+
+        yaml += '\\n';
+    });
+
+    // 下载
+    const blob = new Blob([yaml], { type: 'text/yaml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'thoughts.yml';
+    a.click();
+    URL.revokeObjectURL(url);
+
+    alert(\`✅ 成功！提取 \${posts.length} 条动态\\n\\n文件已下载：thoughts.yml\\n\\n请替换到：_data/thoughts.yml\`);
+})();`;
+
+        function showFullScript() {
+            const codeBox = document.getElementById('scriptCode');
+            codeBox.textContent = fullScript;
+            codeBox.style.display = 'block';
+            alert('✅ 代码已显示！\n\n向下滚动查看完整代码，然后点击"一键复制"按钮');
+        }
+
+        function copyScript() {
+            navigator.clipboard.writeText(fullScript).then(() => {
+                alert('✅ 代码已复制到剪贴板！\n\n下一步：\n1. 打开即刻主页\n2. 按 F12 打开开发者工具\n3. 切换到 Console 标签\n4. 粘贴代码并按回车');
+            }).catch(err => {
+                // 兼容旧浏览器
+                const textarea = document.createElement('textarea');
+                textarea.value = fullScript;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('✅ 代码已复制！');
+            });
+        }
+    </script>
+</body>
+</html>

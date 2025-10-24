@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>即刻动态一键获取工具</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.8;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 40px;
+        }
+        .bookmarklet {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+        .bookmarklet:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+        .step h3 {
+            margin-top: 0;
+            color: #3498db;
+        }
+        code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📱 即刻动态一键获取工具</h1>
+
+    <p>使用此工具可以快速将即刻动态导出为 YAML 格式，适用于博客 Thoughts 页面。</p>
+
+    <h2>🚀 方法一：浏览器书签按钮（最简单）</h2>
+
+    <div class="step">
+        <h3>步骤 1: 拖拽此按钮到书签栏</h3>
+        <p>
+            <a href="javascript:(function(){const posts=[];let postElements=document.querySelectorAll('[class*=&quot;Feed&quot;] > div, [class*=&quot;feed&quot;] > div, article');if(postElements.length===0){alert('未找到动态内容，请确保页面已加载完成');return}postElements.forEach((el,idx)=>{if(idx>20)return;const post={};const dateEl=el.querySelector('time, [class*=&quot;time&quot;], [class*=&quot;date&quot;]');if(dateEl){const dateStr=dateEl.getAttribute('datetime')||dateEl.textContent;try{const date=new Date(dateStr);post.date=date.toISOString().split('T')[0];post.time=date.toTimeString().substring(0,5)}catch(e){}}const contentEl=el.querySelector('[class*=&quot;content&quot;], [class*=&quot;text&quot;], p');if(contentEl){let text=contentEl.textContent.trim();text=text.replace(/\s+/g,' ').substring(0,500);if(text)post.content=text}const imgs=el.querySelectorAll('img[src*=&quot;cdnv2.ruguoapp&quot;], img[src*=&quot;jike&quot;], img[alt]');if(imgs.length>0){post.images=Array.from(imgs).slice(0,4).map(img=>img.src).filter(src=>!src.includes('avatar'))}const links=el.querySelectorAll('a[href^=&quot;http&quot;]');if(links.length>0){links.forEach(link=>{const href=link.href;if(!href.includes('okjike.com')&&!href.includes('ruguoapp.com')){post.link=href;post.link_title=link.textContent.trim()||'查看链接'}})}if(post.content||post.images){posts.push(post)}});if(posts.length===0){alert('未找到有效动态');return}let yaml='# 即刻动态数据\n# 生成时间: '+new Date().toLocaleString()+'\n\n';posts.forEach(post=>{yaml+='- date: '+post.date+'\n';if(post.time)yaml+='  time: &quot;'+post.time+'&quot;\n';if(post.content){const lines=post.content.split('\n');if(lines.length>1){yaml+='  content: |\n';lines.forEach(line=>yaml+='    '+line+'\n')}else{yaml+='  content: '+post.content+'\n'}}if(post.images){yaml+='  images:\n';post.images.forEach(img=>yaml+='    - '+img+'\n')}if(post.link){yaml+='  link: '+post.link+'\n';yaml+='  link_title: '+post.link_title+'\n'}yaml+='\n'});const blob=new Blob([yaml],{type:'text/yaml'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='thoughts.yml';a.click();alert('成功提取 '+posts.length+' 条动态！\n文件已下载为 thoughts.yml')})();" class="bookmarklet">
+                🚀 抓取即刻动态
+            </a>
+        </p>
+        <p style="color: #666; font-size: 14px;">
+            💡 提示：将上面的按钮拖拽到浏览器的书签栏
+        </p>
+    </div>
+
+    <div class="step">
+        <h3>步骤 2: 访问即刻主页</h3>
+        <p>在浏览器中打开你的即刻主页：</p>
+        <p><a href="https://web.okjike.com/u/71A6B3C3-1382-4121-A17A-2A4C05CB55E8" target="_blank">https://web.okjike.com/u/71A6B3C3-1382-4121-A17A-2A4C05CB55E8</a></p>
+    </div>
+
+    <div class="step">
+        <h3>步骤 3: 等待页面加载</h3>
+        <p>确保动态内容已经全部加载完成（可以向下滚动加载更多）</p>
+    </div>
+
+    <div class="step">
+        <h3>步骤 4: 点击书签按钮</h3>
+        <p>点击刚才添加的"抓取即刻动态"书签按钮，自动下载 <code>thoughts.yml</code> 文件</p>
+    </div>
+
+    <div class="step">
+        <h3>步骤 5: 替换文件</h3>
+        <p>将下载的 <code>thoughts.yml</code> 文件替换到：</p>
+        <code>/Users/didi/Desktop/b/atinyhouse.github.io/_data/thoughts.yml</code>
+    </div>
+
+    <div class="success">
+        ✅ 完成！运行 <code>bundle exec jekyll serve</code> 查看效果
+    </div>
+
+    <hr style="margin: 60px 0; border: none; border-top: 2px dashed #ddd;">
+
+    <h2>🛠️ 方法二：手动复制（备用方案）</h2>
+
+    <div class="step">
+        <h3>如果书签方法不work，使用此方法：</h3>
+        <ol>
+            <li>访问即刻主页并登录</li>
+            <li>按 F12 打开开发者工具</li>
+            <li>切换到 Console（控制台）标签</li>
+            <li>复制下面的代码粘贴到控制台并回车</li>
+        </ol>
+
+        <textarea id="consoleCode" readonly>
+// 即刻动态提取代码
+const posts = [];
+let postElements = document.querySelectorAll('[class*="Feed"] > div, [class*="feed"] > div, article');
+
+if (postElements.length === 0) {
+    alert('未找到动态内容，请确保页面已加载完成');
+} else {
+    postElements.forEach((el, idx) => {
+        if (idx > 20) return; // 只提取前20条
+
+        const post = {};
+
+        // 提取日期
+        const dateEl = el.querySelector('time, [class*="time"], [class*="date"]');
+        if (dateEl) {
+            const dateStr = dateEl.getAttribute('datetime') || dateEl.textContent;
+            try {
+                const date = new Date(dateStr);
+                post.date = date.toISOString().split('T')[0];
+                post.time = date.toTimeString().substring(0, 5);
+            } catch(e) {}
+        }
+
+        // 提取内容
+        const contentEl = el.querySelector('[class*="content"], [class*="text"], p');
+        if (contentEl) {
+            let text = contentEl.textContent.trim();
+            text = text.replace(/\s+/g, ' ').substring(0, 500);
+            if (text) post.content = text;
+        }
+
+        // 提取图片
+        const imgs = el.querySelectorAll('img[src*="cdnv2.ruguoapp"], img[src*="jike"], img[alt]');
+        if (imgs.length > 0) {
+            post.images = Array.from(imgs)
+                .slice(0, 4)
+                .map(img => img.src)
+                .filter(src => !src.includes('avatar'));
+        }
+
+        // 提取链接
+        const links = el.querySelectorAll('a[href^="http"]');
+        if (links.length > 0) {
+            links.forEach(link => {
+                const href = link.href;
+                if (!href.includes('okjike.com') && !href.includes('ruguoapp.com')) {
+                    post.link = href;
+                    post.link_title = link.textContent.trim() || '查看链接';
+                }
+            });
+        }
+
+        if (post.content || post.images) {
+            posts.push(post);
+        }
+    });
+
+    // 生成 YAML
+    let yaml = '# 即刻动态数据\n# 生成时间: ' + new Date().toLocaleString() + '\n\n';
+
+    posts.forEach(post => {
+        yaml += '- date: ' + post.date + '\n';
+        if (post.time) yaml += '  time: "' + post.time + '"\n';
+        if (post.content) {
+            const lines = post.content.split('\n');
+            if (lines.length > 1) {
+                yaml += '  content: |\n';
+                lines.forEach(line => yaml += '    ' + line + '\n');
+            } else {
+                yaml += '  content: ' + post.content + '\n';
+            }
+        }
+        if (post.images) {
+            yaml += '  images:\n';
+            post.images.forEach(img => yaml += '    - ' + img + '\n');
+        }
+        if (post.link) {
+            yaml += '  link: ' + post.link + '\n';
+            yaml += '  link_title: ' + post.link_title + '\n';
+        }
+        yaml += '\n';
+    });
+
+    // 下载文件
+    const blob = new Blob([yaml], { type: 'text/yaml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'thoughts.yml';
+    a.click();
+
+    console.log('成功提取 ' + posts.length + ' 条动态');
+    console.log(yaml);
+    alert('成功提取 ' + posts.length + ' 条动态！\n文件已下载为 thoughts.yml');
+}
+        </textarea>
+        <button onclick="copyCode()" style="margin-top: 10px; padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            📋 复制代码
+        </button>
+    </div>
+
+    <div class="warning">
+        ⚠️  注意：此工具通过分析页面 DOM 结构提取数据，如果即刻改版可能需要更新代码
+    </div>
+
+    <script>
+        function copyCode() {
+            const textarea = document.getElementById('consoleCode');
+            textarea.select();
+            document.execCommand('copy');
+            alert('代码已复制！');
+        }
+    </script>
+</body>
+</html>

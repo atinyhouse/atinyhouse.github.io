@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thoughts Preview - A Tiny House</title>
+    <link rel="stylesheet" href="assets/custom.css">
+    <style>
+        :root {
+          --bg-color: #ffffff;
+          --text-color: #37352f;
+          --text-shade: #2f2f2f;
+          --text-tint: #8b8b8b;
+          --grey-1: #6b6b6b;
+          --grey-2: #e9e9e7;
+          --grey-3: #d9d9d7;
+          --grey-4: #f1f1ef;
+          --blue: #0066cc;
+          --border-color: #e0e0e0;
+        }
+
+        [data-theme="dark"] {
+          --bg-color: #1a1a1a;
+          --text-color: #e0e0e0;
+          --text-shade: #ffffff;
+          --text-tint: #a0a0a0;
+          --grey-1: #808080;
+          --grey-2: #2a2a2a;
+          --grey-3: #333333;
+          --grey-4: #2a2a2a;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Navigation */
+        .nav {
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--grey-2);
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-shade);
+            text-decoration: none;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--blue);
+        }
+
+        /* Thoughts Styles */
+        .thoughts-container {
+          max-width: 680px;
+          margin: 0 auto;
+          padding: 48px 24px;
+        }
+
+        .thoughts-header {
+          text-align: center;
+          margin-bottom: 64px;
+          padding-bottom: 32px;
+          border-bottom: 1px solid var(--grey-2);
+        }
+
+        .thoughts-title {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: var(--text-shade);
+          margin: 0 0 16px 0;
+          letter-spacing: -0.02em;
+        }
+
+        .thoughts-subtitle {
+          font-size: 1rem;
+          color: var(--text-tint);
+          line-height: 1.6;
+        }
+
+        .thoughts-subtitle a {
+          color: var(--blue);
+          text-decoration: none;
+          border-bottom: 1px solid var(--blue);
+        }
+
+        .thoughts-timeline {
+          position: relative;
+        }
+
+        .thoughts-timeline::before {
+          content: '';
+          position: absolute;
+          left: 20px;
+          top: 0;
+          bottom: 0;
+          width: 2px;
+          background: var(--grey-2);
+        }
+
+        .thought-item {
+          position: relative;
+          margin-bottom: 40px;
+          padding-left: 56px;
+        }
+
+        .thought-item::before {
+          content: '';
+          position: absolute;
+          left: 14px;
+          top: 8px;
+          width: 14px;
+          height: 14px;
+          background: var(--bg-color);
+          border: 3px solid var(--text-tint);
+          border-radius: 50%;
+          transition: all 0.3s ease;
+          z-index: 1;
+        }
+
+        .thought-item:hover::before {
+          border-color: var(--blue);
+          transform: scale(1.2);
+        }
+
+        .thought-card {
+          background: var(--bg-color);
+          border: 1px solid var(--grey-2);
+          border-radius: 12px;
+          padding: 24px;
+          transition: all 0.3s ease;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        [data-theme="dark"] .thought-card {
+          background: #1f1f1f;
+        }
+
+        .thought-card:hover {
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          transform: translateY(-2px);
+          border-color: var(--text-tint);
+        }
+
+        .thought-date {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.875rem;
+          color: var(--text-tint);
+          margin-bottom: 12px;
+          font-weight: 500;
+        }
+
+        .thought-content {
+          font-size: 1rem;
+          line-height: 1.7;
+          color: var(--text-color);
+          white-space: pre-wrap;
+        }
+
+        .month-divider {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin: 48px 0 32px 0;
+          padding-left: 56px;
+        }
+
+        .month-divider::before,
+        .month-divider::after {
+          content: '';
+          flex: 1;
+          height: 1px;
+          background: var(--grey-2);
+        }
+
+        .month-divider span {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: var(--text-tint);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: var(--grey-4);
+            border: none;
+            border-radius: 20px;
+            width: 50px;
+            height: 26px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .theme-toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        [data-theme="dark"] .theme-toggle-slider {
+            transform: translateX(24px);
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/" class="nav-title">A Tiny House</a>
+            <ul>
+                <li><a href="/">Posts</a></li>
+                <li><a href="/thoughts/" style="color: var(--blue);">Thoughts</a></li>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/tags/">Tags</a></li>
+            </ul>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <div class="theme-toggle-slider"></div>
+            </button>
+        </div>
+    </nav>
+
+    <div class="thoughts-container">
+        <div class="thoughts-header">
+            <h1 class="thoughts-title">Thoughts</h1>
+            <p class="thoughts-subtitle">
+                一些碎碎念，来自<a href="https://web.okjike.com/u/71A6B3C3-1382-4121-A17A-2A4C05CB55E8" target="_blank">即刻</a>
+            </p>
+        </div>
+
+        <div class="thoughts-timeline">
+            <!-- 2025年1月 -->
+            <div class="thought-item">
+                <div class="thought-card">
+                    <div class="thought-date">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>01月15日 14:30</span>
+                    </div>
+                    <div class="thought-content">今天在小月河边散步，看到柳树抽出了新芽。
+
+春天真的要来了。</div>
+                </div>
+            </div>
+
+            <div class="thought-item">
+                <div class="thought-card">
+                    <div class="thought-date">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>01月10日 09:20</span>
+                    </div>
+                    <div class="thought-content">最近在读《美丽的世界，你在哪里》，萨利·鲁尼的文字总是能击中人心。</div>
+                </div>
+            </div>
+
+            <div class="thought-item">
+                <div class="thought-card">
+                    <div class="thought-date">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>01月05日 21:45</span>
+                    </div>
+                    <div class="thought-content">工作就像是一场马拉松，重要的不是跑得多快，而是能坚持到终点。
+
+与其焦虑未来，不如专注当下每一步。</div>
+                </div>
+            </div>
+
+            <!-- 月份分隔 -->
+            <div class="month-divider">
+                <span>2024年12月</span>
+            </div>
+
+            <div class="thought-item">
+                <div class="thought-card">
+                    <div class="thought-date">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>12月28日</span>
+                    </div>
+                    <div class="thought-content">周末去了趟书店，买了三本书。新的一年要多读书。</div>
+                </div>
+            </div>
+
+            <div class="thought-item">
+                <div class="thought-card">
+                    <div class="thought-date">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>12月20日 16:00</span>
+                    </div>
+                    <div class="thought-content">今天和小林聊天，她说："你就把自己当做一个日结工，干完这一天，就多赚了一天的钱。"
+
+这句话太解构了，但又莫名觉得很有道理。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</body>
+</html>

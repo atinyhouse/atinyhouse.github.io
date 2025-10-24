@@ -1,0 +1,463 @@
+---
+layout: default
+title: "Thoughts"
+permalink: /thoughts/
+---
+
+<style>
+/* Thoughts 页面专属样式 */
+.thoughts-container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.thoughts-header {
+  text-align: center;
+  margin-bottom: 64px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--grey-2);
+}
+
+.thoughts-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-shade);
+  margin: 0 0 16px 0;
+  letter-spacing: -0.02em;
+}
+
+.thoughts-subtitle {
+  font-size: 1rem;
+  color: var(--text-tint);
+  line-height: 1.6;
+}
+
+.thoughts-subtitle a {
+  color: var(--blue);
+  text-decoration: none;
+  border-bottom: 1px solid var(--blue);
+  transition: all 0.2s ease;
+}
+
+.thoughts-subtitle a:hover {
+  opacity: 0.7;
+}
+
+.thoughts-timeline {
+  position: relative;
+}
+
+/* 时间线竖线 */
+.thoughts-timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--grey-2);
+}
+
+.thought-item {
+  position: relative;
+  margin-bottom: 40px;
+  padding-left: 56px;
+  animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 时间线圆点 */
+.thought-item::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 8px;
+  width: 14px;
+  height: 14px;
+  background: var(--bg-color);
+  border: 3px solid var(--text-tint);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.thought-item:hover::before {
+  border-color: var(--blue);
+  transform: scale(1.2);
+}
+
+.thought-card {
+  background: var(--bg-color);
+  border: 1px solid var(--grey-2);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="dark"] .thought-card {
+  background: #1f1f1f;
+  border-color: #2a2a2a;
+}
+
+.thought-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+  border-color: var(--text-tint);
+}
+
+[data-theme="dark"] .thought-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.thought-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--text-tint);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.thought-date svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.6;
+}
+
+.thought-content {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-color);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin-bottom: 0;
+}
+
+.thought-content p {
+  margin: 0 0 12px 0;
+}
+
+.thought-content p:last-child {
+  margin-bottom: 0;
+}
+
+.thought-images {
+  margin-top: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.thought-images.single {
+  grid-template-columns: 1fr;
+}
+
+.thought-images.double {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.thought-images.multiple {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.thought-image {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.thought-image:hover {
+  transform: scale(1.02);
+}
+
+.thought-link {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--grey-4);
+  border-radius: 8px;
+  text-decoration: none;
+  display: block;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+[data-theme="dark"] .thought-link {
+  background: #2a2a2a;
+}
+
+.thought-link:hover {
+  border-color: var(--blue);
+  background: var(--grey-3);
+}
+
+[data-theme="dark"] .thought-link:hover {
+  background: #333;
+}
+
+.thought-link-title {
+  font-size: 0.9rem;
+  color: var(--blue);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.thought-link-title svg {
+  width: 14px;
+  height: 14px;
+}
+
+.thought-link-url {
+  font-size: 0.8rem;
+  color: var(--text-tint);
+  margin-top: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 月份分隔 */
+.month-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 48px 0 32px 0;
+  padding-left: 56px;
+}
+
+.month-divider::before {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--grey-2);
+}
+
+.month-divider span {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-tint);
+  white-space: nowrap;
+}
+
+.month-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--grey-2);
+}
+
+/* 加载更多按钮 */
+.load-more {
+  text-align: center;
+  margin-top: 48px;
+}
+
+.load-more-btn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: var(--text-color);
+  color: var(--bg-color);
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.load-more-btn:hover {
+  opacity: 0.8;
+  transform: translateY(-2px);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .thoughts-container {
+    padding: 32px 16px;
+  }
+
+  .thoughts-title {
+    font-size: 2rem;
+  }
+
+  .thought-item {
+    padding-left: 48px;
+  }
+
+  .thoughts-timeline::before {
+    left: 16px;
+  }
+
+  .thought-item::before {
+    left: 10px;
+  }
+
+  .thought-card {
+    padding: 20px;
+  }
+
+  .thought-images.multiple {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .month-divider {
+    padding-left: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .thoughts-title {
+    font-size: 1.75rem;
+  }
+
+  .thought-images.double {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--text-tint);
+}
+
+.empty-state svg {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+
+.empty-state p {
+  font-size: 1rem;
+  margin: 8px 0;
+}
+</style>
+
+<div class="thoughts-container">
+  <!-- 页面头部 -->
+  <div class="thoughts-header">
+    <h1 class="thoughts-title">Thoughts</h1>
+    <p class="thoughts-subtitle">
+      一些碎碎念，来自<a href="https://web.okjike.com/u/71A6B3C3-1382-4121-A17A-2A4C05CB55E8" target="_blank">即刻</a>
+    </p>
+  </div>
+
+  <!-- 时间线 -->
+  <div class="thoughts-timeline">
+    {% assign thoughts_by_month = site.data.thoughts | group_by_exp: "item", "item.date | date: '%Y-%m'" %}
+    {% assign sorted_groups = thoughts_by_month | sort: "name" | reverse %}
+
+    {% for month_group in sorted_groups %}
+      <!-- 月份分隔符 -->
+      {% unless forloop.first %}
+      <div class="month-divider">
+        <span>{{ month_group.name | date: "%Y年%m月" }}</span>
+      </div>
+      {% endunless %}
+
+      <!-- 该月份的所有thoughts -->
+      {% assign sorted_thoughts = month_group.items | sort: "date" | reverse %}
+      {% for thought in sorted_thoughts %}
+      <div class="thought-item">
+        <div class="thought-card">
+          <!-- 日期时间 -->
+          <div class="thought-date">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>
+              {{ thought.date | date: "%m月%d日" }}
+              {% if thought.time %}
+                {{ thought.time }}
+              {% endif %}
+            </span>
+          </div>
+
+          <!-- 内容 -->
+          <div class="thought-content">
+            {{ thought.content | markdownify }}
+          </div>
+
+          <!-- 图片 -->
+          {% if thought.images %}
+          <div class="thought-images {% if thought.images.size == 1 %}single{% elsif thought.images.size == 2 %}double{% else %}multiple{% endif %}">
+            {% for image in thought.images %}
+            <img src="{{ image }}" alt="Thought image" class="thought-image" loading="lazy">
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <!-- 链接 -->
+          {% if thought.link %}
+          <a href="{{ thought.link }}" class="thought-link" target="_blank" rel="noopener">
+            <div class="thought-link-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+              </svg>
+              {{ thought.link_title | default: "查看链接" }}
+            </div>
+            <div class="thought-link-url">{{ thought.link }}</div>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    {% endfor %}
+
+    {% if site.data.thoughts.size == 0 %}
+    <div class="empty-state">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+      </svg>
+      <p>还没有任何想法</p>
+      <p style="font-size: 0.875rem; margin-top: 8px;">在 _data/thoughts.yml 中添加你的即刻动态</p>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- 加载更多（可选，如果你想要分页功能） -->
+  <!-- <div class="load-more">
+    <button class="load-more-btn">加载更多</button>
+  </div> -->
+</div>
+
+<script>
+// 图片点击放大功能（可选）
+document.querySelectorAll('.thought-image').forEach(img => {
+  img.addEventListener('click', function() {
+    const modal = document.createElement('div');
+    modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; display: flex; align-items: center; justify-content: center; cursor: zoom-out;';
+
+    const modalImg = document.createElement('img');
+    modalImg.src = this.src;
+    modalImg.style.cssText = 'max-width: 90%; max-height: 90%; object-fit: contain;';
+
+    modal.appendChild(modalImg);
+    document.body.appendChild(modal);
+
+    modal.addEventListener('click', () => {
+      document.body.removeChild(modal);
+    });
+  });
+});
+</script>
