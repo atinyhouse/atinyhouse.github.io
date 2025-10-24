@@ -46,29 +46,10 @@ layout: default
     {% endif %}
   {% endfor %}
 
-  {% for post in paginator.posts %}
-    {% unless post.sticky %}
+  {% for post in site.posts %}
+    {% unless post.sticky or post.source == 'jike' %}
       {% include catalogue_item.html %}
     {% endunless %}
   {% endfor %}
 </div>
 
-<div class="pagination">
-  <div class="pagination-container">
-    <a href="{{ paginator.first_page_path | prepend: site.baseurl }}" class="pagination-btn" {% unless paginator.previous_page %}disabled{% endunless %}>« 首页</a>
-    {% if paginator.previous_page %}
-      <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}" class="pagination-btn" id="prevBtn">‹ 上一页</a>
-    {% else %}
-      <span class="pagination-btn" disabled>‹ 上一页</span>
-    {% endif %}
-    <div class="pagination-info">
-      <span>第 {{ paginator.page }} 页，共 {{ paginator.total_pages }} 页</span>
-    </div>
-    {% if paginator.next_page %}
-      <a href="{{ paginator.next_page_path | prepend: site.baseurl }}" class="pagination-btn" id="nextBtn">下一页 ›</a>
-    {% else %}
-      <span class="pagination-btn" disabled>下一页 ›</span>
-    {% endif %}
-    <a href="{{ paginator.last_page_path | prepend: site.baseurl }}" class="pagination-btn" {% unless paginator.next_page %}disabled{% endunless %}>末页 »</a>
-  </div>
-</div>
