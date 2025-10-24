@@ -1923,7 +1923,7 @@ article h1.post-title {
   font-size: 2.5rem !important;
   font-weight: 700 !important;
   line-height: 1.2 !important;
-  color: #37352f !important;
+  color: var(--text-shade) !important;
   letter-spacing: -0.02em !important;
 }
 
@@ -1933,7 +1933,7 @@ article h1.post-title {
 article .post-meta,
 article .post-info {
   font-size: 14px !important;
-  color: #787774 !important;
+  color: var(--text-tint) !important;
   margin-bottom: 16px !important;
   display: flex !important;
   align-items: center !important;
