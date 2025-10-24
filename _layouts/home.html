@@ -41,13 +41,13 @@ layout: default
 
 <div class="catalogue">
   {% for post in site.posts %}
-    {% if post.sticky %}
+    {% if post.sticky and post.source != 'jike' %}
       {% include catalogue_item.html sticky='true' %}
     {% endif %}
   {% endfor %}
 
   {% for post in paginator.posts %}
-    {% unless post.sticky %}
+    {% unless post.sticky or post.source == 'jike' %}
       {% include catalogue_item.html %}
     {% endunless %}
   {% endfor %}
