@@ -143,30 +143,7 @@ permalink: /thoughts/
   color: var(--text-color);
   word-wrap: break-word;
   margin-bottom: 0;
-}
-
-.thought-content p {
-  margin: 0 0 0.8em 0;
-}
-
-.thought-content p:first-child {
-  margin-top: 0;
-}
-
-.thought-content p:last-child {
-  margin-bottom: 0;
-}
-
-/* 隐藏空段落 */
-.thought-content p:empty {
-  display: none;
-  margin: 0;
-}
-
-/* 隐藏只包含空白字符的段落 */
-.thought-content p:blank {
-  display: none;
-  margin: 0;
+  white-space: pre-line;
 }
 
 .thought-images {
@@ -410,7 +387,7 @@ permalink: /thoughts/
 
           <!-- 内容 -->
           <div class="thought-content">
-            {{ thought.content | markdownify }}
+            {{ thought.content | strip | newline_to_br }}
           </div>
 
           <!-- 图片 -->
@@ -457,16 +434,6 @@ permalink: /thoughts/
 </div>
 
 <script>
-// 移除空段落
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.thought-content p').forEach(p => {
-    // 如果段落为空或只包含空白字符，则移除
-    if (!p.textContent.trim()) {
-      p.remove();
-    }
-  });
-});
-
 // 图片点击放大功能（可选）
 document.querySelectorAll('.thought-image').forEach(img => {
   img.addEventListener('click', function() {
