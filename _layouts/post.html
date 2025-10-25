@@ -32,17 +32,30 @@ layout: default
 
   <!-- 文章底部 -->
   <footer class="post-footer" style="margin-top: 48px !important; padding-top: 24px !important; border-top: 1px solid #e9e9e7 !important;">
+    {% assign prev_post = nil %}
+    {% assign next_post = nil %}
+    {% for post in site.posts %}
+      {% if post.source != 'jike' %}
+        {% if post.date < page.date and prev_post == nil %}
+          {% assign prev_post = post %}
+        {% endif %}
+        {% if post.date > page.date %}
+          {% assign next_post = post %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
     <div class="post-navigation" style="display: flex !important; justify-content: space-between !important; gap: 24px !important; margin-bottom: 32px !important;">
-      {% if page.previous %}
-        <a href="{{ page.previous.url | relative_url }}" class="nav-link prev" style="flex: 1 !important; padding: 16px 20px !important; background: #f1f1ef !important; border: 1px solid #e9e9e7 !important; border-radius: 8px !important; text-decoration: none !important; color: #37352f !important; transition: all 0.2s ease !important; display: block !important;">
+      {% if prev_post %}
+        <a href="{{ prev_post.url | relative_url }}" class="nav-link prev" style="flex: 1 !important; padding: 16px 20px !important; background: #f1f1ef !important; border: 1px solid #e9e9e7 !important; border-radius: 8px !important; text-decoration: none !important; color: #37352f !important; transition: all 0.2s ease !important; display: block !important;">
           <span class="nav-direction" style="display: block !important; font-size: 0.75rem !important; color: #787774 !important; margin-bottom: 4px !important; font-weight: 500 !important; text-transform: uppercase !important; letter-spacing: 0.05em !important;">← 上一篇</span>
-          <span class="nav-title" style="display: block !important; font-weight: 600 !important; font-size: 0.9rem !important; line-height: 1.4 !important; color: #2f2f2f !important;">{{ page.previous.title }}</span>
+          <span class="nav-title" style="display: block !important; font-weight: 600 !important; font-size: 0.9rem !important; line-height: 1.4 !important; color: #2f2f2f !important;">{{ prev_post.title }}</span>
         </a>
       {% endif %}
-      {% if page.next %}
-        <a href="{{ page.next.url | relative_url }}" class="nav-link next" style="flex: 1 !important; padding: 16px 20px !important; background: #f1f1ef !important; border: 1px solid #e9e9e7 !important; border-radius: 8px !important; text-decoration: none !important; color: #37352f !important; transition: all 0.2s ease !important; display: block !important; text-align: right !important;">
+      {% if next_post %}
+        <a href="{{ next_post.url | relative_url }}" class="nav-link next" style="flex: 1 !important; padding: 16px 20px !important; background: #f1f1ef !important; border: 1px solid #e9e9e7 !important; border-radius: 8px !important; text-decoration: none !important; color: #37352f !important; transition: all 0.2s ease !important; display: block !important; text-align: right !important;">
           <span class="nav-direction" style="display: block !important; font-size: 0.75rem !important; color: #787774 !important; margin-bottom: 4px !important; font-weight: 500 !important; text-transform: uppercase !important; letter-spacing: 0.05em !important;">下一篇 →</span>
-          <span class="nav-title" style="display: block !important; font-weight: 600 !important; font-size: 0.9rem !important; line-height: 1.4 !important; color: #2f2f2f !important;">{{ page.next.title }}</span>
+          <span class="nav-title" style="display: block !important; font-weight: 600 !important; font-size: 0.9rem !important; line-height: 1.4 !important; color: #2f2f2f !important;">{{ next_post.title }}</span>
         </a>
       {% endif %}
     </div>
