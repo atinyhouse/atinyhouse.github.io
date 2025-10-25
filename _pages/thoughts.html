@@ -434,6 +434,17 @@ permalink: /thoughts/
 </div>
 
 <script>
+// 清理多余的换行
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.thought-content').forEach(content => {
+    // 将连续的 <br> 标签替换为单个 <br>
+    content.innerHTML = content.innerHTML
+      .replace(/(<br\s*\/?>\s*){2,}/gi, '<br>')  // 多个连续 br 替换为一个
+      .replace(/^\s*<br\s*\/?>/i, '')  // 移除开头的 br
+      .replace(/<br\s*\/?>\s*$/i, '');  // 移除结尾的 br
+  });
+});
+
 // 图片点击放大功能（可选）
 document.querySelectorAll('.thought-image').forEach(img => {
   img.addEventListener('click', function() {
