@@ -154,6 +154,18 @@ permalink: /thoughts/
   margin-bottom: 0;
 }
 
+/* 隐藏空段落 */
+.thought-content p:empty {
+  display: none;
+  margin: 0;
+}
+
+/* 隐藏只包含空白字符的段落 */
+.thought-content p:blank {
+  display: none;
+  margin: 0;
+}
+
 .thought-images {
   margin-top: 16px;
   display: grid;
@@ -442,6 +454,16 @@ permalink: /thoughts/
 </div>
 
 <script>
+// 移除空段落
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.thought-content p').forEach(p => {
+    // 如果段落为空或只包含空白字符，则移除
+    if (!p.textContent.trim()) {
+      p.remove();
+    }
+  });
+});
+
 // 图片点击放大功能（可选）
 document.querySelectorAll('.thought-image').forEach(img => {
   img.addEventListener('click', function() {
