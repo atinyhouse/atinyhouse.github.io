@@ -1,9 +1,9 @@
 name: Sync Jike Thoughts
 
 on:
-  # 定时运行：每天北京时间 8:00, 14:00, 20:00（UTC 0:00, 6:00, 12:00）
+  # 定时运行：每天北京时间 19:15（UTC 11:15）
   schedule:
-    - cron: '0 0,6,12 * * *'
+    - cron: '15 11 * * *'
 
   # 允许手动触发
   workflow_dispatch:
