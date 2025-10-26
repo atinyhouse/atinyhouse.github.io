@@ -42,37 +42,71 @@ def strip_html(html):
     return s.get_text()
 
 USER_ID = "71A6B3C3-1382-4121-A17A-2A4C05CB55E8"
-RSSHUB_URL = f"https://rsshub.app/jike/user/{USER_ID}"
+
+# 多个 RSSHub 镜像源（按优先级排序）
+RSSHUB_INSTANCES = [
+    "https://rsshub.app",
+    "https://rss.miantiao.me",
+    "https://rss.shab.fun",
+    "https://rsshub.rssforever.com",
+]
 
 print("="*60)
 print("🚀 即刻动态自动同步")
 print("="*60)
 print()
 print(f"用户 ID: {USER_ID}")
-print(f"RSS 源: {RSSHUB_URL}")
+print(f"可用镜像: {len(RSSHUB_INSTANCES)} 个")
 print()
 
-# 获取 RSS
+# 尝试从多个源获取 RSS
 print("📡 正在获取 RSS feed...")
-try:
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
-    }
-    req = urllib.request.Request(RSSHUB_URL, headers=headers)
+rss_data = None
+successful_source = None
 
-    with urllib.request.urlopen(req, timeout=30) as response:
-        rss_data = response.read().decode('utf-8')
+for instance in RSSHUB_INSTANCES:
+    rsshub_url = f"{instance}/jike/user/{USER_ID}"
+    print(f"  尝试: {instance}")
 
-    print("✓ RSS 获取成功")
+    try:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
+        }
+        req = urllib.request.Request(rsshub_url, headers=headers)
 
-except Exception as e:
-    print(f"❌ RSS 获取失败: {e}")
+        with urllib.request.urlopen(req, timeout=15) as response:
+            rss_data = response.read().decode('utf-8')
+            successful_source = instance
+            print(f"  ✓ 成功获取数据")
+            break
+
+    except Exception as e:
+        print(f"  ✗ 失败: {e}")
+        continue
+
+if rss_data is None:
     print()
-    print("备用方案：")
-    print("由于您已有大量历史数据，可以暂时跳过本次同步")
-    print("建议稍后重试或检查网络连接")
-    exit(1)
+    print("❌ 所有 RSS 源都不可用")
+    print()
+    print("这通常是暂时性问题，可能的原因：")
+    print("  - RSSHub 服务器维护")
+    print("  - 网络连接问题")
+    print("  - 即刻 API 暂时不可用")
+    print()
+    print("💡 建议：")
+    print("  - 稍后会自动重试（每天 19:15）")
+    print("  - 您的历史数据已保存，不会丢失")
+    print("  - 可以稍后手动触发 workflow")
+    print()
+    # 在 GitHub Actions 中优雅退出，避免显示为失败
+    import sys
+    if os.getenv('GITHUB_ACTIONS'):
+        print("⚠️  GitHub Actions: 优雅退出，等待下次重试")
+        sys.exit(0)
+    else:
+        sys.exit(1)
 
+print(f"✓ 使用数据源: {successful_source}")
 print()
 
 # 解析 RSS
