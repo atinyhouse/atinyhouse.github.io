@@ -53,11 +53,7 @@ jobs:
 
           # 提交并推送
           TIMESTAMP=$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')
-          git commit -m "chore: auto sync jike thoughts - ${TIMESTAMP}
-
-🤖 通过 RSSHub 自动同步即刻动态
-
-Co-Authored-By: GitHub Actions <noreply@github.com>"
+          git commit -m "chore: auto sync jike thoughts - ${TIMESTAMP}" -m "通过 RSSHub 自动同步即刻动态" -m "Co-Authored-By: GitHub Actions <noreply@github.com>"
           git push
 
       # 6. 报告状态
