@@ -1,0 +1,67 @@
+name: Sync Jike Thoughts
+
+on:
+  # 定时运行：每天北京时间 19:15（UTC 11:15）
+  schedule:
+    - cron: '15 11 * * *'
+
+  # 允许手动触发
+  workflow_dispatch:
+
+jobs:
+  sync-thoughts:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # 2. 设置 Python 环境
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 3. 安装依赖
+      - name: Install dependencies
+        run: |
+          pip install PyYAML
+
+      # 4. 运行同步脚本
+      - name: Sync Jike thoughts from RSSHub
+        run: |
+          python scripts/sync_jike_simple.py
+
+      # 5. 提交更改
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          # 添加变更文件
+          git add _data/thoughts.yml
+
+          # 检查是否有变更
+          if git diff --staged --quiet; then
+            echo "✓ 没有新的动态需要同步"
+            exit 0
+          fi
+
+          # 提交并推送
+          TIMESTAMP=$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')
+          git commit -m "chore: auto sync jike thoughts - ${TIMESTAMP}" -m "通过 RSSHub 自动同步即刻动态" -m "Co-Authored-By: GitHub Actions <noreply@github.com>"
+          git push
+
+      # 6. 报告状态
+      - name: Report status
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ 即刻动态同步成功"
+          else
+            echo "❌ 即刻动态同步失败"
+          fi
