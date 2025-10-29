@@ -19,6 +19,8 @@ import os
 import re
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
+import hashlib
+from urllib.parse import urlparse
 
 class HTMLStripper(HTMLParser):
     """移除 HTML 标签"""
@@ -41,7 +43,60 @@ def strip_html(html):
     s.feed(html)
     return s.get_text()
 
+def extract_images_from_html(html):
+    """从 HTML 中提取图片 URL"""
+    if not html:
+        return []
+
+    # 查找所有 img 标签的 src
+    img_pattern = r'<img[^>]+src=["\']([^"\']+)["\']'
+    matches = re.findall(img_pattern, html, re.IGNORECASE)
+
+    # 过滤掉头像等小图片
+    images = []
+    for url in matches:
+        # 过滤掉头像图片
+        if 'avatar' not in url.lower():
+            images.append(url)
+
+    return images
+
+def download_image(url, save_dir):
+    """下载图片并返回本地路径"""
+    try:
+        # 创建保存目录
+        os.makedirs(save_dir, exist_ok=True)
+
+        # 生成文件名（使用日期时间戳 + URL hash）
+        timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+        url_hash = hashlib.md5(url.encode()).hexdigest()[:16]
+        ext = os.path.splitext(urlparse(url).path)[1] or '.jpg'
+        filename = f"{timestamp}-{url_hash}{ext}"
+        filepath = os.path.join(save_dir, filename)
+
+        # 如果文件已存在，直接返回相对路径
+        if os.path.exists(filepath):
+            return f"/_pages/files/thoughts/{filename}"
+
+        # 下载图片
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
+        }
+        req = urllib.request.Request(url, headers=headers)
+
+        with urllib.request.urlopen(req, timeout=30) as response:
+            with open(filepath, 'wb') as f:
+                f.write(response.read())
+
+        print(f"    ✓ 下载图片: {filename}")
+        return f"/_pages/files/thoughts/{filename}"
+
+    except Exception as e:
+        print(f"    ✗ 图片下载失败: {url[:50]}... 错误: {e}")
+        return None
+
 USER_ID = "71A6B3C3-1382-4121-A17A-2A4C05CB55E8"
+IMAGES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), '_pages/files/thoughts')
 
 # 多个 RSSHub 实例备选列表
 RSSHUB_INSTANCES = [
@@ -124,6 +179,7 @@ print()
 # 转换为 thoughts 格式
 print("📝 转换数据格式...")
 new_thoughts = []
+total_images_downloaded = 0
 
 for item in items:
     thought = {}
@@ -140,13 +196,30 @@ for item in items:
         except:
             pass
 
-    # 内容
+    # 内容和图片
     description = item.find('description')
     if description is not None and description.text:
+        # 先提取图片
+        image_urls = extract_images_from_html(description.text)
+
+        # 清理文本内容
         content = strip_html(description.text)
         content = re.sub(r'\s+', ' ', content).strip()
         if content:
             thought['content'] = content
+
+        # 下载图片
+        if image_urls:
+            print(f"  发现 {len(image_urls)} 张图片，开始下载...")
+            images = []
+            for img_url in image_urls:
+                local_path = download_image(img_url, IMAGES_DIR)
+                if local_path:
+                    images.append(local_path)
+                    total_images_downloaded += 1
+
+            if images:
+                thought['images'] = images
 
     # 标题
     title = item.find('title')
@@ -161,10 +234,11 @@ for item in items:
     if link is not None and link.text:
         thought['source_link'] = link.text
 
-    if 'date' in thought and 'content' in thought:
+    if 'date' in thought and ('content' in thought or 'images' in thought):
         new_thoughts.append(thought)
 
 print(f"✓ 成功转换 {len(new_thoughts)} 条动态")
+print(f"✓ 下载了 {total_images_downloaded} 张图片")
 print()
 
 # 读取现有数据
@@ -197,17 +271,39 @@ print()
 print("🔗 合并数据...")
 
 # 使用日期+时间+内容前100字符作为唯一标识
-existing_keys = set()
-for t in existing_thoughts:
+existing_keys = {}
+for idx, t in enumerate(existing_thoughts):
     key = f"{t.get('date', '')}_{t.get('time', '')}_{t.get('content', '')[:100]}"
-    existing_keys.add(key)
+    existing_keys[key] = idx
 
 new_count = 0
+updated_count = 0
+
 for t in new_thoughts:
     key = f"{t.get('date', '')}_{t.get('time', '')}_{t.get('content', '')[:100]}"
-    if key not in existing_keys:
+
+    if key in existing_keys:
+        # 已存在的动态，检查是否需要更新图片
+        idx = existing_keys[key]
+        old_thought = existing_thoughts[idx]
+
+        # 如果新动态有图片，而旧的没有，或者图片不同，则更新
+        if 'images' in t and 'images' not in old_thought:
+            old_thought['images'] = t['images']
+            updated_count += 1
+            print(f"  ✓ 更新动态图片: {t.get('date')} {t.get('time')}")
+        elif 'images' in t and 'images' in old_thought:
+            # 合并图片列表，去重
+            old_images = set(old_thought['images'])
+            new_images = [img for img in t['images'] if img not in old_images]
+            if new_images:
+                old_thought['images'].extend(new_images)
+                updated_count += 1
+                print(f"  ✓ 添加新图片: {t.get('date')} {t.get('time')} (+{len(new_images)}张)")
+    else:
+        # 新动态
         existing_thoughts.append(t)
-        existing_keys.add(key)
+        existing_keys[key] = len(existing_thoughts) - 1
         new_count += 1
 
 # 按日期时间倒序排列
@@ -219,6 +315,7 @@ existing_thoughts.sort(
 print(f"✓ 合并完成")
 print(f"  总计: {len(existing_thoughts)} 条")
 print(f"  新增: {new_count} 条")
+print(f"  更新: {updated_count} 条")
 print()
 
 # 保存
@@ -265,16 +362,24 @@ print(f"📊 统计信息:")
 print(f"  - RSS 获取: {len(items)} 条")
 print(f"  - 有效数据: {len(new_thoughts)} 条")
 print(f"  - 新增动态: {new_count} 条")
+print(f"  - 更新动态: {updated_count} 条")
+print(f"  - 下载图片: {total_images_downloaded} 张")
 print(f"  - 总计动态: {len(existing_thoughts)} 条")
 print()
 
-if new_count > 0:
-    print(f"🎉 发现 {new_count} 条新动态！")
+if new_count > 0 or updated_count > 0:
+    print(f"🎉 发现变化！")
+    if new_count > 0:
+        print(f"  - 新增 {new_count} 条动态")
+    if updated_count > 0:
+        print(f"  - 更新 {updated_count} 条动态（添加图片）")
     print()
     print("最新动态预览:")
     for i, t in enumerate(new_thoughts[:3], 1):
         content_preview = t.get('content', '')[:60]
-        print(f"  {i}. [{t.get('date')} {t.get('time')}] {content_preview}...")
+        img_count = len(t.get('images', []))
+        img_info = f" [📷 {img_count}]" if img_count > 0 else ""
+        print(f"  {i}. [{t.get('date')} {t.get('time')}]{img_info} {content_preview}...")
 else:
     print("✓ 没有新动态")
 
