@@ -204,7 +204,11 @@ for item in items:
 
         # 清理文本内容
         content = strip_html(description.text)
-        content = re.sub(r'\s+', ' ', content).strip()
+        # 清理多余的空白：将多个连续空行压缩成单个换行
+        content = re.sub(r'\n\s*\n+', '\n\n', content)  # 多个空行压缩成双换行
+        content = re.sub(r'[ \t]+', ' ', content)  # 多个空格压缩成单个空格
+        content = content.strip()
+
         if content:
             thought['content'] = content
 
