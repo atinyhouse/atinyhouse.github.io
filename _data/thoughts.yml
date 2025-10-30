@@ -2,8 +2,8 @@
 # Thoughts 数据文件 - 即刻动态
 # ============================================
 #
-# 已修复：删除重复、恢复段落格式
-# 修复时间: 2025-10-30 13:42:41
+# 已全面清理：删除重复动态、去除重复图片
+# 清理时间: 2025-10-30 15:08:47
 #
 # ============================================
 
@@ -66,14 +66,6 @@
   - /_pages/files/thoughts/20251030110207-21c21682d3d992b2.jpg
   - /_pages/files/thoughts/20251030110207-6aac1b4b55aa0d07.jpg
   - /_pages/files/thoughts/20251030110208-734213f4d7761130.jpg
-- date: '2025-09-29'
-  time: 02:40
-  content: 📷
-  images:
-  - /_pages/files/thoughts/20250929024029-FjRH9hLxHBniYDh1Y_uuSOXDXPBPv3.jpg
-  - /_pages/files/thoughts/20250929024029-Fj2Hk667oBrGAh1PomWDvTbHxXhWv3.jpg
-  - /_pages/files/thoughts/20250929024029-FowcXPptWPukVQ0o2H5ViXFi5nsuv3.jpg
-  - /_pages/files/thoughts/20250929024029-FkYeL0GNctmFJ4h-jsihkf2t2qabv3.jpg
 - date: '2025-09-28'
   time: '18:40'
   content: 📷
@@ -109,10 +101,6 @@
   - /_pages/files/thoughts/20250920145008-FhPUj9B17TVYqKHJZ7HVUfd4LMVxv3.heic
   - /_pages/files/thoughts/20250920145008-FqWTpt6Q7JBzICNxXwiKqILuArO3v3.heic
   - /_pages/files/thoughts/20250920145008-Fg5JUNL0JQ7CCntNm5k7swpReCLPv3.heic
-  - /_pages/files/thoughts/20251030110210-553abd95664615ca.heic
-  - /_pages/files/thoughts/20251030110210-85ad7ccc0125df5c.heic
-  - /_pages/files/thoughts/20251030110211-788cac1d40c256dd.heic
-  - /_pages/files/thoughts/20251030110211-b8aa67023c814662.heic
   source_link: https://m.okjike.com/originalPosts/68ce4ea08da78b979043ae32
   topic: '发布了: 在杭州的一个下午'
 - date: '2025-09-01'
@@ -140,9 +128,6 @@
   - /_pages/files/thoughts/20250712123517-FsN4Ne74PqlIEkW8g6ouktIAGDOCv3.jpg
   - /_pages/files/thoughts/20250712123517-Fp6ghVqNeOrZN-Mir_6Ae5FQnBWKv3.jpg
   - /_pages/files/thoughts/20250712123517-FmoxvWnccyUreyUdLtCmQsT6RrGgv3.jpg
-  - /_pages/files/thoughts/20251030110212-5b95c8ccc15a3751.jpg
-  - /_pages/files/thoughts/20251030110213-ceae3f0bbe143b35.jpg
-  - /_pages/files/thoughts/20251030110213-c65bb7d0de45417e.jpg
   source_link: https://m.okjike.com/originalPosts/6871e605b558e7d6298b842b
   topic: '发布了: 🎀迪士尼排队时还挺好拍的！'
 - date: '2025-07-10'
@@ -188,12 +173,6 @@
   - /_pages/files/thoughts/20250105221726-Fjc62hpz-hZpyAbHeLXHLZi6q73Fv3.heic
   - /_pages/files/thoughts/20250105221726-FvLantUI0ndqqH8ZSxlKzpMM2LuKv3.heic
   - /_pages/files/thoughts/20250105221726-Fh_Zyt7yV8RgjkEz9K9S4kGLK-eZv3.heic
-  - /_pages/files/thoughts/20251030110214-a9288ecffa4b9ddb.heic
-  - /_pages/files/thoughts/20251030110214-143ce9f3319503b9.heic
-  - /_pages/files/thoughts/20251030110215-d7ef17faf63e4060.heic
-  - /_pages/files/thoughts/20251030110215-dc0a6b8a944caa84.heic
-  - /_pages/files/thoughts/20251030110216-fdfdc630065f20aa.heic
-  - /_pages/files/thoughts/20251030110216-69911ac487df40b3.heic
   source_link: https://m.okjike.com/originalPosts/677a94762d8ef3d9a0c514a5
   topic: '发布了: 今天去了沙河大集，好多人呀！'
 - date: '2025-01-03'
