@@ -5,11 +5,131 @@ permalink: /thoughts/
 ---
 
 <style>
-/* Thoughts 页面专属样式 */
-.thoughts-container {
-  max-width: 680px;
+/* Thoughts 页面布局 */
+.thoughts-wrapper {
+  display: flex;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 48px 24px;
+  gap: 48px;
+  position: relative;
+}
+
+/* ========== 左侧时间轴导航 ========== */
+.timeline-nav {
+  position: sticky;
+  top: 100px;
+  width: 180px;
+  height: fit-content;
+  flex-shrink: 0;
+}
+
+.timeline-nav-inner {
+  border-left: 2px solid var(--grey-2);
+  padding-left: 0;
+}
+
+.timeline-year {
+  margin-bottom: 24px;
+}
+
+.timeline-year-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-shade);
+  margin-bottom: 12px;
+  padding-left: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.timeline-year-label::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--grey-2);
+  border: 2px solid var(--bg-color);
+  transition: all 0.2s ease;
+}
+
+.timeline-year-label:hover {
+  color: var(--blue);
+}
+
+.timeline-year-label:hover::before {
+  background: var(--blue);
+  transform: translateY(-50%) scale(1.2);
+}
+
+.timeline-month-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0 20px;
+}
+
+.timeline-month-item {
+  margin-bottom: 8px;
+}
+
+.timeline-month-link {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-tint);
+  text-decoration: none;
+  padding: 4px 0;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.timeline-month-link::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--text-tint);
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.timeline-month-link:hover {
+  color: var(--blue);
+  padding-left: 8px;
+}
+
+.timeline-month-link:hover::before {
+  opacity: 1;
+  left: -20px;
+}
+
+/* 当前激活的月份 */
+.timeline-month-link.active {
+  color: var(--blue);
+  font-weight: 600;
+  padding-left: 8px;
+}
+
+.timeline-month-link.active::before {
+  opacity: 1;
+  background: var(--blue);
+  border-color: var(--blue);
+  left: -20px;
+}
+
+/* ========== 右侧内容区域 ========== */
+.thoughts-container {
+  flex: 1;
+  min-width: 0; /* 防止flex子元素溢出 */
 }
 
 .thoughts-header {
@@ -238,6 +358,7 @@ permalink: /thoughts/
   gap: 16px;
   margin: 48px 0 32px 0;
   padding-left: 56px;
+  scroll-margin-top: 100px; /* 为滚动锚点留出空间 */
 }
 
 .month-divider::before {
@@ -261,35 +382,70 @@ permalink: /thoughts/
   background: var(--grey-2);
 }
 
-/* 加载更多按钮 */
-.load-more {
-  text-align: center;
-  margin-top: 48px;
+/* ========== 响应式设计 ========== */
+@media (max-width: 1024px) {
+  .timeline-nav {
+    width: 140px;
+    top: 80px;
+  }
+
+  .timeline-year-label {
+    font-size: 1rem;
+  }
+
+  .timeline-month-link {
+    font-size: 0.85rem;
+  }
 }
 
-.load-more-btn {
-  display: inline-block;
-  padding: 12px 32px;
-  background: var(--text-color);
-  color: var(--bg-color);
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-  font-size: 0.95rem;
-}
-
-.load-more-btn:hover {
-  opacity: 0.8;
-  transform: translateY(-2px);
-}
-
-/* 响应式设计 */
 @media (max-width: 768px) {
-  .thoughts-container {
+  .thoughts-wrapper {
+    flex-direction: column;
     padding: 32px 16px;
+    gap: 32px;
+  }
+
+  .timeline-nav {
+    position: relative;
+    top: 0;
+    width: 100%;
+    background: var(--bg-color);
+    border: 1px solid var(--grey-2);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 0;
+  }
+
+  .timeline-nav-inner {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .timeline-year {
+    display: inline-block;
+    margin-right: 24px;
+    margin-bottom: 16px;
+    vertical-align: top;
+  }
+
+  .timeline-year-label::before {
+    display: none;
+  }
+
+  .timeline-month-list {
+    margin: 8px 0 0 0;
+  }
+
+  .timeline-month-link::before {
+    display: none;
+  }
+
+  .timeline-month-link.active {
+    padding-left: 0;
+  }
+
+  .timeline-month-link:hover {
+    padding-left: 0;
   }
 
   .thoughts-title {
@@ -329,6 +485,11 @@ permalink: /thoughts/
   .thought-images.double {
     grid-template-columns: 1fr;
   }
+
+  .timeline-year {
+    display: block;
+    margin-right: 0;
+  }
 }
 
 /* 空状态 */
@@ -351,107 +512,195 @@ permalink: /thoughts/
 }
 </style>
 
-<div class="thoughts-container">
-  <!-- 页面头部 -->
-  <div class="thoughts-header">
-    <h1 class="thoughts-title">Thoughts</h1>
-    <p class="thoughts-subtitle">
-      一些碎碎念，来自<a href="https://web.okjike.com/u/71A6B3C3-1382-4121-A17A-2A4C05CB55E8" target="_blank">即刻</a>
-    </p>
-  </div>
+<div class="thoughts-wrapper">
+  <!-- 左侧时间轴导航 -->
+  <nav class="timeline-nav">
+    <div class="timeline-nav-inner">
+      {% assign thoughts_by_month = site.data.thoughts | group_by_exp: "item", "item.date | date: '%Y-%m'" %}
+      {% assign sorted_groups = thoughts_by_month | sort: "name" | reverse %}
+      {% assign thoughts_by_year = sorted_groups | group_by_exp: "item", "item.name | slice: 0, 4" %}
 
-  <!-- 时间线 -->
-  <div class="thoughts-timeline">
-    {% assign thoughts_by_month = site.data.thoughts | group_by_exp: "item", "item.date | date: '%Y-%m'" %}
-    {% assign sorted_groups = thoughts_by_month | sort: "name" | reverse %}
-
-    {% for month_group in sorted_groups %}
-      <!-- 月份分隔符 -->
-      {% unless forloop.first %}
-      <div class="month-divider">
-        <span>{{ month_group.name | date: "%Y年%m月" }}</span>
-      </div>
-      {% endunless %}
-
-      <!-- 该月份的所有thoughts -->
-      {% assign sorted_thoughts = month_group.items | sort: "date" | reverse %}
-      {% for thought in sorted_thoughts %}
-      <div class="thought-item">
-        <div class="thought-card">
-          <!-- 日期时间 -->
-          <div class="thought-date">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            <span>
-              {{ thought.date | date: "%m月%d日" }}
-              {% if thought.time %}
-                {{ thought.time }}
-              {% endif %}
-            </span>
+      {% for year_group in thoughts_by_year %}
+        <div class="timeline-year">
+          <div class="timeline-year-label" onclick="scrollToMonth('{{ year_group.items.first.name }}')">
+            {{ year_group.name }}
           </div>
-
-          <!-- 内容 -->
-          <div class="thought-content">
-            {{ thought.content | strip | newline_to_br }}
-          </div>
-
-          <!-- 图片 -->
-          {% if thought.images %}
-          <div class="thought-images {% if thought.images.size == 1 %}single{% elsif thought.images.size == 2 %}double{% else %}multiple{% endif %}">
-            {% for image in thought.images %}
-            <img src="{{ image }}" alt="Thought image" class="thought-image" loading="lazy">
+          <ul class="timeline-month-list">
+            {% for month in year_group.items %}
+              <li class="timeline-month-item">
+                <a href="#month-{{ month.name }}" class="timeline-month-link" data-month="{{ month.name }}">
+                  {{ month.name | date: "%m月" }}
+                </a>
+              </li>
             {% endfor %}
-          </div>
-          {% endif %}
-
-          <!-- 链接 -->
-          {% if thought.link %}
-          <a href="{{ thought.link }}" class="thought-link" target="_blank" rel="noopener">
-            <div class="thought-link-title">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-              </svg>
-              {{ thought.link_title | default: "查看链接" }}
-            </div>
-            <div class="thought-link-url">{{ thought.link }}</div>
-          </a>
-          {% endif %}
+          </ul>
         </div>
-      </div>
       {% endfor %}
-    {% endfor %}
-
-    {% if site.data.thoughts.size == 0 %}
-    <div class="empty-state">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-      </svg>
-      <p>还没有任何想法</p>
-      <p style="font-size: 0.875rem; margin-top: 8px;">在 _data/thoughts.yml 中添加你的即刻动态</p>
     </div>
-    {% endif %}
-  </div>
+  </nav>
 
-  <!-- 加载更多（可选，如果你想要分页功能） -->
-  <!-- <div class="load-more">
-    <button class="load-more-btn">加载更多</button>
-  </div> -->
+  <!-- 右侧内容区域 -->
+  <div class="thoughts-container">
+    <!-- 页面头部 -->
+    <div class="thoughts-header">
+      <h1 class="thoughts-title">Thoughts</h1>
+      <p class="thoughts-subtitle">
+        一些碎碎念，来自<a href="https://web.okjike.com/u/71A6B3C3-1382-4121-A17A-2A4C05CB55E8" target="_blank">即刻</a>
+      </p>
+    </div>
+
+    <!-- 时间线 -->
+    <div class="thoughts-timeline">
+      {% for month_group in sorted_groups %}
+        <!-- 月份分隔符 -->
+        <div class="month-divider" id="month-{{ month_group.name }}" data-month="{{ month_group.name }}">
+          <span>{{ month_group.name | date: "%Y年%m月" }}</span>
+        </div>
+
+        <!-- 该月份的所有thoughts -->
+        {% assign sorted_thoughts = month_group.items | sort: "date" | reverse %}
+        {% for thought in sorted_thoughts %}
+        <div class="thought-item">
+          <div class="thought-card">
+            <!-- 日期时间 -->
+            <div class="thought-date">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span>
+                {{ thought.date | date: "%m月%d日" }}
+                {% if thought.time %}
+                  {{ thought.time }}
+                {% endif %}
+              </span>
+            </div>
+
+            <!-- 内容 -->
+            <div class="thought-content">
+              {{ thought.content | strip | newline_to_br }}
+            </div>
+
+            <!-- 图片 -->
+            {% if thought.images %}
+            <div class="thought-images {% if thought.images.size == 1 %}single{% elsif thought.images.size == 2 %}double{% else %}multiple{% endif %}">
+              {% for image in thought.images %}
+              <img src="{{ image }}" alt="Thought image" class="thought-image" loading="lazy">
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- 链接 -->
+            {% if thought.link %}
+            <a href="{{ thought.link }}" class="thought-link" target="_blank" rel="noopener">
+              <div class="thought-link-title">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                </svg>
+                {{ thought.link_title | default: "查看链接" }}
+              </div>
+              <div class="thought-link-url">{{ thought.link }}</div>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      {% endfor %}
+
+      {% if site.data.thoughts.size == 0 %}
+      <div class="empty-state">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+        </svg>
+        <p>还没有任何想法</p>
+        <p style="font-size: 0.875rem; margin-top: 8px;">在 _data/thoughts.yml 中添加你的即刻动态</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
 </div>
 
 <script>
 // 清理多余的换行
 document.addEventListener('DOMContentLoaded', function() {
+  // 清理内容中的换行
   document.querySelectorAll('.thought-content').forEach(content => {
-    // 将连续的 <br> 标签替换为单个 <br>
     content.innerHTML = content.innerHTML
-      .replace(/(<br\s*\/?>\s*){2,}/gi, '<br>')  // 多个连续 br 替换为一个
-      .replace(/^\s*<br\s*\/?>/i, '')  // 移除开头的 br
-      .replace(/<br\s*\/?>\s*$/i, '');  // 移除结尾的 br
+      .replace(/(<br\s*\/?>\s*){2,}/gi, '<br>')
+      .replace(/^\s*<br\s*\/?>/i, '')
+      .replace(/<br\s*\/?>\s*$/i, '');
+  });
+
+  // 滚动监听，高亮当前可见的月份
+  const monthDividers = document.querySelectorAll('.month-divider');
+  const monthLinks = document.querySelectorAll('.timeline-month-link');
+
+  function updateActiveMonth() {
+    let currentMonth = null;
+    const scrollTop = window.scrollY + 150; // 偏移量
+
+    monthDividers.forEach(divider => {
+      const rect = divider.getBoundingClientRect();
+      const top = rect.top + window.scrollY;
+
+      if (top <= scrollTop + 100) {
+        currentMonth = divider.dataset.month;
+      }
+    });
+
+    // 更新激活状态
+    monthLinks.forEach(link => {
+      if (link.dataset.month === currentMonth) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+
+  // 防抖函数
+  let scrollTimeout;
+  window.addEventListener('scroll', () => {
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
+    scrollTimeout = setTimeout(updateActiveMonth, 50);
+  });
+
+  // 初始化
+  updateActiveMonth();
+
+  // 平滑滚动到指定月份
+  monthLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href').substring(1);
+      const target = document.getElementById(targetId);
+      if (target) {
+        const offset = 100;
+        const targetPosition = target.offsetTop - offset;
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
   });
 });
 
-// 图片点击放大功能（可选）
+// 滚动到指定月份（用于年份点击）
+function scrollToMonth(monthId) {
+  const target = document.getElementById('month-' + monthId);
+  if (target) {
+    const offset = 100;
+    const targetPosition = target.offsetTop - offset;
+    window.scrollTo({
+      top: targetPosition,
+      behavior: 'smooth'
+    });
+  }
+}
+
+// 图片点击放大功能
 document.querySelectorAll('.thought-image').forEach(img => {
   img.addEventListener('click', function() {
     const modal = document.createElement('div');
