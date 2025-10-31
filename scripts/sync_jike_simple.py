@@ -274,36 +274,69 @@ print()
 # 合并去重
 print("🔗 合并数据...")
 
-# 使用日期+时间+内容前100字符作为唯一标识
+# 使用 source_link 作为唯一标识（最可靠）
+# 如果没有source_link，则使用日期+内容的hash
 existing_keys = {}
 for idx, t in enumerate(existing_thoughts):
-    key = f"{t.get('date', '')}_{t.get('time', '')}_{t.get('content', '')[:100]}"
+    if 'source_link' in t and t['source_link']:
+        key = t['source_link']
+    else:
+        # 对于没有source_link的旧数据，使用日期+内容hash
+        import hashlib
+        content_hash = hashlib.md5(t.get('content', '').encode()).hexdigest()[:16]
+        key = f"{t.get('date', '')}_{content_hash}"
     existing_keys[key] = idx
 
 new_count = 0
 updated_count = 0
 
 for t in new_thoughts:
-    key = f"{t.get('date', '')}_{t.get('time', '')}_{t.get('content', '')[:100]}"
+    if 'source_link' in t and t['source_link']:
+        key = t['source_link']
+    else:
+        import hashlib
+        content_hash = hashlib.md5(t.get('content', '').encode()).hexdigest()[:16]
+        key = f"{t.get('date', '')}_{content_hash}"
 
     if key in existing_keys:
-        # 已存在的动态，检查是否需要更新图片
+        # 已存在的动态，检查是否需要更新
         idx = existing_keys[key]
         old_thought = existing_thoughts[idx]
 
-        # 如果新动态有图片，而旧的没有，或者图片不同，则更新
-        if 'images' in t and 'images' not in old_thought:
-            old_thought['images'] = t['images']
-            updated_count += 1
-            print(f"  ✓ 更新动态图片: {t.get('date')} {t.get('time')}")
-        elif 'images' in t and 'images' in old_thought:
-            # 合并图片列表，去重
-            old_images = set(old_thought['images'])
-            new_images = [img for img in t['images'] if img not in old_images]
-            if new_images:
-                old_thought['images'].extend(new_images)
+        # 更新策略：保留格式更好的版本（有段落的），同时合并图片
+        new_has_paragraphs = '\n\n' in t.get('content', '')
+        old_has_paragraphs = '\n\n' in old_thought.get('content', '')
+
+        # 如果新版本有段落格式而旧版本没有，替换内容
+        if new_has_paragraphs and not old_has_paragraphs:
+            old_thought['content'] = t['content']
+            print(f"  ✓ 更新动态格式: {t.get('date')} {t.get('time')}")
+
+        # 更新或保留更好的topic
+        if 'topic' in t and ('topic' not in old_thought or len(t['topic']) > len(old_thought.get('topic', ''))):
+            old_thought['topic'] = t['topic']
+
+        # 合并图片，按文件大小去重
+        if 'images' in t:
+            import os
+            from collections import defaultdict
+
+            # 获取所有图片的大小
+            all_images = old_thought.get('images', []) + t['images']
+            size_map = {}
+            for img in all_images:
+                img_path = img.lstrip('/')
+                if os.path.exists(img_path):
+                    size = os.path.getsize(img_path)
+                    if size not in size_map:
+                        size_map[size] = img
+
+            # 使用去重后的图片
+            unique_images = list(size_map.values())
+            if len(unique_images) != len(old_thought.get('images', [])):
+                old_thought['images'] = unique_images
                 updated_count += 1
-                print(f"  ✓ 添加新图片: {t.get('date')} {t.get('time')} (+{len(new_images)}张)")
+                print(f"  ✓ 更新图片列表: {t.get('date')} {t.get('time')}")
     else:
         # 新动态
         existing_thoughts.append(t)
