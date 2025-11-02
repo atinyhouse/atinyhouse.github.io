@@ -92,6 +92,21 @@ body {
   font-size: 1.05em;
 }
 
+@media (max-width: 600px) {
+  .post-content p {
+    font-size: 1em;
+    line-height: 1.75;
+    margin: 1.25em 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-content p {
+    font-size: 0.95em;
+    line-height: 1.7;
+  }
+}
+
 /* 前言部分样式 - 灰色字体，非斜体 */
 .post-content p em {
   color: var(--text-tint);
@@ -112,6 +127,22 @@ body {
   position: relative;
   line-height: 1.8;
   font-size: 1.05em;
+}
+
+@media (max-width: 768px) {
+  .post-content blockquote {
+    margin: 2em 0;
+    padding: 1.5em 1.5em;
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-content blockquote {
+    margin: 1.5em 0;
+    padding: 1.25em 1.25em;
+    font-size: 0.95em;
+  }
 }
 
 .post-content blockquote p:last-child {
@@ -216,6 +247,14 @@ body {
   font-family: 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
   color: #e16259;
   border: 1px solid var(--border-color);
+  word-break: break-all;
+}
+
+@media (max-width: 600px) {
+  .post-content code {
+    font-size: 0.85em;
+    padding: 0.15em 0.35em;
+  }
 }
 
 .post-content pre {
@@ -226,6 +265,23 @@ body {
   margin: 1.5em 0;
   border: 1px solid var(--border-color);
   font-size: 0.9em;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .post-content pre {
+    padding: 1.25em;
+    font-size: 0.85em;
+    margin: 1.25em -12px;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-content pre {
+    padding: 1em;
+    font-size: 0.8em;
+  }
 }
 
 .post-content pre code {
@@ -233,6 +289,7 @@ body {
   padding: 0;
   border: none;
   color: inherit;
+  word-break: normal;
 }
 
 /* 图片样式 */
@@ -264,6 +321,21 @@ body {
   border-radius: 6px;
   overflow: hidden;
   box-shadow: 0 1px 3px var(--shadow-color);
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .post-content table {
+    font-size: 0.85em;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-content table {
+    font-size: 0.8em;
+  }
 }
 
 .post-content th, .post-content td {
@@ -271,6 +343,19 @@ body {
   text-align: left;
   border-bottom: 1px solid var(--border-color);
   vertical-align: top;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .post-content th, .post-content td {
+    padding: 0.6em 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-content th, .post-content td {
+    padding: 0.5em 0.6em;
+  }
 }
 
 .post-content th {
@@ -337,6 +422,16 @@ body {
   box-shadow: 0 2px 8px var(--shadow-color);
 }
 
+/* 移动端优化主题切换按钮位置 */
+@media (max-width: 600px) {
+  .theme-toggle {
+    top: 10px;
+    left: 10px;
+    width: 44px;
+    height: 22px;
+  }
+}
+
 .theme-toggle:hover {
   border-color: var(--blue);
   box-shadow: 0 4px 12px var(--shadow-color);
@@ -354,9 +449,23 @@ body {
   font-size: 10px;
 }
 
+@media (max-width: 600px) {
+  .theme-toggle-slider {
+    width: 16px;
+    height: 16px;
+    font-size: 8px;
+  }
+}
+
 .theme-toggle[data-theme="dark"] .theme-toggle-slider {
   transform: translateX(25px);
   background: var(--blue);
+}
+
+@media (max-width: 600px) {
+  .theme-toggle[data-theme="dark"] .theme-toggle-slider {
+    transform: translateX(22px);
+  }
 }
 
 .theme-toggle[data-theme="dark"] .theme-toggle-slider::before {
@@ -376,6 +485,12 @@ body {
   position: relative;
 }
 
+@media (max-width: 600px) {
+  .home-header {
+    padding: 32px 0;
+  }
+}
+
 .logo-container {
   position: relative;
   display: inline-block;
@@ -387,6 +502,14 @@ body {
   height: 80px;
   margin: 0 auto 24px;
   position: relative;
+}
+
+@media (max-width: 600px) {
+  .logo-house {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 16px;
+  }
 }
 
 .logo-house svg {
@@ -476,13 +599,32 @@ body {
   .logo-decoration {
     display: none;
   }
-  
+
   .logo-text {
     font-size: 1.25rem;
   }
-  
+
   .logo-text-main {
     font-size: 1.75rem;
+  }
+
+  .logo-text-subtitle {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-text {
+    font-size: 1rem;
+  }
+
+  .logo-text-main {
+    font-size: 1.5rem;
+  }
+
+  .logo-text-subtitle {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
   }
 }
 
@@ -496,12 +638,25 @@ body {
   text-decoration: none;
 }
 
+@media (max-width: 600px) {
+  .catalogue-item {
+    padding: 20px 0;
+  }
+}
+
 .catalogue-item:hover {
   background-color: var(--grey-4);
   border-radius: 6px;
   padding-left: 12px;
   padding-right: 12px;
   text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .catalogue-item:hover {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }
 
 .catalogue-item:last-child {
@@ -525,6 +680,12 @@ body {
   margin-bottom: 8px;
 }
 
+@media (max-width: 480px) {
+  .catalogue-time {
+    font-size: 0.8rem;
+  }
+}
+
 .catalogue-title {
   color: var(--text-shade);
   display: block;
@@ -536,11 +697,30 @@ body {
   letter-spacing: -0.01em;
 }
 
+@media (max-width: 600px) {
+  .catalogue-title {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .catalogue-title {
+    font-size: 1.1rem;
+  }
+}
+
 .catalogue-excerpt {
   color: var(--text-tint);
   font-size: 0.875rem;
   line-height: 1.5;
   margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .catalogue-excerpt {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
 }
 
 .catalogue-tags {
@@ -1056,5 +1236,188 @@ footer {
 @media (min-width: 1200px) {
   footer {
     max-width: 900px;
+  }
+}
+
+/* ============================================
+   全局移动端优化 
+   ============================================ */
+
+/* 确保所有图片响应式 */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 防止小屏幕上的文本溢出 */
+body {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* 优化触摸区域大小 */
+@media (max-width: 768px) {
+  a, button {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* 导航链接例外,保持紧凑 */
+  .nav a {
+    min-height: auto;
+    min-width: auto;
+  }
+}
+
+/* 移动端优化容器内边距 */
+@media (max-width: 600px) {
+  .container, main, footer, .nav-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container, main, footer, .nav-container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+/* 优化小屏幕上的标题间距 */
+@media (max-width: 600px) {
+  .post-content h1,
+  .post-content h2,
+  .post-content h3,
+  .post-content h4,
+  .post-content h5,
+  .post-content h6 {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+  }
+  
+  .post-content h1 {
+    font-size: 1.6rem;
+  }
+  
+  .post-content h2 {
+    font-size: 1.4rem;
+  }
+  
+  .post-content h3 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-content h1 {
+    font-size: 1.5rem;
+  }
+  
+  .post-content h2 {
+    font-size: 1.3rem;
+  }
+  
+  .post-content h3 {
+    font-size: 1.15rem;
+  }
+}
+
+/* 优化列表在移动端的显示 */
+@media (max-width: 600px) {
+  .post-content ul,
+  .post-content ol {
+    padding-left: 1.25em;
+    margin: 1.25em 0;
+  }
+  
+  .post-content ul li,
+  .post-content ol li {
+    margin: 0.4em 0;
+  }
+}
+
+/* 分页按钮移动端优化 */
+@media (max-width: 600px) {
+  .pagination-container {
+    gap: 8px;
+  }
+  
+  .pagination-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .pagination-info {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    margin-top: 32px;
+    padding: 24px 0;
+  }
+  
+  .pagination-container {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .pagination-btn {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+}
+
+/* 优化水平滚动提示 */
+@media (max-width: 768px) {
+  .post-content pre,
+  .post-content table {
+    position: relative;
+  }
+  
+  .post-content pre::after,
+  .post-content table::after {
+    content: "→";
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    color: var(--text-tint);
+    font-size: 1.2em;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+/* Footer 移动端优化 */
+@media (max-width: 600px) {
+  footer {
+    padding: 1.5rem 0;
+  }
+  
+  footer span {
+    font-size: 0.75rem;
+  }
+}
+
+/* 确保固定元素不会遮挡内容 */
+@media (max-width: 600px) {
+  body {
+    padding-top: 0;
+  }
+}
+
+/* 优化引用中的内边距 */
+@media (max-width: 480px) {
+  .post-content blockquote p {
+    padding-left: 0.75em;
+  }
+  
+  .post-content blockquote::before {
+    font-size: 2.5rem;
   }
 }
