@@ -622,12 +622,12 @@ permalink: /thoughts/
 <script>
 // 清理多余的换行
 document.addEventListener('DOMContentLoaded', function() {
-  // 清理内容中的换行
+  // 清理内容中的换行（保留段落间的空行）
   document.querySelectorAll('.thought-content').forEach(content => {
     content.innerHTML = content.innerHTML
-      .replace(/(<br\s*\/?>\s*){2,}/gi, '<br>')
-      .replace(/^\s*<br\s*\/?>/i, '')
-      .replace(/<br\s*\/?>\s*$/i, '');
+      .replace(/(<br\s*\/?>\s*){3,}/gi, '<br><br>')  // 把3个及以上的br替换为2个br（保留段落间空行）
+      .replace(/^\s*<br\s*\/?>/i, '')  // 删除开头的br
+      .replace(/<br\s*\/?>\s*$/i, '');  // 删除结尾的br
   });
 
   // 滚动监听，高亮当前可见的月份

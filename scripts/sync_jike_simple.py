@@ -76,7 +76,7 @@ def download_image(url, save_dir):
 
         # 如果文件已存在，直接返回相对路径
         if os.path.exists(filepath):
-            return f"/_pages/files/thoughts/{filename}"
+            return f"/assets/thoughts/{filename}"
 
         # 下载图片
         headers = {
@@ -89,14 +89,14 @@ def download_image(url, save_dir):
                 f.write(response.read())
 
         print(f"    ✓ 下载图片: {filename}")
-        return f"/_pages/files/thoughts/{filename}"
+        return f"/assets/thoughts/{filename}"
 
     except Exception as e:
         print(f"    ✗ 图片下载失败: {url[:50]}... 错误: {e}")
         return None
 
 USER_ID = "71A6B3C3-1382-4121-A17A-2A4C05CB55E8"
-IMAGES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), '_pages/files/thoughts')
+IMAGES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'assets/thoughts')
 
 # 多个 RSSHub 实例备选列表
 RSSHUB_INSTANCES = [

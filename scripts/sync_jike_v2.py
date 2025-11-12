@@ -38,7 +38,7 @@ USER_ID = os.getenv('JIKE_USER_ID', '71A6B3C3-1382-4121-A17A-2A4C05CB55E8')
 JIKE_API = "https://web-api.okjike.com/api/graphql"
 
 # 图片保存目录
-IMAGES_DIR = "_pages/files/thoughts"
+IMAGES_DIR = "assets/thoughts"
 
 # 每次获取的数量
 FETCH_LIMIT = 50
