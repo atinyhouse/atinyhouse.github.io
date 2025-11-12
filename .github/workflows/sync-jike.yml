@@ -44,7 +44,7 @@ jobs:
 
           # 添加变更文件（包括文本和图片）
           git add _data/thoughts.yml
-          git add _pages/files/thoughts/
+          git add assets/thoughts/
 
           # 检查是否有变更
           if git diff --staged --quiet; then
