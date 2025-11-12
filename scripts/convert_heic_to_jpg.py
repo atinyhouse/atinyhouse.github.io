@@ -30,8 +30,12 @@ def convert_heic_to_jpg(heic_file):
         return None
 
 def main():
+    # 获取脚本所在目录的父目录（项目根目录）
+    script_dir = Path(__file__).parent
+    project_dir = script_dir.parent
+
     # 图片目录
-    image_dir = Path("/Users/didi/Desktop/b/atinyhouse.github.io/_pages/files/thoughts")
+    image_dir = project_dir / "assets" / "thoughts"
 
     # 查找所有HEIC文件
     heic_files = list(image_dir.glob("*.heic"))
@@ -51,7 +55,7 @@ def main():
     print(f"\n成功转换 {len(converted)} 个文件")
 
     # 更新thoughts.yml中的路径
-    thoughts_file = Path("/Users/didi/Desktop/b/atinyhouse.github.io/_data/thoughts.yml")
+    thoughts_file = project_dir / "_data" / "thoughts.yml"
 
     with open(thoughts_file, 'r', encoding='utf-8') as f:
         content = f.read()
