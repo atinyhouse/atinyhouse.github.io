@@ -19,6 +19,8 @@ import os
 import re
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
+from urllib.parse import urlparse
+import hashlib
 
 class HTMLStripper(HTMLParser):
     """移除 HTML 标签"""
@@ -40,6 +42,61 @@ def strip_html(html):
     s = HTMLStripper()
     s.feed(html)
     return s.get_text()
+
+def extract_images_from_description(description_text):
+    """从 description 中提取图片 URL"""
+    if not description_text:
+        return []
+
+    # 查找所有 img 标签中的 src
+    img_pattern = r'<img[^>]+src=["\']([^"\']+)["\']'
+    images = re.findall(img_pattern, description_text)
+
+    # 过滤掉非图片链接
+    valid_images = []
+    for img in images:
+        # 确保是有效的图片 URL
+        if img and (img.startswith('http') or img.startswith('//')):
+            # 如果是协议相对 URL，补全协议
+            if img.startswith('//'):
+                img = 'https:' + img
+            valid_images.append(img)
+
+    return valid_images
+
+def download_image(url, save_path):
+    """下载图片，返回是否成功"""
+    try:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+            'Referer': 'https://m.okjike.com/'
+        }
+        req = urllib.request.Request(url, headers=headers)
+
+        with urllib.request.urlopen(req, timeout=30) as response:
+            data = response.read()
+
+            # 检查是否是有效的图片数据（不是 JSON 错误）
+            if len(data) < 100:
+                # 可能是错误响应
+                try:
+                    json_data = json.loads(data)
+                    if 'error' in json_data:
+                        print(f"    ✗ 图片获取失败: {json_data.get('error')}")
+                        return False
+                except:
+                    pass
+
+            # 保存图片
+            os.makedirs(os.path.dirname(save_path), exist_ok=True)
+            with open(save_path, 'wb') as f:
+                f.write(data)
+
+            return True
+
+    except Exception as e:
+        print(f"    ✗ 下载失败: {e}")
+        return False
 
 USER_ID = "71A6B3C3-1382-4121-A17A-2A4C05CB55E8"
 
@@ -132,6 +189,11 @@ print()
 # 转换为 thoughts 格式
 print("📝 转换数据格式...")
 new_thoughts = []
+total_images = 0
+
+# 获取项目根目录
+project_root = os.path.dirname(os.path.dirname(__file__))
+images_dir = os.path.join(project_root, 'assets', 'thoughts')
 
 for item in items:
     thought = {}
@@ -145,13 +207,44 @@ for item in items:
             dt = parsedate_to_datetime(pub_date.text)
             thought['date'] = dt.strftime('%Y-%m-%d')
             thought['time'] = dt.strftime('%H:%M')
+            # 生成唯一 ID 用于图片文件名
+            thought_id = dt.strftime('%Y%m%d%H%M%S')
         except:
             pass
 
-    # 内容
+    # 内容和图片
     description = item.find('description')
     if description is not None and description.text:
-        content = strip_html(description.text)
+        description_text = description.text
+
+        # 提取图片
+        image_urls = extract_images_from_description(description_text)
+        if image_urls:
+            print(f"  [{thought.get('date')} {thought.get('time')}] 找到 {len(image_urls)} 张图片")
+            images = []
+
+            for idx, img_url in enumerate(image_urls, 1):
+                # 生成文件名
+                img_ext = os.path.splitext(urlparse(img_url).path)[1] or '.jpg'
+                img_filename = f"{thought_id}-img{idx}{img_ext}"
+                img_path = os.path.join(images_dir, img_filename)
+
+                # 下载图片（如果不存在）
+                if not os.path.exists(img_path):
+                    print(f"    下载图片 {idx}/{len(image_urls)}...")
+                    if download_image(img_url, img_path):
+                        images.append(f"/assets/thoughts/{img_filename}")
+                        total_images += 1
+                        print(f"    ✓ 已保存: {img_filename}")
+                else:
+                    images.append(f"/assets/thoughts/{img_filename}")
+                    print(f"    ✓ 已存在: {img_filename}")
+
+            if images:
+                thought['images'] = images
+
+        # 提取文本内容
+        content = strip_html(description_text)
         content = re.sub(r'\s+', ' ', content).strip()
         if content:
             thought['content'] = content
@@ -161,6 +254,7 @@ for item in items:
     if title is not None and title.text:
         title_text = title.text.strip()
         # 如果标题不是内容的开头部分，则作为话题
+        content = thought.get('content', '')
         if title_text and content and not content.startswith(title_text[:20]):
             thought['topic'] = title_text
 
@@ -173,6 +267,8 @@ for item in items:
         new_thoughts.append(thought)
 
 print(f"✓ 成功转换 {len(new_thoughts)} 条动态")
+if total_images > 0:
+    print(f"✓ 下载了 {total_images} 张新图片")
 print()
 
 # 读取现有数据
@@ -273,6 +369,7 @@ print(f"📊 统计信息:")
 print(f"  - RSS 获取: {len(items)} 条")
 print(f"  - 有效数据: {len(new_thoughts)} 条")
 print(f"  - 新增动态: {new_count} 条")
+print(f"  - 下载图片: {total_images} 张")
 print(f"  - 总计动态: {len(existing_thoughts)} 条")
 print()
 
