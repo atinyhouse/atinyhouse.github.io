@@ -67,12 +67,14 @@ def download_image(url, save_dir):
         # 创建保存目录
         os.makedirs(save_dir, exist_ok=True)
 
-        # 生成文件名（使用日期时间戳 + URL hash）
-        timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-        url_hash = hashlib.md5(url.encode()).hexdigest()[:16]
-        ext = os.path.splitext(urlparse(url).path)[1] or '.jpg'
-        filename = f"{timestamp}-{url_hash}{ext}"
-        filepath = os.path.join(save_dir, filename)
+         # 生成文件名（使用 URL 
+  hash，确保同一图片不会重复下载）
+  url_hash =
+  hashlib.md5(url.encode()).hexdigest()[:16]
+  ext = os.path.splitext(urlparse(url).path)[1]
+  or '.jpg'
+  filename = f"{url_hash}{ext}"
+  filepath = os.path.join(save_dir, filename)
 
         # 如果文件已存在，直接返回相对路径
         if os.path.exists(filepath):
