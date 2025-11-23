@@ -60,7 +60,6 @@ def extract_images_from_html(html):
             images.append(url)
 
     return images
-
 def download_image(url, save_dir):
       """下载图片并返回本地路径"""
       try:
@@ -101,16 +100,9 @@ def download_image(url, save_dir):
           return f"/assets/thoughts/{filename}"
 
       except Exception as e:
-          print(f"    ✗ 下载失败: {e}")
+          print(f"    ✗ 图片下载失败: 
+  {url[:50]}... 错误: {e}")
           return None
-
-
-        print(f"    ✓ 下载图片: {filename}")
-        return f"/assets/thoughts/{filename}"
-
-    except Exception as e:
-        print(f"    ✗ 图片下载失败: {url[:50]}... 错误: {e}")
-        return None
 
 USER_ID = "71A6B3C3-1382-4121-A17A-2A4C05CB55E8"
 IMAGES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'assets/thoughts')
