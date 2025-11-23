@@ -19,8 +19,8 @@ import os
 import re
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
-import hashlib
 from urllib.parse import urlparse
+import hashlib
 
 class HTMLStripper(HTMLParser):
     """移除 HTML 标签"""
@@ -43,77 +43,69 @@ def strip_html(html):
     s.feed(html)
     return s.get_text()
 
-def extract_images_from_html(html):
-    """从 HTML 中提取图片 URL"""
-    if not html:
+def extract_images_from_description(description_text):
+    """从 description 中提取图片 URL"""
+    if not description_text:
         return []
 
-    # 查找所有 img 标签的 src
+    # 查找所有 img 标签中的 src
     img_pattern = r'<img[^>]+src=["\']([^"\']+)["\']'
-    matches = re.findall(img_pattern, html, re.IGNORECASE)
+    images = re.findall(img_pattern, description_text)
 
-    # 过滤掉头像等小图片
-    images = []
-    for url in matches:
-        # 过滤掉头像图片
-        if 'avatar' not in url.lower():
-            images.append(url)
+    # 过滤掉非图片链接
+    valid_images = []
+    for img in images:
+        # 确保是有效的图片 URL
+        if img and (img.startswith('http') or img.startswith('//')):
+            # 如果是协议相对 URL，补全协议
+            if img.startswith('//'):
+                img = 'https:' + img
+            valid_images.append(img)
 
-    return images
-def download_image(url, save_dir):
-      """下载图片并返回本地路径"""
-      try:
-          # 创建保存目录
-          os.makedirs(save_dir, exist_ok=True)
+    return valid_images
 
-          # 生成文件名（使用 URL 
-  hash，确保同一图片不会重复下载）
-          url_hash =
-  hashlib.md5(url.encode()).hexdigest()[:16]
-          ext =
-  os.path.splitext(urlparse(url).path)[1] or
-  '.jpg'
-          filename = f"{url_hash}{ext}"
-          filepath = os.path.join(save_dir,
-  filename)
+def download_image(url, save_path):
+    """下载图片，返回是否成功"""
+    try:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+            'Referer': 'https://m.okjike.com/'
+        }
+        req = urllib.request.Request(url, headers=headers)
 
-          # 如果文件已存在，直接返回相对路径
-          if os.path.exists(filepath):
-              return
-  f"/assets/thoughts/{filename}"
+        with urllib.request.urlopen(req, timeout=30) as response:
+            data = response.read()
 
-          # 下载图片
-          headers = {
-              'User-Agent': 'Mozilla/5.0 
-  (Macintosh; Intel Mac OS X 10_15_7) 
-  AppleWebKit/537.36'
-          }
-          req = urllib.request.Request(url,
-  headers=headers)
+            # 检查是否是有效的图片数据（不是 JSON 错误）
+            if len(data) < 100:
+                # 可能是错误响应
+                try:
+                    json_data = json.loads(data)
+                    if 'error' in json_data:
+                        print(f"    ✗ 图片获取失败: {json_data.get('error')}")
+                        return False
+                except:
+                    pass
 
-          with urllib.request.urlopen(req,
-  timeout=30) as response:
-              with open(filepath, 'wb') as f:
-                  f.write(response.read())
+            # 保存图片
+            os.makedirs(os.path.dirname(save_path), exist_ok=True)
+            with open(save_path, 'wb') as f:
+                f.write(data)
 
-          print(f"    ✓ 下载图片: {filename}")
-          return f"/assets/thoughts/{filename}"
+            return True
 
-      except Exception as e:
-          print(f"    ✗ 图片下载失败: 
-  {url[:50]}... 错误: {e}")
-          return None
+    except Exception as e:
+        print(f"    ✗ 下载失败: {e}")
+        return False
 
 USER_ID = "71A6B3C3-1382-4121-A17A-2A4C05CB55E8"
-IMAGES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'assets/thoughts')
 
-# 多个 RSSHub 实例备选列表
+# 多个 RSSHub 镜像源（按优先级排序）
 RSSHUB_INSTANCES = [
     "https://rsshub.app",
-    "https://rsshub.rssforever.com",
-    "https://rsshub.ktachibana.party",
+    "https://rss.miantiao.me",
     "https://rss.shab.fun",
-    "https://rsshub.feeded.xyz",
+    "https://rsshub.rssforever.com",
 ]
 
 print("="*60)
@@ -121,17 +113,17 @@ print("🚀 即刻动态自动同步")
 print("="*60)
 print()
 print(f"用户 ID: {USER_ID}")
-print(f"可用实例数: {len(RSSHUB_INSTANCES)}")
+print(f"可用镜像: {len(RSSHUB_INSTANCES)} 个")
 print()
 
-# 尝试从多个实例获取 RSS
+# 尝试从多个源获取 RSS
 print("📡 正在获取 RSS feed...")
 rss_data = None
-successful_instance = None
+successful_source = None
 
 for instance in RSSHUB_INSTANCES:
     rsshub_url = f"{instance}/jike/user/{USER_ID}"
-    print(f"  尝试实例: {instance}")
+    print(f"  尝试: {instance}")
 
     try:
         headers = {
@@ -141,28 +133,37 @@ for instance in RSSHUB_INSTANCES:
 
         with urllib.request.urlopen(req, timeout=15) as response:
             rss_data = response.read().decode('utf-8')
-            successful_instance = instance
-            print(f"  ✓ 实例可用: {instance}")
+            successful_source = instance
+            print(f"  ✓ 成功获取数据")
             break
 
     except Exception as e:
-        print(f"  ✗ 实例失败: {str(e)[:50]}")
+        print(f"  ✗ 失败: {e}")
         continue
 
 if rss_data is None:
     print()
-    print("❌ 所有 RSSHub 实例均不可用")
+    print("❌ 所有 RSS 源都不可用")
     print()
-    print("备用方案：")
-    print("  由于您已有大量历史数据，可以暂时跳过本次同步")
-    print("  建议稍后重试或检查网络连接")
+    print("这通常是暂时性问题，可能的原因：")
+    print("  - RSSHub 服务器维护")
+    print("  - 网络连接问题")
+    print("  - 即刻 API 暂时不可用")
     print()
-    print("💡 这不会导致 GitHub Actions 失败，请放心")
-    # 使用 exit 0 避免 GitHub Actions 失败
-    exit(0)
+    print("💡 建议：")
+    print("  - 稍后会自动重试（每天 19:15）")
+    print("  - 您的历史数据已保存，不会丢失")
+    print("  - 可以稍后手动触发 workflow")
+    print()
+    # 在 GitHub Actions 中优雅退出，避免显示为失败
+    import sys
+    if os.getenv('GITHUB_ACTIONS'):
+        print("⚠️  GitHub Actions: 优雅退出，等待下次重试")
+        sys.exit(0)
+    else:
+        sys.exit(1)
 
-print()
-print(f"✓ RSS 获取成功 (实例: {successful_instance})")
+print(f"✓ 使用数据源: {successful_source}")
 print()
 
 # 解析 RSS
@@ -188,7 +189,11 @@ print()
 # 转换为 thoughts 格式
 print("📝 转换数据格式...")
 new_thoughts = []
-total_images_downloaded = 0
+total_images = 0
+
+# 获取项目根目录
+project_root = os.path.dirname(os.path.dirname(__file__))
+images_dir = os.path.join(project_root, 'assets', 'thoughts')
 
 for item in items:
     thought = {}
@@ -202,43 +207,54 @@ for item in items:
             dt = parsedate_to_datetime(pub_date.text)
             thought['date'] = dt.strftime('%Y-%m-%d')
             thought['time'] = dt.strftime('%H:%M')
+            # 生成唯一 ID 用于图片文件名
+            thought_id = dt.strftime('%Y%m%d%H%M%S')
         except:
             pass
 
     # 内容和图片
     description = item.find('description')
     if description is not None and description.text:
-        # 先提取图片
-        image_urls = extract_images_from_html(description.text)
+        description_text = description.text
 
-        # 清理文本内容
-        content = strip_html(description.text)
-        # 清理多余的空白：将多个连续空行压缩成单个换行
-        content = re.sub(r'\n\s*\n+', '\n\n', content)  # 多个空行压缩成双换行
-        content = re.sub(r'[ \t]+', ' ', content)  # 多个空格压缩成单个空格
-        content = content.strip()
-
-        if content:
-            thought['content'] = content
-
-        # 下载图片
+        # 提取图片
+        image_urls = extract_images_from_description(description_text)
         if image_urls:
-            print(f"  发现 {len(image_urls)} 张图片，开始下载...")
+            print(f"  [{thought.get('date')} {thought.get('time')}] 找到 {len(image_urls)} 张图片")
             images = []
-            for img_url in image_urls:
-                local_path = download_image(img_url, IMAGES_DIR)
-                if local_path:
-                    images.append(local_path)
-                    total_images_downloaded += 1
+
+            for idx, img_url in enumerate(image_urls, 1):
+                # 生成文件名
+                img_ext = os.path.splitext(urlparse(img_url).path)[1] or '.jpg'
+                img_filename = f"{thought_id}-img{idx}{img_ext}"
+                img_path = os.path.join(images_dir, img_filename)
+
+                # 下载图片（如果不存在）
+                if not os.path.exists(img_path):
+                    print(f"    下载图片 {idx}/{len(image_urls)}...")
+                    if download_image(img_url, img_path):
+                        images.append(f"/assets/thoughts/{img_filename}")
+                        total_images += 1
+                        print(f"    ✓ 已保存: {img_filename}")
+                else:
+                    images.append(f"/assets/thoughts/{img_filename}")
+                    print(f"    ✓ 已存在: {img_filename}")
 
             if images:
                 thought['images'] = images
+
+        # 提取文本内容
+        content = strip_html(description_text)
+        content = re.sub(r'\s+', ' ', content).strip()
+        if content:
+            thought['content'] = content
 
     # 标题
     title = item.find('title')
     if title is not None and title.text:
         title_text = title.text.strip()
         # 如果标题不是内容的开头部分，则作为话题
+        content = thought.get('content', '')
         if title_text and content and not content.startswith(title_text[:20]):
             thought['topic'] = title_text
 
@@ -247,11 +263,12 @@ for item in items:
     if link is not None and link.text:
         thought['source_link'] = link.text
 
-    if 'date' in thought and ('content' in thought or 'images' in thought):
+    if 'date' in thought and 'content' in thought:
         new_thoughts.append(thought)
 
 print(f"✓ 成功转换 {len(new_thoughts)} 条动态")
-print(f"✓ 下载了 {total_images_downloaded} 张图片")
+if total_images > 0:
+    print(f"✓ 下载了 {total_images} 张新图片")
 print()
 
 # 读取现有数据
@@ -283,73 +300,18 @@ print()
 # 合并去重
 print("🔗 合并数据...")
 
-# 使用 source_link 作为唯一标识（最可靠）
-# 如果没有source_link，则使用日期+内容的hash
-existing_keys = {}
-for idx, t in enumerate(existing_thoughts):
-    if 'source_link' in t and t['source_link']:
-        key = t['source_link']
-    else:
-        # 对于没有source_link的旧数据，使用日期+内容hash
-        import hashlib
-        content_hash = hashlib.md5(t.get('content', '').encode()).hexdigest()[:16]
-        key = f"{t.get('date', '')}_{content_hash}"
-    existing_keys[key] = idx
+# 使用日期+时间+内容前100字符作为唯一标识
+existing_keys = set()
+for t in existing_thoughts:
+    key = f"{t.get('date', '')}_{t.get('time', '')}_{t.get('content', '')[:100]}"
+    existing_keys.add(key)
 
 new_count = 0
-updated_count = 0
-
 for t in new_thoughts:
-    if 'source_link' in t and t['source_link']:
-        key = t['source_link']
-    else:
-        import hashlib
-        content_hash = hashlib.md5(t.get('content', '').encode()).hexdigest()[:16]
-        key = f"{t.get('date', '')}_{content_hash}"
-
-    if key in existing_keys:
-        # 已存在的动态，检查是否需要更新
-        idx = existing_keys[key]
-        old_thought = existing_thoughts[idx]
-
-        # 更新策略：保留格式更好的版本（有段落的），同时合并图片
-        new_has_paragraphs = '\n\n' in t.get('content', '')
-        old_has_paragraphs = '\n\n' in old_thought.get('content', '')
-
-        # 如果新版本有段落格式而旧版本没有，替换内容
-        if new_has_paragraphs and not old_has_paragraphs:
-            old_thought['content'] = t['content']
-            print(f"  ✓ 更新动态格式: {t.get('date')} {t.get('time')}")
-
-        # 更新或保留更好的topic
-        if 'topic' in t and ('topic' not in old_thought or len(t['topic']) > len(old_thought.get('topic', ''))):
-            old_thought['topic'] = t['topic']
-
-        # 合并图片，按文件大小去重
-        if 'images' in t:
-            import os
-            from collections import defaultdict
-
-            # 获取所有图片的大小
-            all_images = old_thought.get('images', []) + t['images']
-            size_map = {}
-            for img in all_images:
-                img_path = img.lstrip('/')
-                if os.path.exists(img_path):
-                    size = os.path.getsize(img_path)
-                    if size not in size_map:
-                        size_map[size] = img
-
-            # 使用去重后的图片
-            unique_images = list(size_map.values())
-            if len(unique_images) != len(old_thought.get('images', [])):
-                old_thought['images'] = unique_images
-                updated_count += 1
-                print(f"  ✓ 更新图片列表: {t.get('date')} {t.get('time')}")
-    else:
-        # 新动态
+    key = f"{t.get('date', '')}_{t.get('time', '')}_{t.get('content', '')[:100]}"
+    if key not in existing_keys:
         existing_thoughts.append(t)
-        existing_keys[key] = len(existing_thoughts) - 1
+        existing_keys.add(key)
         new_count += 1
 
 # 按日期时间倒序排列
@@ -361,7 +323,6 @@ existing_thoughts.sort(
 print(f"✓ 合并完成")
 print(f"  总计: {len(existing_thoughts)} 条")
 print(f"  新增: {new_count} 条")
-print(f"  更新: {updated_count} 条")
 print()
 
 # 保存
@@ -408,24 +369,17 @@ print(f"📊 统计信息:")
 print(f"  - RSS 获取: {len(items)} 条")
 print(f"  - 有效数据: {len(new_thoughts)} 条")
 print(f"  - 新增动态: {new_count} 条")
-print(f"  - 更新动态: {updated_count} 条")
-print(f"  - 下载图片: {total_images_downloaded} 张")
+print(f"  - 下载图片: {total_images} 张")
 print(f"  - 总计动态: {len(existing_thoughts)} 条")
 print()
 
-if new_count > 0 or updated_count > 0:
-    print(f"🎉 发现变化！")
-    if new_count > 0:
-        print(f"  - 新增 {new_count} 条动态")
-    if updated_count > 0:
-        print(f"  - 更新 {updated_count} 条动态（添加图片）")
+if new_count > 0:
+    print(f"🎉 发现 {new_count} 条新动态！")
     print()
     print("最新动态预览:")
     for i, t in enumerate(new_thoughts[:3], 1):
         content_preview = t.get('content', '')[:60]
-        img_count = len(t.get('images', []))
-        img_info = f" [📷 {img_count}]" if img_count > 0 else ""
-        print(f"  {i}. [{t.get('date')} {t.get('time')}]{img_info} {content_preview}...")
+        print(f"  {i}. [{t.get('date')} {t.get('time')}] {content_preview}...")
 else:
     print("✓ 没有新动态")
 
