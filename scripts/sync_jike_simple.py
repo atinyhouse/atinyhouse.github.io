@@ -62,33 +62,48 @@ def extract_images_from_html(html):
     return images
 
 def download_image(url, save_dir):
-    """下载图片并返回本地路径"""
-    try:
-        # 创建保存目录
-        os.makedirs(save_dir, exist_ok=True)
+      """下载图片并返回本地路径"""
+      try:
+          # 创建保存目录
+          os.makedirs(save_dir, exist_ok=True)
 
-         # 生成文件名（使用 URL 
+          # 生成文件名（使用 URL 
   hash，确保同一图片不会重复下载）
-  url_hash =
+          url_hash =
   hashlib.md5(url.encode()).hexdigest()[:16]
-  ext = os.path.splitext(urlparse(url).path)[1]
-  or '.jpg'
-  filename = f"{url_hash}{ext}"
-  filepath = os.path.join(save_dir, filename)
+          ext =
+  os.path.splitext(urlparse(url).path)[1] or
+  '.jpg'
+          filename = f"{url_hash}{ext}"
+          filepath = os.path.join(save_dir,
+  filename)
 
-        # 如果文件已存在，直接返回相对路径
-        if os.path.exists(filepath):
-            return f"/assets/thoughts/{filename}"
+          # 如果文件已存在，直接返回相对路径
+          if os.path.exists(filepath):
+              return
+  f"/assets/thoughts/{filename}"
 
-        # 下载图片
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
-        }
-        req = urllib.request.Request(url, headers=headers)
+          # 下载图片
+          headers = {
+              'User-Agent': 'Mozilla/5.0 
+  (Macintosh; Intel Mac OS X 10_15_7) 
+  AppleWebKit/537.36'
+          }
+          req = urllib.request.Request(url,
+  headers=headers)
 
-        with urllib.request.urlopen(req, timeout=30) as response:
-            with open(filepath, 'wb') as f:
-                f.write(response.read())
+          with urllib.request.urlopen(req,
+  timeout=30) as response:
+              with open(filepath, 'wb') as f:
+                  f.write(response.read())
+
+          print(f"    ✓ 下载图片: {filename}")
+          return f"/assets/thoughts/{filename}"
+
+      except Exception as e:
+          print(f"    ✗ 下载失败: {e}")
+          return None
+
 
         print(f"    ✓ 下载图片: {filename}")
         return f"/assets/thoughts/{filename}"
