@@ -43,7 +43,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
 
           # 添加变更文件
-          git add _data/thoughts.yml
+          git add _data/thoughts.yml assets/thoughts/
 
           # 检查是否有变更
           if git diff --staged --quiet; then
