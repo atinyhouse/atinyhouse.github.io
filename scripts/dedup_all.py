@@ -98,6 +98,16 @@ unique.sort(
 print("✓ 已按日期时间倒序排列")
 print()
 
+# 保存前确保所有时间字段都是字符串
+print("🔧 修复时间格式...")
+for thought in unique:
+    if 'time' in thought and thought['time'] is not None:
+        # 确保时间是字符串类型
+        thought['time'] = str(thought['time'])
+
+print("✓ 时间格式已修复")
+print()
+
 # 保存
 print("💾 保存文件...")
 
@@ -111,6 +121,14 @@ header = f"""# ============================================
 # ============================================
 
 """
+
+# 自定义 YAML representer，确保时间字段用引号
+def str_representer(dumper, data):
+    if ':' in str(data) and len(str(data)) <= 8:  # 可能是时间格式
+        return dumper.represent_scalar('tag:yaml.org,2002:str', str(data), style="'")
+    return dumper.represent_scalar('tag:yaml.org,2002:str', data)
+
+yaml.add_representer(str, str_representer)
 
 with open(data_file, 'w', encoding='utf-8') as f:
     f.write(header)
