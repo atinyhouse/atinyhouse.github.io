@@ -32,11 +32,16 @@ unique = []
 duplicates_removed = 0
 
 for t in thoughts:
+    # 优先使用 source_link 作为唯一键，因为同一个帖子可能有不同的时间戳
+    source_link = t.get('source_link', '')
     date = t.get('date', '')
     time = str(t.get('time', '')).strip()
 
-    # 使用日期+时间作为唯一键
-    key = f"{date}_{time}"
+    # 如果有 source_link，用它作为唯一键；否则用日期+时间
+    if source_link:
+        key = source_link
+    else:
+        key = f"{date}_{time}"
 
     if key in seen:
         # 重复了，比较哪个更好
@@ -71,10 +76,10 @@ for t in thoughts:
             idx = unique.index(old)
             unique[idx] = t
             seen[key] = t
-            print(f"  替换: {date} {time} (旧:{old_score} 新:{new_score})")
+            print(f"  替换: {key[:60]}... (旧:{old_score} 新:{new_score})")
         else:
             # 旧的更好或相等，跳过新的
-            print(f"  跳过: {date} {time} (保留旧的 {old_score} >= {new_score})")
+            print(f"  跳过: {key[:60]}... (保留旧的 {old_score} >= {new_score})")
 
         duplicates_removed += 1
     else:
