@@ -29,7 +29,12 @@ jobs:
         run: |
           echo "开始同步即刻动态..."
           python3 scripts/sync_jike_simple.py
-      
+
+      - name: Clean duplicates
+        run: |
+          echo "清理重复内容..."
+          python3 scripts/dedup_all.py
+
       - name: Commit and push changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
