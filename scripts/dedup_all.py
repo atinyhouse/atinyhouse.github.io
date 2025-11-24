@@ -31,25 +31,61 @@ seen = {}
 unique = []
 duplicates_removed = 0
 
+# 辅助函数：规范化内容用于比较
+def normalize_content(content):
+    """移除空白符和换行，用于内容比较"""
+    if not content:
+        return ""
+    return ''.join(str(content).split())
+
 for t in thoughts:
-    # 优先使用 source_link 作为唯一键，因为同一个帖子可能有不同的时间戳
+    # 优先使用 source_link 作为唯一键
     source_link = t.get('source_link', '')
     date = t.get('date', '')
     time = str(t.get('time', '')).strip()
+    content = t.get('content', '')
+    normalized_content = normalize_content(content)
 
-    # 如果有 source_link，用它作为唯一键；否则用日期+时间
-    if source_link:
+    # 先用 source_link 查找
+    if source_link and source_link in seen:
         key = source_link
+        found_duplicate = True
     else:
+        # 如果没有 source_link，或者用 source_link 没找到，尝试用内容匹配
+        found_duplicate = False
         key = f"{date}_{time}"
 
-    if key in seen:
+        # 检查是否有相同内容的条目（用于识别缺少 source_link 的重复）
+        if normalized_content:
+            for existing_key, existing in seen.items():
+                existing_normalized = normalize_content(existing.get('content', ''))
+                if existing_normalized and existing_normalized == normalized_content:
+                    # 找到内容相同的条目
+                    key = existing_key
+                    found_duplicate = True
+                    break
+
+        # 如果还是没找到，用 date_time 作为键
+        if not found_duplicate and key in seen:
+            found_duplicate = True
+
+    if found_duplicate:
         # 重复了，比较哪个更好
         old = seen[key]
 
         # 计算分数 - 保留最完整的版本
         old_score = 0
         new_score = 0
+
+        # 有 source_link 和 topic 字段加分（说明是完整的同步数据）
+        if old.get('source_link'):
+            old_score += 5
+        if t.get('source_link'):
+            new_score += 5
+        if old.get('topic'):
+            old_score += 3
+        if t.get('topic'):
+            new_score += 3
 
         # 有图片加分
         old_images = len(old.get('images', []))
