@@ -46,27 +46,29 @@ for t in thoughts:
     content = t.get('content', '')
     normalized_content = normalize_content(content)
 
-    # 先用 source_link 查找
-    if source_link and source_link in seen:
-        key = source_link
-        found_duplicate = True
-    else:
-        # 如果没有 source_link，或者用 source_link 没找到，尝试用内容匹配
-        found_duplicate = False
-        key = f"{date}_{time}"
+    # 确定唯一键和是否重复
+    found_duplicate = False
+    key = None
 
-        # 检查是否有相同内容的条目（用于识别缺少 source_link 的重复）
-        if normalized_content:
-            for existing_key, existing in seen.items():
-                existing_normalized = normalize_content(existing.get('content', ''))
-                if existing_normalized and existing_normalized == normalized_content:
-                    # 找到内容相同的条目
-                    key = existing_key
-                    found_duplicate = True
-                    break
+    # 1. 首先尝试用 source_link 作为唯一键（最可靠）
+    if source_link:
+        key = f"link:{source_link}"
+        if key in seen:
+            found_duplicate = True
 
-        # 如果还是没找到，用 date_time 作为键
-        if not found_duplicate and key in seen:
+    # 2. 如果没有 source_link，尝试用规范化的内容匹配
+    if not found_duplicate and normalized_content:
+        content_key = f"content:{normalized_content}"
+        if content_key in seen:
+            key = content_key
+            found_duplicate = True
+        elif not key:  # 没有 source_link 的情况，用 content 作为key
+            key = content_key
+
+    # 3. 最后兜底：用 date_time 检查
+    if not key:
+        key = f"datetime:{date}_{time}"
+        if key in seen:
             found_duplicate = True
 
     if found_duplicate:

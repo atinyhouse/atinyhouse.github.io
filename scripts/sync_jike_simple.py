@@ -300,18 +300,35 @@ print()
 # 合并去重
 print("🔗 合并数据...")
 
-# 使用日期+时间+内容前100字符作为唯一标识
-existing_keys = set()
+# 使用 source_link 作为主要唯一标识（最可靠）
+# 如果没有 source_link，则用内容作为标识
+existing_keys = {}  # key -> thought
 for t in existing_thoughts:
-    key = f"{t.get('date', '')}_{t.get('time', '')}_{t.get('content', '')[:100]}"
-    existing_keys.add(key)
+    source_link = t.get('source_link', '')
+    if source_link:
+        key = f"link:{source_link}"
+    else:
+        # 对于没有 source_link 的，用日期+时间+内容前100字符
+        content = ''.join(str(t.get('content', '')).split())[:100]
+        key = f"content:{t.get('date', '')}_{t.get('time', '')}_{content}"
+    existing_keys[key] = t
 
 new_count = 0
 for t in new_thoughts:
-    key = f"{t.get('date', '')}_{t.get('time', '')}_{t.get('content', '')[:100]}"
+    # 确保时间是字符串格式（防止 YAML 解析问题）
+    if 'time' in t:
+        t['time'] = str(t['time'])
+
+    source_link = t.get('source_link', '')
+    if source_link:
+        key = f"link:{source_link}"
+    else:
+        content = ''.join(str(t.get('content', '')).split())[:100]
+        key = f"content:{t.get('date', '')}_{t.get('time', '')}_{content}"
+
     if key not in existing_keys:
         existing_thoughts.append(t)
-        existing_keys.add(key)
+        existing_keys[key] = t
         new_count += 1
 
 # 按日期时间倒序排列
@@ -330,6 +347,11 @@ print("💾 保存数据...")
 
 os.makedirs(data_dir, exist_ok=True)
 
+# 确保所有时间字段都是字符串类型
+for thought in existing_thoughts:
+    if 'time' in thought and thought['time'] is not None:
+        thought['time'] = str(thought['time'])
+
 header = f"""# ============================================
 # Thoughts 数据文件 - 即刻动态
 # ============================================
@@ -341,6 +363,15 @@ header = f"""# ============================================
 # ============================================
 
 """
+
+# 自定义 YAML representer，确保时间字段用引号
+def str_representer(dumper, data):
+    """确保时间格式的字符串用引号包裹"""
+    if ':' in str(data) and len(str(data)) <= 8:  # 可能是时间格式
+        return dumper.represent_scalar('tag:yaml.org,2002:str', str(data), style="'")
+    return dumper.represent_scalar('tag:yaml.org,2002:str', data)
+
+yaml.add_representer(str, str_representer)
 
 try:
     with open(output_file, 'w', encoding='utf-8') as f:
