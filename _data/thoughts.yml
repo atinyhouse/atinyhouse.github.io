@@ -3,11 +3,20 @@
 # ============================================
 #
 # 本文件由 sync_jike_simple.py 自动生成
-# 更新时间: 2026-05-22 13:37:43
+# 更新时间: 2026-05-23 12:08:35
 # 数据来源: RSSHub (https://rsshub.app)
 #
 # ============================================
 
+- date: '2026-05-22'
+  time: '13:59'
+  images:
+  - /assets/thoughts/20260522135909-img1.heic
+  - /assets/thoughts/20260522135909-img2.heic
+  - /assets/thoughts/20260522135909-img3.heic
+  content: 下雨的时候出了趟门🌧️
+  topic: '发布了: 下雨的时候出了趟门🌧️'
+  source_link: https://m.okjike.com/originalPosts/6a10612daf7695b4cf347ee7
 - date: '2026-04-09'
   time: '15:09'
   images:
