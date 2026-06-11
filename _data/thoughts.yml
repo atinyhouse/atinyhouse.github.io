@@ -3,11 +3,20 @@
 # ============================================
 #
 # 本文件由 sync_jike_simple.py 自动生成
-# 更新时间: 2026-06-10 14:29:29
+# 更新时间: 2026-06-11 14:55:17
 # 数据来源: RSSHub (https://rsshub.app)
 #
 # ============================================
 
+- date: '2026-06-11'
+  time: '05:47'
+  images:
+  - /assets/thoughts/20260611054738-img1.png
+  - /assets/thoughts/20260611054738-img2.png
+  - /assets/thoughts/20260611054738-img3.gif
+  content: 我的Codex pet：Lumi 👇
+  topic: '发布了: 我的Codex pet：Lumi 👇'
+  source_link: https://m.okjike.com/originalPosts/6a2a4bfa8694679c367847e3
 - date: '2026-05-29'
   time: '03:32'
   content: 对话创建自定义Agent这个功能怎么感觉现在什么产品都有了，大到ChatGPT Workspace Agents、Notion Agent、Click up Agent，小到各种创业公司 Creao、Gumloop 等，感觉已经是标配了呢🤔好奇真的用得多么🤔
